@@ -1,0 +1,104 @@
+name: Validate JSON Data
+
+on:
+  push:
+    paths:
+      - 'data/**/*.json'
+  pull_request:
+    paths:
+      - 'data/**/*.json'
+
+jobs:
+  validate-json:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Validate JSON files
+        run: |
+          echo "Validating JSON files in data directory..."
+          find data -name "*.json" -type f | while read file; do
+            echo "Checking $file..."
+            if ! python3 -m json.tool "$file" > /dev/null 2>&1; then
+              echo "ERROR: Invalid JSON in $file"
+              exit 1
+            fi
+          done
+          echo "All JSON files are valid!"
+      
+      - name: Validate holiday schema
+        run: |
+          echo "Validating holiday data schema..."
+          python3 << 'EOF'
+          import json
+          import os
+          import sys
+          from datetime import datetime
+          
+          required_fields = ['date', 'name', 'type', 'state_code', 'description']
+          valid_types = ['national', 'public', 'state', 'bank', 'regional', 'optional']
+          
+          errors = []
+          
+          for root, dirs, files in os.walk('data'):
+              for file in files:
+                  if file.endswith('.json'):
+                      filepath = os.path.join(root, file)
+                      try:
+                          with open(filepath, 'r') as f:
+                              data = json.load(f)
+                          
+                          # Check if it's a list (holidays) or dict (meta)
+                          if isinstance(data, list):
+                              for i, holiday in enumerate(data):
+                                  for field in required_fields:
+                                      if field not in holiday:
+                                          errors.append(f"{filepath}[{i}]: Missing required field '{field}'")
+                                  
+                                  # Validate date format
+                                  if 'date' in holiday:
+                                      try:
+                                          datetime.strptime(holiday['date'], '%Y-%m-%d')
+                                      except ValueError:
+                                          errors.append(f"{filepath}[{i}]: Invalid date format '{holiday['date']}'. Expected YYYY-MM-DD")
+                                  
+                                  # Validate type
+                                  if 'type' in holiday and holiday['type'] not in valid_types:
+                                      errors.append(f"{filepath}[{i}]: Invalid type '{holiday['type']}'. Must be one of {valid_types}")
+                                  
+                                  # Validate state_code format
+                                  if 'state_code' in holiday:
+                                      if not (holiday['state_code'] == 'IN' or len(holiday['state_code']) == 2):
+                                          errors.append(f"{filepath}[{i}]: Invalid state_code '{holiday['state_code']}'")
+                          
+                          elif isinstance(data, dict):
+                              # Meta files - basic validation
+                              if 'states' in data:
+                                  for state in data['states']:
+                                      if 'code' not in state or 'name' not in state:
+                                          errors.append(f"{filepath}: State missing 'code' or 'name'")
+                              elif 'types' in data:
+                                  for htype in data['types']:
+                                      if 'id' not in htype or 'name' not in htype:
+                                          errors.append(f"{filepath}: Type missing 'id' or 'name'")
+                      
+                      except json.JSONDecodeError as e:
+                          errors.append(f"{filepath}: JSON parse error - {str(e)}")
+                      except Exception as e:
+                          errors.append(f"{filepath}: Unexpected error - {str(e)}")
+          
+          if errors:
+              print("Validation errors found:")
+              for error in errors:
+                  print(f"  - {error}")
+              sys.exit(1)
+          else:
+              print("All holiday data is valid!")
+          EOF

@@ -1,0 +1,135 @@
+[
+  {
+    "date": "2024-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "IN",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2024-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "IN",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2024-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "IN",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2024-01-14",
+    "name": "Makar Sankranti",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Harvest festival celebrated across India"
+  },
+  {
+    "date": "2024-03-08",
+    "name": "Maha Shivaratri",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2024-03-25",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2024-04-11",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2024-04-17",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2024-04-21",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2024-06-17",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2024-08-26",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2024-09-16",
+    "name": "Milad un-Nabi",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Birthday of Prophet Muhammad"
+  },
+  {
+    "date": "2024-10-12",
+    "name": "Durga Ashtami",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Eighth day of Navratri festival"
+  },
+  {
+    "date": "2024-10-14",
+    "name": "Maha Navami",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Ninth day of Navratri festival"
+  },
+  {
+    "date": "2024-10-15",
+    "name": "Vijayadashami (Dasara)",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Celebrates victory of good over evil"
+  },
+  {
+    "date": "2024-10-31",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Festival of lights"
+  },
+  {
+    "date": "2024-11-01",
+    "name": "Diwali (Post-Diwali)",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Day after Diwali"
+  },
+  {
+    "date": "2024-11-15",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2024-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "IN",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]
