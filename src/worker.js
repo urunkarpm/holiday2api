@@ -62,6 +62,21 @@ export default {
         return await serveQueryHolidays(url.searchParams);
       }
 
+      // Route: /api/health or /health
+      if (path === '/api/health' || path === '/health' || path === '/api/health.json') {
+        return new Response(
+          JSON.stringify({
+            status: 'healthy',
+            timestamp: new Date().toISOString(),
+            version: '1.0.0',
+            timezone: 'Asia/Kolkata',
+          }),
+          {
+            headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
+          }
+        );
+      }
+
       // Root endpoint - API info
       if (path === '/' || path === '/api' || path === '/api/') {
         return new Response(
