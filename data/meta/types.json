@@ -1,0 +1,36 @@
+{
+  "types": [
+    {
+      "id": "national",
+      "name": "National Holiday",
+      "description": "Mandatory holidays observed across all India (Republic Day, Independence Day, Gandhi Jayanti)"
+    },
+    {
+      "id": "public",
+      "name": "Public Holiday",
+      "description": "Gazetted holidays declared by the Central Government"
+    },
+    {
+      "id": "state",
+      "name": "State Holiday",
+      "description": "Holidays specific to a particular state or union territory"
+    },
+    {
+      "id": "bank",
+      "name": "Bank Holiday",
+      "description": "Holidays when banks are closed as per RBI guidelines"
+    },
+    {
+      "id": "regional",
+      "name": "Regional Holiday",
+      "description": "District or city-specific observances"
+    },
+    {
+      "id": "optional",
+      "name": "Optional/Restricted Holiday",
+      "description": "Restricted holidays that employees can choose to avail"
+    }
+  ],
+  "timezone": "Asia/Kolkata",
+  "last_updated": "2025-01-01T00:00:00+05:30"
+}

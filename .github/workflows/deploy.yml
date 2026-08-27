@@ -1,0 +1,51 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/**'
+      - 'src/**'
+      - 'wrangler.toml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install Wrangler
+        run: npm install -g wrangler
+      
+      - name: Validate JSON before deploy
+        run: |
+          echo "Validating JSON files..."
+          find data -name "*.json" -type f | while read file; do
+            if ! python3 -m json.tool "$file" > /dev/null 2>&1; then
+              echo "ERROR: Invalid JSON in $file"
+              exit 1
+            fi
+          done
+          echo "All JSON files are valid!"
+      
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          wrangler pages deploy ./data --project-name=india-holidays-api --branch=main
+      
+      - name: Deploy Worker (optional)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          wrangler deploy --env production
+        continue-on-error: true
