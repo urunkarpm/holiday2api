@@ -1,0 +1,24 @@
+{
+  "name": "india-holidays-api",
+  "version": "1.0.0",
+  "description": "Free, fast, and reliable API for Indian holidays",
+  "main": "src/worker.js",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node test/worker.test.js",
+    "validate": "python -c \"import json, glob; [json.load(open(f, encoding='utf-8')) for f in glob.glob('data/**/*.json', recursive=True)]; print('All JSON files are valid!')\""
+  },
+  "keywords": [
+    "india",
+    "holidays",
+    "api",
+    "cloudflare-workers"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^4.127.0"
+  }
+}

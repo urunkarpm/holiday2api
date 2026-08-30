@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: Deploy to Cloudflare
 
 on:
   push:
@@ -7,24 +7,27 @@ on:
     paths:
       - 'data/**'
       - 'src/**'
+      - 'test/**'
       - 'wrangler.toml'
+      - 'package.json'
+      - '.github/workflows/deploy.yml'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-      
-      - name: Install Wrangler
-        run: npm install -g wrangler
-      
+          node-version: '22'
+
+      - name: Install Dependencies
+        run: npm ci || npm install
+
       - name: Validate JSON before deploy
         run: |
           echo "Validating JSON files..."
@@ -35,17 +38,26 @@ jobs:
             fi
           done
           echo "All JSON files are valid!"
-      
-      - name: Deploy to Cloudflare Pages
+
+      - name: Run API Endpoint Tests
+        run: node test/worker.test.js
+
+      - name: Check Cloudflare Credentials
+        id: check-creds
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::warning ::CLOUDFLARE_API_TOKEN secret is not configured in repository settings. Deployment step will be skipped."
+            echo "has_token=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_token=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy to Cloudflare Workers with Assets
+        if: steps.check-creds.outputs.has_token == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          wrangler pages deploy ./data --project-name=india-holidays-api --branch=main
-      
-      - name: Deploy Worker (optional)
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: |
-          wrangler deploy --env production
-        continue-on-error: true
+          npx wrangler deploy
