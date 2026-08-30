@@ -159,6 +159,17 @@ async function runTests() {
     console.log('✔ 404 handling passed');
   }
 
+  // Test 13: Vercel handler (api/index.js)
+  {
+    const vercelHandler = (await import('../api/index.js')).default;
+    const req = new Request('http://localhost:3000/api/holidays/2026/TG');
+    const res = await vercelHandler(req);
+    assert.strictEqual(res.status, 200, 'Vercel handler should return 200');
+    const data = await res.json();
+    assert(Array.isArray(data) && data.length > 0, 'Vercel handler should return TG holidays');
+    console.log(`✔ Vercel handler (api/index.js) passed (returned ${data.length} holidays for 2026/TG)`);
+  }
+
   console.log('\n🎉 All tests passed successfully!');
 }
 
