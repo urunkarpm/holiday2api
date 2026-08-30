@@ -1360,9 +1360,7 @@ function renderInteractiveHtml(env) {
       background: var(--accent-saffron-subtle);
       color: var(--accent-saffron);
       border-color: rgba(249, 115, 22, 0.3);
-    }
-
-    /* Long weekend specific card */
+       /* Long weekend specific card */
     .lw-card {
       background: var(--bg);
       border: 1px solid rgba(249, 115, 22, 0.25);
@@ -1387,6 +1385,65 @@ function renderInteractiveHtml(env) {
       font-size: 0.85rem;
       color: var(--ink-secondary);
       line-height: 1.45;
+    }
+
+    /* KPI Metrics Box */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem;
+      text-align: center;
+    }
+    .kpi-val {
+      font-size: 1.4rem;
+      font-weight: 800;
+      font-family: var(--font-display);
+      margin-bottom: 0.15rem;
+    }
+    .kpi-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+    }
+
+    /* Meta & OpenApi Cards */
+    .meta-card {
+      background: var(--bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.95rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.5rem;
+      transition: all 0.15s ease;
+    }
+    .meta-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-1px);
+    }
+    .meta-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .meta-card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink-primary);
+    }
+    .meta-card-desc {
+      font-size: 0.82rem;
+      color: var(--ink-secondary);
+      line-height: 1.4;
     }
 
     /* Raw Code Box */
@@ -1760,7 +1817,7 @@ function renderInteractiveHtml(env) {
       <!-- Quick cURL Bar -->
       <div class="hero-terminal">
         <div class="terminal-cmd" id="heroTerminalCmd">
-          <span>$ </span>curl <span id="heroTerminalUrl">https://your-domain.com/api/holidays/2026/TG</span>
+          <span>$ </span>curl <span id="heroTerminalUrl">https://holiday2api.vercel.app/api/holidays/2026/TG</span>
         </div>
         <button class="btn btn-sm btn-outline" onclick="copyHeroCurl()">
           📋 Copy cURL
@@ -1813,6 +1870,9 @@ function renderInteractiveHtml(env) {
         <button class="preset-chip" onclick="applyPreset('national-2026')">All-India National 2026</button>
         <button class="preset-chip" onclick="applyPreset('ics-feed')">Apple/Google .ICS Feed</button>
         <button class="preset-chip" onclick="applyPreset('meta-states')">36 States Directory</button>
+        <button class="preset-chip" onclick="applyPreset('meta-types')">Holiday Classifications</button>
+        <button class="preset-chip" onclick="applyPreset('openapi')">OpenAPI Spec</button>
+        <button class="preset-chip" onclick="applyPreset('health')">API Health</button>
       </div>
 
       <!-- The Workbench Grid -->
@@ -1827,7 +1887,7 @@ function renderInteractiveHtml(env) {
             
             <div class="form-row">
               <label class="field-label">Target Endpoint</label>
-              <select id="endpointSelect" class="control-select" onchange="updateFormFields()">
+              <select id="endpointSelect" class="control-select" onchange="handleControlChange()">
                 <option value="/api/holidays/:year/:state">GET /api/holidays/:year/:state (State Holidays)</option>
                 <option value="/api/holidays/:year">GET /api/holidays/:year (National Holidays)</option>
                 <option value="/api/holidays/upcoming">GET /api/holidays/upcoming (Upcoming Holidays)</option>
@@ -1844,7 +1904,7 @@ function renderInteractiveHtml(env) {
             <div class="grid-duo form-row" id="yearStateRow">
               <div id="yearGroup">
                 <label class="field-label">Year (2024–2036)</label>
-                <select id="yearSelect" class="control-select" onchange="updateFormFields()">
+                <select id="yearSelect" class="control-select" onchange="handleControlChange()">
                   <option value="2026" selected>2026</option>
                   <option value="2025">2025</option>
                   <option value="2024">2024</option>
@@ -1863,7 +1923,7 @@ function renderInteractiveHtml(env) {
 
               <div id="stateGroup">
                 <label class="field-label">State / UT (36 Regions)</label>
-                <select id="stateSelect" class="control-select" onchange="updateFormFields()">
+                <select id="stateSelect" class="control-select" onchange="handleControlChange()">
                   <option value="TG" selected>TG — Telangana</option>
                   <option value="IN">IN — National (All India)</option>
                   <option value="MH">MH — Maharashtra</option>
@@ -1909,15 +1969,15 @@ function renderInteractiveHtml(env) {
               <div class="grid-duo" style="margin-bottom: 0.75rem;">
                 <div>
                   <label class="field-label">From Date</label>
-                  <input type="date" id="fromDateInput" class="control-input" value="2026-03-01" onchange="updateFormFields()">
+                  <input type="date" id="fromDateInput" class="control-input" value="2026-03-01" onchange="handleControlChange()">
                 </div>
                 <div>
                   <label class="field-label">To Date</label>
-                  <input type="date" id="toDateInput" class="control-input" value="2026-03-31" onchange="updateFormFields()">
+                  <input type="date" id="toDateInput" class="control-input" value="2026-03-31" onchange="handleControlChange()">
                 </div>
               </div>
               <label class="checkbox-pill">
-                <input type="checkbox" id="bankRulesCheckbox" onchange="updateFormFields()">
+                <input type="checkbox" id="bankRulesCheckbox" onchange="handleControlChange()">
                 <span>Apply RBI Bank Rules (2nd & 4th Sat Off)</span>
               </label>
             </div>
@@ -2268,6 +2328,11 @@ function renderInteractiveHtml(env) {
       updateSnippetDisplay();
     }
 
+    function handleControlChange() {
+      updateFormFields();
+      executeWorkbenchRequest();
+    }
+
     function updateSnippetDisplay() {
       const fullUrl = window.location.origin + getGeneratedPath();
       let code = '';
@@ -2311,7 +2376,7 @@ function renderInteractiveHtml(env) {
       const statusBadge = document.getElementById('responseStatusBadge');
       const timeBadge = document.getElementById('responseTimeBadge');
 
-      visualContainer.innerHTML = '<div style="color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.85rem; padding: 2rem 0; text-align: center;">Fetching data...</div>';
+      visualContainer.innerHTML = '<div style="grid-column: 1/-1; color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.85rem; padding: 2rem 0; text-align: center;">Fetching data...</div>';
       rawContainer.innerText = 'Fetching data...';
 
       try {
@@ -2335,7 +2400,7 @@ function renderInteractiveHtml(env) {
       } catch (err) {
         statusBadge.innerText = 'Error';
         statusBadge.style.color = '#ef4444';
-        visualContainer.innerHTML = '<div style="color: #ef4444; font-family: var(--font-mono); padding: 1rem;">Failed to fetch: ' + err.message + '</div>';
+        visualContainer.innerHTML = '<div style="grid-column: 1/-1; color: #ef4444; font-family: var(--font-mono); padding: 1rem;">Failed to fetch: ' + err.message + '</div>';
         rawContainer.innerText = 'Error: ' + err.message;
       }
     }
@@ -2344,29 +2409,52 @@ function renderInteractiveHtml(env) {
       const visualContainer = document.getElementById('visualDisplayArea');
       const rawContainer = document.getElementById('rawDisplayArea');
 
+      // 1. Calendar (.ICS) View
       if (isIcs) {
         rawContainer.innerText = data;
-        visualContainer.innerHTML = '<div style="grid-column: 1/-1; padding: 1.5rem; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md);"><strong style="color: var(--accent-saffron); font-size: 1rem; display: block; margin-bottom: 0.5rem;">📅 RFC 5545 iCalendar Subscription Feed</strong><p style="color: var(--ink-secondary); font-size: 0.88rem; margin-bottom: 1rem;">This raw .ics calendar feed is compatible with Apple Calendar, Google Calendar, and Microsoft Outlook.</p><button class="btn btn-sm btn-primary" onclick="window.open(\\'' + getGeneratedPath() + '\\', \\'_blank\\')">📥 Download .ics File</button></div>';
+        const currentPath = getGeneratedPath();
+        const fullIcsUrl = window.location.origin + currentPath;
+        visualContainer.innerHTML = '<div style="grid-column: 1/-1; padding: 1.5rem; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">' +
+          '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem;">' +
+            '<span class="tag-badge gazetted">RFC 5545 Live Feed</span>' +
+            '<span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-emerald);">● Synchronized</span>' +
+          '</div>' +
+          '<h3 style="color: #fff; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">📅 iCalendar (.ics) Feed Generated</h3>' +
+          '<p style="color: var(--ink-secondary); font-size: 0.88rem; line-height: 1.55; margin-bottom: 1.25rem;">' +
+            'This universal calendar subscription contains all gazetted holidays locked to Asia/Kolkata timezone. Subscribe once to get automatic updates on Apple Calendar, Google Calendar, or Outlook.' +
+          '</p>' +
+          '<div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">' +
+            '<button class="btn btn-sm btn-primary" onclick="window.open(\\'' + currentPath + '\\', \\'_blank\\')">📥 Download .ics File</button>' +
+            '<button class="btn btn-sm btn-outline" onclick="copySnippetText(\\'' + fullIcsUrl + '\\')">📋 Copy WebCal URL</button>' +
+          '</div>' +
+        '</div>';
         return;
       }
 
       rawContainer.innerText = JSON.stringify(data, null, 2);
 
-      // Render Visual representation
+      // 2. Arrays: Holidays or Long Weekends
       if (Array.isArray(data)) {
         if (data.length === 0) {
-          visualContainer.innerHTML = '<div style="grid-column: 1/-1; color: var(--ink-muted); padding: 1.5rem; text-align: center;">No holidays matched the selected criteria.</div>';
+          visualContainer.innerHTML = '<div style="grid-column: 1/-1; color: var(--ink-muted); padding: 2rem; text-align: center; font-family: var(--font-mono);">No records matched the selected query parameters.</div>';
           return;
         }
 
-        // Check if long weekends array
-        if (data[0] && (data[0].long_weekend_type || data[0].recommendation)) {
+        // Long Weekends Array
+        if (data[0] && (data[0].long_weekend_type || data[0].recommendation || data[0].total_days)) {
           let html = '';
           data.forEach(lw => {
+            const isBridge = (lw.long_weekend_type || '').includes('Bridge') || (lw.total_days >= 4);
+            const badgeClass = isBridge ? 'gazetted' : 'national';
+            const badgeText = lw.total_days ? lw.total_days + ' Days Off' : 'Long Weekend';
+
             html += '<div class="lw-card" style="grid-column: 1/-1;">' +
-              '<div class="lw-title">' + (lw.name || 'Long Weekend') + '</div>' +
-              '<div class="lw-meta">🗓️ ' + lw.start_date + ' → ' + lw.end_date + ' (' + lw.total_days + ' Days Total) • ' + (lw.long_weekend_type || 'Weekend') + '</div>' +
-              '<div class="lw-advice">💡 ' + (lw.recommendation || lw.leave_required || 'No leave required') + '</div>' +
+              '<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem;">' +
+                '<div class="lw-title">' + (lw.name || 'Long Weekend') + '</div>' +
+                '<span class="tag-badge ' + badgeClass + '">' + badgeText + '</span>' +
+              '</div>' +
+              '<div class="lw-meta">🗓️ ' + lw.start_date + ' → ' + lw.end_date + ' • ' + (lw.long_weekend_type || 'Weekend') + '</div>' +
+              '<div class="lw-advice">💡 ' + (lw.recommendation || lw.leave_required || 'No additional leave needed.') + '</div>' +
             '</div>';
           });
           visualContainer.innerHTML = html;
@@ -2399,23 +2487,145 @@ function renderInteractiveHtml(env) {
           '</div>';
         });
         visualContainer.innerHTML = html;
-      } else if (typeof data === 'object' && data !== null) {
-        // Business days or Metadata object
-        let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem;">';
+        return;
+      }
+
+      // 3. Objects: Business Days, States Metadata, Types Metadata, OpenAPI Spec, Health Check
+      if (typeof data === 'object' && data !== null) {
         
+        // A. Business / Working Days Object
         if (data.working_days !== undefined) {
-          html += '<h4 style="font-size: 1.1rem; color: #fff; margin-bottom: 0.75rem;">💼 Working Days Breakdown</h4>' +
-            '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; margin-bottom: 1rem;">' +
-              '<div style="background: var(--bg-surface); padding: 0.75rem; border-radius: var(--radius-sm);"><div style="font-size: 1.35rem; font-weight: 800; color: var(--accent-emerald);">' + data.working_days + '</div><div style="font-size: 0.75rem; color: var(--ink-muted); font-family: var(--font-mono);">Working Days</div></div>' +
-              '<div style="background: var(--bg-surface); padding: 0.75rem; border-radius: var(--radius-sm);"><div style="font-size: 1.35rem; font-weight: 800; color: var(--accent-saffron);">' + (data.holiday_days_count || 0) + '</div><div style="font-size: 0.75rem; color: var(--ink-muted); font-family: var(--font-mono);">Holidays</div></div>' +
-              '<div style="background: var(--bg-surface); padding: 0.75rem; border-radius: var(--radius-sm);"><div style="font-size: 1.35rem; font-weight: 800; color: var(--ink-primary);">' + (data.total_calendar_days || 0) + '</div><div style="font-size: 0.75rem; color: var(--ink-muted); font-family: var(--font-mono);">Total Span</div></div>' +
+          let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem;">' +
+            '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">' +
+              '<h4 style="font-size: 1.1rem; color: #fff; font-weight: 700;">💼 Working Days Calculation</h4>' +
+              '<span class="tag-badge national">' + (data.state_code || 'IN') + '</span>' +
             '</div>' +
-            '<div style="font-size: 0.82rem; font-family: var(--font-mono); color: var(--ink-secondary);">Rules Applied: ' + (data.rules || 'Standard') + '</div>';
-        } else {
-          html += '<pre style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan);">' + JSON.stringify(data, null, 2) + '</pre>';
+            '<div class="kpi-grid">' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-emerald);">' + data.working_days + '</div><div class="kpi-label">Working Days</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-saffron);">' + (data.holiday_days_count || 0) + '</div><div class="kpi-label">Holidays</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-marigold);">' + (data.weekend_days || 0) + '</div><div class="kpi-label">Weekend Days</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--ink-primary);">' + (data.total_calendar_days || 0) + '</div><div class="kpi-label">Total Span</div></div>' +
+            '</div>' +
+            '<div style="font-size: 0.82rem; font-family: var(--font-mono); color: var(--ink-secondary); margin-bottom: 1rem;">' +
+              'Date Span: <strong style="color:#fff;">' + data.from + '</strong> → <strong style="color:#fff;">' + data.to + '</strong> • Rules: <strong style="color: var(--accent-saffron);">' + (data.rules || 'Standard') + '</strong>' +
+            '</div>';
+
+          if (Array.isArray(data.holidays_on_weekdays) && data.holidays_on_weekdays.length > 0) {
+            html += '<div style="margin-top: 0.75rem;"><strong style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--accent-saffron); text-transform: uppercase;">Weekdays Holidays:</strong><div style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.4rem;">';
+            data.holidays_on_weekdays.forEach(hw => {
+              html += '<span class="tag-badge gazetted">' + hw.date + ' — ' + hw.name + ' (' + hw.day + ')</span>';
+            });
+            html += '</div></div>';
+          }
+
+          if (Array.isArray(data.holidays_on_weekends) && data.holidays_on_weekends.length > 0) {
+            html += '<div style="margin-top: 0.75rem;"><strong style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--ink-muted); text-transform: uppercase;">Weekend Holidays:</strong><div style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.4rem;">';
+            data.holidays_on_weekends.forEach(he => {
+              html += '<span class="tag-badge">' + he.date + ' — ' + he.name + ' (' + he.day + ')</span>';
+            });
+            html += '</div></div>';
+          }
+
+          html += '</div>';
+          visualContainer.innerHTML = html;
+          return;
         }
-        
-        html += '</div>';
+
+        // B. States Metadata (/api/meta/states)
+        if (Array.isArray(data.states)) {
+          let html = '';
+          data.states.forEach(st => {
+            const isUT = st.type === 'union_territory';
+            const isNat = st.type === 'national';
+            const badgeClass = isNat ? 'national' : isUT ? 'gazetted' : '';
+            const typeLabel = isNat ? 'National' : isUT ? 'Union Territory' : 'State';
+
+            html += '<div class="meta-card">' +
+              '<div class="meta-card-header">' +
+                '<span style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 800; color: var(--accent-saffron);">' + st.code + '</span>' +
+                '<span class="tag-badge ' + badgeClass + '">' + typeLabel + '</span>' +
+              '</div>' +
+              '<div class="meta-card-title">' + st.name + '</div>' +
+              '<button class="btn btn-sm btn-outline" style="margin-top: 0.35rem; justify-content: center;" onclick="quickSelectState(\\'' + st.code + '\\')">⚡ Query ' + st.code + '</button>' +
+            '</div>';
+          });
+          visualContainer.innerHTML = html;
+          return;
+        }
+
+        // C. Types Metadata (/api/meta/types)
+        if (Array.isArray(data.types)) {
+          let html = '';
+          data.types.forEach(tp => {
+            const badgeClass = tp.id === 'national' ? 'national' : (tp.id === 'public' || tp.id === 'state') ? 'gazetted' : '';
+            html += '<div class="meta-card">' +
+              '<div class="meta-card-header">' +
+                '<span class="meta-card-title">' + tp.name + '</span>' +
+                '<span class="tag-badge ' + badgeClass + '">' + tp.id + '</span>' +
+              '</div>' +
+              '<div class="meta-card-desc">' + tp.description + '</div>' +
+            '</div>';
+          });
+          visualContainer.innerHTML = html;
+          return;
+        }
+
+        // D. Health Telemetry (/api/health)
+        if (data.status && (data.uptime || data.timestamp || data.timezone)) {
+          let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem;">' +
+            '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">' +
+              '<h4 style="font-size: 1.1rem; color: #fff; font-weight: 700;">📡 API Edge Status & Health</h4>' +
+              '<span class="status-indicator"><span class="ping-dot"></span><span>' + (data.status.toUpperCase()) + '</span></span>' +
+            '</div>' +
+            '<div class="kpi-grid">' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-emerald);">' + (data.status || 'OK') + '</div><div class="kpi-label">Edge Health</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-cyan);">' + (data.uptime || '99.99%') + '</div><div class="kpi-label">Uptime</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-saffron); font-size: 1.1rem;">' + (data.timezone || 'Asia/Kolkata') + '</div><div class="kpi-label">Timezone</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--ink-primary);">' + (data.version || '1.0.0') + '</div><div class="kpi-label">API Version</div></div>' +
+            '</div>' +
+            '<div style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--ink-muted); margin-top: 0.5rem;">Server Timestamp: ' + (data.timestamp || new Date().toISOString()) + '</div>' +
+          '</div>';
+          visualContainer.innerHTML = html;
+          return;
+        }
+
+        // E. OpenAPI Spec (/api/openapi.json)
+        if (data.openapi && data.paths) {
+          let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 0.75rem;">' +
+            '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">' +
+              '<h4 style="font-size: 1.15rem; color: #fff; font-weight: 700;">' + (data.info?.title || 'OpenAPI 3.0 Spec') + '</h4>' +
+              '<span class="tag-badge gazetted">v' + (data.info?.version || '1.0.0') + '</span>' +
+            '</div>' +
+            '<p style="color: var(--ink-secondary); font-size: 0.85rem; margin-bottom: 1rem;">' + (data.info?.description || '') + '</p>' +
+            '<div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">' +
+              '<a href="/api/openapi.json" target="_blank" class="btn btn-sm btn-primary">📥 Open Full Spec JSON</a>' +
+              '<button class="btn btn-sm btn-outline" onclick="copyOpenApiUrl()">📋 Copy Spec URL</button>' +
+            '</div>' +
+          '</div>';
+
+          Object.keys(data.paths).forEach(p => {
+            const pathObj = data.paths[p];
+            const getMethod = pathObj.get;
+            if (getMethod) {
+              html += '<div class="meta-card" style="grid-column: 1/-1;">' +
+                '<div class="meta-card-header">' +
+                  '<div style="display: flex; align-items: center; gap: 0.5rem;">' +
+                    '<span class="method-get">GET</span>' +
+                    '<code class="endpoint-code">' + p + '</code>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="meta-card-desc">' + (getMethod.summary || '') + '</div>' +
+              '</div>';
+            }
+          });
+          visualContainer.innerHTML = html;
+          return;
+        }
+
+        // Generic Object fallback
+        let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem;">' +
+          '<pre style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan);">' + JSON.stringify(data, null, 2) + '</pre>' +
+        '</div>';
         visualContainer.innerHTML = html;
       }
     }
@@ -2435,7 +2645,7 @@ function renderInteractiveHtml(env) {
 
     function copySnippetText(txt) {
       navigator.clipboard.writeText(txt);
-      showToast('Copied cURL command');
+      showToast('Copied to clipboard');
     }
 
     function copyCurrentSnippet() {
@@ -2480,6 +2690,12 @@ function renderInteractiveHtml(env) {
         document.getElementById('stateSelect').value = 'TG';
       } else if (type === 'meta-states') {
         document.getElementById('endpointSelect').value = '/api/meta/states';
+      } else if (type === 'meta-types') {
+        document.getElementById('endpointSelect').value = '/api/meta/types';
+      } else if (type === 'openapi') {
+        document.getElementById('endpointSelect').value = '/api/openapi.json';
+      } else if (type === 'health') {
+        document.getElementById('endpointSelect').value = '/api/health';
       }
 
       updateFormFields();
