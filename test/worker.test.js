@@ -71,7 +71,8 @@ async function runTests() {
     assert(html.includes('themeToggleBtn') && html.includes('toggleTheme()') && html.includes('[data-theme="light"]'), 'Should include Night/Day theme toggle and CSS tokens');
     assert(html.includes('stateSearchInput') && html.includes('filterStatePills'), 'Should include states search filter');
     assert(html.includes('data-code="TG"') && html.includes('data-code="MH"') && html.includes('data-code="AN"'), 'Should include full state pill directory');
-    console.log('✔ GET / (Interactive HTML UI with Author font & Night/Day toggle & State Filter) passed');
+    assert(html.includes('<link rel="icon" type="image/svg+xml"') && html.includes('circle-clip'), 'Should include circular Indian flag SVG favicon in head');
+    console.log('✔ GET / (Interactive HTML UI with Author font & Night/Day toggle & State Filter & Circular Flag Favicon) passed');
   }
 
   // Test 3: GET /health
@@ -229,7 +230,33 @@ async function runTests() {
     console.log('✔ GET /fonts/Author-Regular.ttf passed');
   }
 
-  console.log('\n🎉 All 17 tests passed successfully!');
+  // Test 18: GET /favicon.ico and GET /favicon.svg (Circular Indian flag favicon)
+  {
+    const reqIco = new Request('http://localhost:8787/favicon.ico');
+    const resIco = await worker.fetch(reqIco, mockEnv);
+    assert.strictEqual(resIco.status, 200, 'GET /favicon.ico should return 200');
+    assert.strictEqual(resIco.headers.get('Content-Type'), 'image/svg+xml');
+    const icoText = await resIco.text();
+    assert(icoText.includes('circle-clip') && icoText.includes('#FF9933') && icoText.includes('#138808'), 'Favicon should contain circular Indian flag SVG');
+
+    const reqSvg = new Request('http://localhost:8787/favicon.svg');
+    const resSvg = await worker.fetch(reqSvg, mockEnv);
+    assert.strictEqual(resSvg.status, 200, 'GET /favicon.svg should return 200');
+    assert.strictEqual(resSvg.headers.get('Content-Type'), 'image/svg+xml');
+    console.log('✔ GET /favicon.ico and /favicon.svg passed (Circular Indian Flag SVG)');
+  }
+
+  // Test 19: Vercel handler serving static favicon.svg
+  {
+    const vercelHandler = (await import('../api/index.js')).default;
+    const req = new Request('http://localhost:3000/favicon.svg');
+    const res = await vercelHandler(req);
+    assert.strictEqual(res.status, 200, 'Vercel handler should serve /favicon.svg');
+    assert.strictEqual(res.headers.get('Content-Type'), 'image/svg+xml');
+    console.log('✔ Vercel handler static /favicon.svg passed');
+  }
+
+  console.log('\n🎉 All 19 tests passed successfully!');
 }
 
 runTests().catch(err => {

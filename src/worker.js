@@ -14,6 +14,50 @@ const JSON_HEADERS = {
   'Cache-Control': 'public, max-age=3600',
 };
 
+const FAVICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <clipPath id="circle-clip">
+      <circle cx="64" cy="64" r="64"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#circle-clip)">
+    <rect width="128" height="42.667" fill="#FF9933"/>
+    <rect y="42.667" width="128" height="42.666" fill="#FFFFFF"/>
+    <rect y="85.333" width="128" height="42.667" fill="#138808"/>
+    <g transform="translate(64 64)">
+      <circle r="15.5" fill="none" stroke="#000080" stroke-width="2.2"/>
+      <circle r="3.2" fill="#000080"/>
+      <g stroke="#000080" stroke-width="1.1" stroke-linecap="round">
+        <line y1="-3.2" y2="-14.5"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(15)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(30)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(45)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(60)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(75)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(90)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(105)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(120)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(135)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(150)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(165)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(180)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(195)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(210)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(225)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(240)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(255)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(270)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(285)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(300)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(315)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(330)"/>
+        <line y1="-3.2" y2="-14.5" transform="rotate(345)"/>
+      </g>
+    </g>
+    <circle cx="64" cy="64" r="63.5" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+  </g>
+</svg>`;
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -131,6 +175,17 @@ export default {
       // 13. Static Font Route: /Author-Regular.ttf, /fonts/Author-Regular.ttf
       if (path === '/Author-Regular.ttf' || path === '/fonts/Author-Regular.ttf' || path === '/data/fonts/Author-Regular.ttf' || path.endsWith('.ttf') || path.endsWith('.woff') || path.endsWith('.woff2')) {
         return await serveFont(env, request, path);
+      }
+
+      // 14. Favicon Route: /favicon.ico, /favicon.svg
+      if (path === '/favicon.ico' || path === '/favicon.svg') {
+        return new Response(FAVICON_SVG, {
+          headers: {
+            'Content-Type': 'image/svg+xml',
+            'Cache-Control': 'public, max-age=86400, immutable',
+            'Access-Control-Allow-Origin': '*',
+          },
+        });
       }
 
       // 14. Direct static asset binding fallback
@@ -836,6 +891,9 @@ function renderInteractiveHtml(env) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>India Holidays API — The Open Gazette & Holiday Engine</title>
   <meta name="description" content="A fast, human-crafted REST API for Indian holidays. Covers National gazettes and all 36 States & UTs with Postman collections, iCalendar feeds, long weekend planning, and working day calculations.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,${encodeURIComponent(FAVICON_SVG)}">
+  <link rel="alternate icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,${encodeURIComponent(FAVICON_SVG)}">
   <link rel="preload" href="/Author-Regular.ttf" as="font" type="font/ttf" crossorigin>
   <script>
     (function() {

@@ -14,6 +14,9 @@ const env = {
       let reqPath = url.pathname.replace(/^\/+/, '').replace(/^data\/+/, '');
       let filePath = path.join(projectRoot, 'data', reqPath);
       if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+        filePath = path.join(projectRoot, 'public', reqPath);
+      }
+      if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
         filePath = path.join(projectRoot, reqPath);
       }
 
@@ -23,6 +26,8 @@ const env = {
         const isHtml = filePath.endsWith('.html');
         const isCss = filePath.endsWith('.css');
         const isJs = filePath.endsWith('.js');
+        const isSvg = filePath.endsWith('.svg');
+        const isIco = filePath.endsWith('.ico');
         let contentType = 'application/json';
         if (isFont) {
           contentType = filePath.endsWith('.woff2') ? 'font/woff2' : (filePath.endsWith('.woff') ? 'font/woff' : 'font/ttf');
@@ -34,14 +39,18 @@ const env = {
           contentType = 'text/css; charset=utf-8';
         } else if (isJs) {
           contentType = 'application/javascript; charset=utf-8';
+        } else if (isSvg) {
+          contentType = 'image/svg+xml';
+        } else if (isIco) {
+          contentType = 'image/x-icon';
         }
 
-        const content = isFont ? fs.readFileSync(filePath) : fs.readFileSync(filePath, 'utf-8');
+        const content = (isFont || isIco) ? fs.readFileSync(filePath) : fs.readFileSync(filePath, 'utf-8');
         return new Response(content, {
           status: 200,
           headers: {
             'Content-Type': contentType,
-            'Cache-Control': isFont ? 'public, max-age=31536000, immutable' : 'public, max-age=3600',
+            'Cache-Control': (isFont || isSvg || isIco) ? 'public, max-age=31536000, immutable' : 'public, max-age=3600',
             'Access-Control-Allow-Origin': '*',
           },
         });
