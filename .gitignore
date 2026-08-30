@@ -1,6 +1,10 @@
 node_modules/
 .wrangler/
 .dev.vars
+.env
+.env.*
+*.pem
+*.key
 dist/
 .DS_Store
 Thumbs.db
