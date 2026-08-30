@@ -837,6 +837,14 @@ function renderInteractiveHtml(env) {
   <title>India Holidays API — The Open Gazette & Holiday Engine</title>
   <meta name="description" content="A fast, human-crafted REST API for Indian holidays. Covers National gazettes and all 36 States & UTs with Postman collections, iCalendar feeds, long weekend planning, and working day calculations.">
   <link rel="preload" href="/Author-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <script>
+    (function() {
+      try {
+        var theme = localStorage.getItem('holiday2api_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,600&display=swap" rel="stylesheet">
@@ -850,7 +858,7 @@ function renderInteractiveHtml(env) {
       font-display: swap;
     }
 
-    :root {
+    :root, [data-theme="dark"] {
       --bg: #0e1013;
       --bg-surface: #14171c;
       --bg-elevated: #1b1f26;
@@ -880,6 +888,35 @@ function renderInteractiveHtml(env) {
       --radius-lg: 12px;
       --shadow-crisp: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.25);
       --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.45);
+      --nav-bg: rgba(14, 16, 19, 0.88);
+      --grid-dot: rgba(255, 255, 255, 0.015);
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-elevated: #f1f5f9;
+      --bg-subtle: #e2e8f0;
+      --border-subtle: #e2e8f0;
+      --border-strong: #cbd5e1;
+      
+      --ink-primary: #0f172a;
+      --ink-secondary: #475569;
+      --ink-muted: #64748b;
+      
+      --accent-saffron: #ea580c;
+      --accent-saffron-subtle: rgba(234, 88, 12, 0.08);
+      --accent-marigold: #d97706;
+      --accent-emerald: #059669;
+      --accent-emerald-subtle: rgba(5, 150, 105, 0.08);
+      --accent-terracotta: #c2410c;
+      --accent-cyan: #0284c7;
+      --accent-cyan-subtle: rgba(2, 132, 199, 0.08);
+      
+      --shadow-crisp: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.04);
+      --shadow-elevated: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --nav-bg: rgba(255, 255, 255, 0.92);
+      --grid-dot: rgba(0, 0, 0, 0.03);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -892,20 +929,22 @@ function renderInteractiveHtml(env) {
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.04) 0%, transparent 60%),
-        linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+        radial-gradient(circle at 50% 0%, var(--accent-saffron-subtle) 0%, transparent 60%),
+        linear-gradient(to right, var(--grid-dot) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-dot) 1px, transparent 1px);
       background-size: 100% 100%, 32px 32px, 32px 32px;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
     /* Top Utility Bar */
     .top-nav {
       border-bottom: 1px solid var(--border-subtle);
-      background: rgba(14, 16, 19, 0.85);
+      background: var(--nav-bg);
       backdrop-filter: blur(12px);
       position: sticky;
       top: 0;
       z-index: 100;
+      transition: background 0.2s ease, border-color 0.2s ease;
     }
     .top-nav-inner {
       max-width: 1240px;
@@ -977,6 +1016,37 @@ function renderInteractiveHtml(env) {
       background: var(--accent-emerald);
       box-shadow: 0 0 8px var(--accent-emerald);
     }
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      color: var(--ink-primary);
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-md);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+      box-shadow: var(--shadow-crisp);
+    }
+    .theme-toggle:hover {
+      border-color: var(--accent-saffron);
+      background: var(--bg-subtle);
+      transform: translateY(-1px);
+    }
+    .theme-icon {
+      font-size: 0.85rem;
+      line-height: 1;
+      display: inline-block;
+    }
+    [data-theme="light"] .moon-icon { display: none; }
+    [data-theme="light"] .sun-icon { display: inline-block; }
+    :root:not([data-theme="light"]) .sun-icon { display: none; }
+    :root:not([data-theme="light"]) .moon-icon { display: inline-block; }
 
     .container {
       max-width: 1240px;
@@ -1010,7 +1080,7 @@ function renderInteractiveHtml(env) {
       line-height: 1.08;
       letter-spacing: -0.035em;
       margin-bottom: 1.25rem;
-      color: #ffffff;
+      color: var(--ink-primary);
     }
     h1 .serif-accent {
       font-family: var(--font-serif);
@@ -1919,6 +1989,11 @@ function renderInteractiveHtml(env) {
         <a href="#postman" class="nav-link">Postman Spec</a>
         <a href="#states" class="nav-link">36 States</a>
         <a href="#docs" class="nav-link">Endpoints</a>
+        <button id="themeToggleBtn" class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Night / Day Mode" title="Toggle Night / Day Mode">
+          <span class="theme-icon moon-icon">🌙</span>
+          <span class="theme-icon sun-icon">☀️</span>
+          <span class="theme-label" id="themeLabel">Night</span>
+        </button>
         <div class="status-indicator">
           <span class="ping-dot"></span>
           <span>Global Edge Live</span>
@@ -2525,6 +2600,29 @@ function renderInteractiveHtml(env) {
   </footer>
 
   <script>
+    function initTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      updateThemeUI(currentTheme);
+    }
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      try {
+        localStorage.setItem('holiday2api_theme', nextTheme);
+      } catch (e) {}
+      updateThemeUI(nextTheme);
+      showToast(nextTheme === 'light' ? '☀️ Day mode activated' : '🌙 Night mode activated');
+    }
+
+    function updateThemeUI(theme) {
+      const label = document.getElementById('themeLabel');
+      if (label) {
+        label.textContent = theme === 'light' ? 'Day' : 'Night';
+      }
+    }
+
     let activeSnippetType = 'curl';
     let activeViewMode = 'visual';
     let lastFetchedData = null;
@@ -2956,6 +3054,8 @@ function renderInteractiveHtml(env) {
 
     // Initialize on page ready
     document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+
       const heroUrl = window.location.origin + '/api/holidays/2026/TG';
       const heroEl = document.getElementById('heroTerminalUrl');
       if (heroEl) heroEl.innerText = heroUrl;

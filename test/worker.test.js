@@ -58,7 +58,7 @@ async function runTests() {
     console.log('✔ GET / (JSON discovery) passed');
   }
 
-  // Test 2: GET / with Accept: text/html (Interactive Web UI with Author font)
+  // Test 2: GET / with Accept: text/html (Interactive Web UI with Author font & Theme Toggle)
   {
     const req = new Request('http://localhost:8787/', {
       headers: { 'Accept': 'text/html,application/xhtml+xml' },
@@ -68,7 +68,8 @@ async function runTests() {
     const html = await res.text();
     assert(html.includes('<!DOCTYPE html>') && html.includes('India Holidays API'), 'Should return HTML UI');
     assert(html.includes("@font-face") && html.includes("font-family: 'Author'") && html.includes('--font-display: \'Author\''), 'Should configure Author font-family');
-    console.log('✔ GET / (Interactive HTML UI with Author font) passed');
+    assert(html.includes('themeToggleBtn') && html.includes('toggleTheme()') && html.includes('[data-theme="light"]'), 'Should include Night/Day theme toggle and CSS tokens');
+    console.log('✔ GET / (Interactive HTML UI with Author font & Night/Day toggle) passed');
   }
 
   // Test 3: GET /health
