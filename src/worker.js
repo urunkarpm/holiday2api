@@ -795,7 +795,7 @@ function getOpenApiSpec(baseUrl) {
 }
 
 /**
- * Render Modern Interactive HTML Landing Page & API Explorer UI
+ * Render Modern Interactive HTML Landing Page, Postman Guide & API Documentation UI
  */
 function renderInteractiveHtml(env) {
   return `<!DOCTYPE html>
@@ -804,19 +804,20 @@ function renderInteractiveHtml(env) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>India Holidays API — Free, Fast, Developer-Friendly</title>
-  <meta name="description" content="Free, sub-100ms REST API for Indian holidays. Covers National and all 36 States & UTs with iCalendar exports, long weekend planner, and business day calculations.">
+  <meta name="description" content="Free, sub-100ms REST API for Indian holidays. Covers National and all 36 States & UTs with Postman collections, iCalendar exports, long weekend planner, and business day calculations.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #090d16;
-      --card-bg: rgba(22, 29, 47, 0.7);
+      --card-bg: rgba(22, 29, 47, 0.75);
       --card-border: rgba(255, 255, 255, 0.08);
       --accent: #ff6b35;
       --accent-gradient: linear-gradient(135deg, #ff8c42 0%, #ff3e3e 50%, #d81159 100%);
-      --cyan-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-      --emerald-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --postman-orange: #ff6c37;
+      --cyan: #38bdf8;
+      --emerald: #10b981;
       --text: #f8fafc;
       --text-muted: #94a3b8;
       --code-bg: #0c1222;
@@ -838,7 +839,7 @@ function renderInteractiveHtml(env) {
       min-height: 100vh;
     }
     .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
-    header { text-align: center; padding: 3.5rem 1rem 2.5rem; }
+    header { text-align: center; padding: 3rem 1rem 2rem; }
     .badge {
       display: inline-flex; align-items: center; gap: 0.5rem;
       background: rgba(255, 107, 53, 0.12);
@@ -848,13 +849,13 @@ function renderInteractiveHtml(env) {
       margin-bottom: 1.25rem;
     }
     h1 {
-      font-size: 3rem; font-weight: 800; letter-spacing: -0.03em;
+      font-size: 3.2rem; font-weight: 800; letter-spacing: -0.03em;
       background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       margin-bottom: 1rem;
     }
     .hero-sub {
-      font-size: 1.2rem; color: var(--text-muted); max-width: 720px; margin: 0 auto 2rem;
+      font-size: 1.15rem; color: var(--text-muted); max-width: 760px; margin: 0 auto 2rem;
     }
     .hero-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
     .btn {
@@ -868,13 +869,18 @@ function renderInteractiveHtml(env) {
       box-shadow: 0 4px 20px rgba(255, 62, 62, 0.3);
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(255, 62, 62, 0.45); }
+    .btn-postman {
+      background: linear-gradient(135deg, #ff6c37 0%, #e0531c 100%); color: #fff;
+      box-shadow: 0 4px 15px rgba(255, 108, 55, 0.25);
+    }
+    .btn-postman:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 108, 55, 0.4); }
     .btn-secondary {
       background: rgba(255, 255, 255, 0.05); color: var(--text);
       border: 1px solid var(--card-border);
     }
     .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
 
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
     @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } }
 
     .card {
@@ -913,7 +919,7 @@ function renderInteractiveHtml(env) {
     }
 
     .stats-row {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2.5rem 0;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0 3rem;
     }
     .stat-card {
       background: rgba(255, 255, 255, 0.02);
@@ -924,11 +930,46 @@ function renderInteractiveHtml(env) {
     .stat-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
 
     .tag {
-      display: inline-block; padding: 0.2rem 0.5rem; border-radius: 0.3rem;
-      font-size: 0.75rem; font-family: var(--font-mono); font-weight: 600;
-      background: rgba(56, 189, 248, 0.15); color: #38bdf8;
+      display: inline-block; padding: 0.25rem 0.6rem; border-radius: 0.35rem;
+      font-size: 0.8rem; font-family: var(--font-mono); font-weight: 600;
+      background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.25);
     }
-    footer { text-align: center; margin-top: 4rem; padding: 2rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--card-border); }
+    .tag-get { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    /* Postman Banner */
+    .postman-banner {
+      background: linear-gradient(135deg, rgba(255, 108, 55, 0.15) 0%, rgba(22, 29, 47, 0.9) 100%);
+      border: 1px solid rgba(255, 108, 55, 0.35);
+      border-radius: 1rem;
+      padding: 1.75rem;
+      margin: 2.5rem 0;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    @media (max-width: 800px) { .postman-banner { grid-template-columns: 1fr; } }
+    .postman-title { font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .postman-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1rem; }
+    .postman-steps {
+      background: rgba(12, 18, 34, 0.6); border-radius: 0.6rem; padding: 1rem; border: 1px solid var(--card-border);
+      font-size: 0.85rem; color: #cbd5e1;
+    }
+    .postman-steps ol { padding-left: 1.25rem; }
+    .postman-steps li { margin-bottom: 0.35rem; }
+
+    /* Table Styling */
+    .table-container { overflow-x: auto; margin-top: 1rem; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+    th { background: rgba(255, 255, 255, 0.04); padding: 0.75rem 1rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; border-bottom: 1px solid var(--card-border); }
+    td { padding: 0.85rem 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); color: #cbd5e1; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+    /* Action bar */
+    .action-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+    .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 0.4rem; }
+
+    footer { text-align: center; margin-top: 4rem; padding: 2.5rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--card-border); }
   </style>
 </head>
 <body>
@@ -937,11 +978,12 @@ function renderInteractiveHtml(env) {
     <header>
       <div class="badge">🚀 Sub-100ms • Zero Auth • Edge CDN</div>
       <h1>India Holidays API</h1>
-      <p class="hero-sub">The fast, free, open-access API for Indian holidays. Covers National, Gazetted, and all 36 States & UTs with iCalendar exports, long weekend planning, and business day calculations.</p>
+      <p class="hero-sub">The fast, free, open-access API for Indian holidays. Covers National, Gazetted, and all 36 States & UTs with Postman collections, iCalendar exports, long weekend planning, and business day calculations.</p>
       <div class="hero-buttons">
         <a href="#tester" class="btn btn-primary">⚡ Try Live API Tester</a>
-        <a href="/api/openapi.json" class="btn btn-secondary" target="_blank">📖 OpenAPI Spec</a>
-        <a href="https://github.com/urunkarpm/holiday2api" class="btn btn-secondary" target="_blank">⭐ GitHub Repo</a>
+        <a href="#postman" class="btn btn-postman">🚀 Test with Postman</a>
+        <a href="#docs" class="btn btn-secondary">📖 API Reference</a>
+        <a href="https://github.com/urunkarpm/holiday2api" class="btn btn-secondary" target="_blank">⭐ GitHub</a>
       </div>
     </header>
 
@@ -955,7 +997,7 @@ function renderInteractiveHtml(env) {
         <div class="stat-label">Supported Years (13 Years)</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number">0 ms</div>
+        <div class="stat-number">&lt; 100 ms</div>
         <div class="stat-label">Edge Cached Latency</div>
       </div>
       <div class="stat-card">
@@ -964,6 +1006,7 @@ function renderInteractiveHtml(env) {
       </div>
     </div>
 
+    <!-- Live API Tester Section -->
     <div id="tester" class="grid-2">
       <!-- Interactive Request Builder -->
       <div class="card">
@@ -978,15 +1021,16 @@ function renderInteractiveHtml(env) {
             <option value="/api/long-weekends/:year/:state">GET /api/long-weekends/:year/:state (Long Weekend Finder)</option>
             <option value="/api/business-days">GET /api/business-days (Working Days Calculator)</option>
             <option value="/api/calendar/:year/:state.ics">GET /api/calendar/:year/:state.ics (iCalendar Feed)</option>
-            <option value="/api/meta/states">GET /api/meta/states (List All States)</option>
+            <option value="/api/meta/states">GET /api/meta/states (List All 36 States & UTs)</option>
             <option value="/api/meta/types">GET /api/meta/types (List Holiday Types)</option>
+            <option value="/api/openapi.json">GET /api/openapi.json (OpenAPI 3.0 Spec)</option>
           </select>
         </div>
 
         <div class="grid-2" style="margin-top: 0; margin-bottom: 1rem;">
           <div class="form-group" id="yearGroup">
             <label>Year</label>
-            <select id="yearSelect">
+            <select id="yearSelect" onchange="updateFormFields()">
               <option value="2026" selected>2026</option>
               <option value="2025">2025</option>
               <option value="2024">2024</option>
@@ -994,27 +1038,55 @@ function renderInteractiveHtml(env) {
               <option value="2028">2028</option>
               <option value="2029">2029</option>
               <option value="2030">2030</option>
+              <option value="2031">2031</option>
+              <option value="2032">2032</option>
+              <option value="2033">2033</option>
+              <option value="2034">2034</option>
               <option value="2035">2035</option>
+              <option value="2036">2036</option>
             </select>
           </div>
 
           <div class="form-group" id="stateGroup">
-            <label>State / Region</label>
-            <select id="stateSelect">
-              <option value="IN">IN - National (All India)</option>
-              <option value="TG" selected>TG - Telangana</option>
-              <option value="MH">MH - Maharashtra</option>
-              <option value="KA">KA - Karnataka</option>
-              <option value="DL">DL - Delhi</option>
-              <option value="TN">TN - Tamil Nadu</option>
-              <option value="WB">WB - West Bengal</option>
-              <option value="GJ">GJ - Gujarat</option>
-              <option value="KL">KL - Kerala</option>
-              <option value="UP">UP - Uttar Pradesh</option>
-              <option value="AP">AP - Andhra Pradesh</option>
-              <option value="PB">PB - Punjab</option>
-              <option value="RJ">RJ - Rajasthan</option>
-              <option value="GA">GA - Goa</option>
+            <label>State / Region (36 States & UTs)</label>
+            <select id="stateSelect" onchange="updateFormFields()">
+              <option value="IN">IN — National (All India)</option>
+              <option value="AN">AN — Andaman and Nicobar Islands</option>
+              <option value="AP">AP — Andhra Pradesh</option>
+              <option value="AR">AR — Arunachal Pradesh</option>
+              <option value="AS">AS — Assam</option>
+              <option value="BR">BR — Bihar</option>
+              <option value="CH">CH — Chandigarh</option>
+              <option value="CT">CT — Chhattisgarh</option>
+              <option value="DN">DN — Dadra & Nagar Haveli and Daman & Diu</option>
+              <option value="DL">DL — Delhi</option>
+              <option value="GA">GA — Goa</option>
+              <option value="GJ">GJ — Gujarat</option>
+              <option value="HR">HR — Haryana</option>
+              <option value="HP">HP — Himachal Pradesh</option>
+              <option value="JK">JK — Jammu and Kashmir</option>
+              <option value="JH">JH — Jharkhand</option>
+              <option value="KA">KA — Karnataka</option>
+              <option value="KL">KL — Kerala</option>
+              <option value="LA">LA — Ladakh</option>
+              <option value="LD">LD — Lakshadweep</option>
+              <option value="MP">MP — Madhya Pradesh</option>
+              <option value="MH">MH — Maharashtra</option>
+              <option value="MN">MN — Manipur</option>
+              <option value="ML">ML — Meghalaya</option>
+              <option value="MZ">MZ — Mizoram</option>
+              <option value="NL">NL — Nagaland</option>
+              <option value="OR">OR — Odisha</option>
+              <option value="PY">PY — Puducherry</option>
+              <option value="PB">PB — Punjab</option>
+              <option value="RJ">RJ — Rajasthan</option>
+              <option value="SK">SK — Sikkim</option>
+              <option value="TN">TN — Tamil Nadu</option>
+              <option value="TG" selected>TG — Telangana</option>
+              <option value="TR">TR — Tripura</option>
+              <option value="UP">UP — Uttar Pradesh</option>
+              <option value="UT">UT — Uttarakhand</option>
+              <option value="WB">WB — West Bengal</option>
             </select>
           </div>
         </div>
@@ -1023,16 +1095,16 @@ function renderInteractiveHtml(env) {
           <div class="grid-2" style="margin-top:0;">
             <div>
               <label>From Date</label>
-              <input type="date" id="fromDateInput" value="2026-03-01">
+              <input type="date" id="fromDateInput" value="2026-03-01" onchange="updateFormFields()">
             </div>
             <div>
               <label>To Date</label>
-              <input type="date" id="toDateInput" value="2026-03-31">
+              <input type="date" id="toDateInput" value="2026-03-31" onchange="updateFormFields()">
             </div>
           </div>
           <div style="margin-top: 0.75rem;">
             <label style="display:inline-flex; align-items:center; gap:0.5rem; text-transform:none; cursor:pointer;">
-              <input type="checkbox" id="bankRulesCheckbox" style="width:auto;"> Apply RBI Bank Rules (2nd/4th Sat Off)
+              <input type="checkbox" id="bankRulesCheckbox" style="width:auto;" onchange="updateFormFields()"> Apply RBI Bank Rules (2nd/4th Sat Off)
             </label>
           </div>
         </div>
@@ -1041,25 +1113,145 @@ function renderInteractiveHtml(env) {
           ⚡ Execute Live Request
         </button>
 
-        <div style="margin-top: 1.5rem;">
+        <div style="margin-top: 1.25rem;">
           <label>Generated Request URL</label>
           <div id="requestUrlDisplay" class="tag" style="width: 100%; padding: 0.6rem; overflow-x: auto; display: block;">/api/holidays/2026/TG</div>
+        </div>
+
+        <div class="action-bar">
+          <button class="btn btn-secondary btn-sm" onclick="copySnippet('curl')">📋 Copy cURL</button>
+          <button class="btn btn-secondary btn-sm" onclick="copySnippet('fetch')">📋 Copy JS Fetch</button>
+          <button class="btn btn-secondary btn-sm" onclick="copySnippet('python')">📋 Copy Python</button>
+          <button class="btn btn-secondary btn-sm" onclick="openCurrentUrl()">🌐 Open URL</button>
         </div>
       </div>
 
       <!-- Response Viewer -->
       <div class="card">
         <div class="card-title" style="justify-content: space-between;">
-          <span>📦 Response Preview</span>
+          <span>📦 Live Response Preview</span>
           <span id="latencyBadge" class="tag" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">200 OK</span>
         </div>
         <div id="responseOutput" class="code-box">Loading...</div>
       </div>
     </div>
+
+    <!-- Dedicated Postman Section -->
+    <div id="postman" class="postman-banner">
+      <div>
+        <div class="postman-title">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="11" fill="#FF6C37"/>
+            <path d="M16.5 12.5L12 8L7.5 12.5M12 8V16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Test with Postman
+        </div>
+        <p class="postman-desc">
+          Test, inspect, and automate the India Holidays API instantly in <strong>Postman</strong> using our full OpenAPI 3.0 specification. Pre-configured with all 10+ endpoints and query parameters.
+        </p>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <a href="/api/openapi.json" target="_blank" class="btn btn-postman">
+            📥 Download OpenAPI / Postman Spec
+          </a>
+          <button class="btn btn-secondary" onclick="copyOpenApiUrl()">
+            📋 Copy Spec URL
+          </button>
+        </div>
+      </div>
+      <div class="postman-steps">
+        <strong style="color: #ff8c42; display: block; margin-bottom: 0.5rem;">⚡ 3-Step Postman Import:</strong>
+        <ol>
+          <li>Open Postman & click <strong>Import</strong> (top left).</li>
+          <li>Paste the OpenAPI Spec URL: <code id="specUrlSnippet" style="color: #38bdf8; word-break: break-all;">https://.../api/openapi.json</code></li>
+          <li>Click <strong>Import</strong>. All endpoints and query parameters are loaded immediately!</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Complete API Documentation Reference Table -->
+    <div id="docs" class="card" style="margin-top: 2rem;">
+      <div class="card-title">📖 Complete API Endpoints Reference</div>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">All endpoints return standard JSON with CORS enabled (<code>Access-Control-Allow-Origin: *</code>) and 1-hour CDN caching.</p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Endpoint</th>
+              <th>Description & Key Parameters</th>
+              <th>Example Request</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="tag tag-get">GET</span></td>
+              <td><code>/api/holidays/:year/:state</code></td>
+              <td>State holidays + national holidays for a region (<code>year</code>: 2024–2036, <code>state</code>: 36 codes)</td>
+              <td><code>/api/holidays/2026/TG</code></td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-get">GET</span></td>
+              <td><code>/api/holidays/:year</code></td>
+              <td>All national holidays for a given year (optional <code>?state=XX</code>, <code>?type=YY</code>)</td>
+              <td><code>/api/holidays/2026</code></td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-get">GET</span></td>
+              <td><code>/api/holidays/upcoming</code></td>
+              <td>Upcoming holidays starting from today in IST (<code>?state=XX</code>, <code>?limit=5</code>, <code>?type=YY</code>)</td>
+              <td><code>/api/holidays/upcoming?state=MH&limit=5</code></td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-get">GET</span></td>
+              <td><code>/api/long-weekends/:year/:state</code></td>
+              <td>Finds 3-day weekends and 4-day bridge weekends with leave advice</td>
+              <td><code>/api/long-weekends/2026/KA</code></td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-get">GET</span></td>
+              <td><code>/api/business-days</code></td>
+              <td>Calculates working days vs holidays (<code>from=YYYY-MM-DD</code>, <code>to=YYYY-MM-DD</code>, <code>bank_rules=true</code>)</td>
+              <td><code>/api/business-days?from=2026-03-01&to=2026-03-31&state=MH</code></td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-get">GET</span></td>
+              <td><code>/api/calendar/:year/:state.ics</code></td>
+              <td>RFC 5545 iCalendar feed for Google Calendar, Apple Calendar, Outlook</td>
+              <td><code>/api/calendar/2026/TG.ics</code></td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-get">GET</span></td>
+              <td><code>/api/meta/states</code></td>
+              <td>List all 36 supported States & Union Territories with ISO codes</td>
+              <td><code>/api/meta/states</code></td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-get">GET</span></td>
+              <td><code>/api/meta/types</code></td>
+              <td>List all holiday classifications (<code>national</code>, <code>public</code>, <code>state</code>, <code>bank</code>, etc.)</td>
+              <td><code>/api/meta/types</code></td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-get">GET</span></td>
+              <td><code>/api/openapi.json</code></td>
+              <td>OpenAPI 3.0.3 specification for SDKs and Postman</td>
+              <td><code>/api/openapi.json</code></td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-get">GET</span></td>
+              <td><code>/api/health</code></td>
+              <td>API status, version, and uptime check</td>
+              <td><code>/api/health</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <footer>
-    <p>India Holidays API is open source under the MIT License • Built for developers worldwide 🇮🇳</p>
+    <p>India Holidays API is open source under the MIT License • Free for developers and enterprise use worldwide 🇮🇳</p>
   </footer>
 
   <script>
@@ -1079,6 +1271,7 @@ function renderInteractiveHtml(env) {
       if (ep === '/api/calendar/:year/:state.ics') return '/api/calendar/' + year + '/' + state + '.ics';
       if (ep === '/api/meta/states') return '/api/meta/states';
       if (ep === '/api/meta/types') return '/api/meta/types';
+      if (ep === '/api/openapi.json') return '/api/openapi.json';
       return '/api/holidays/' + year + '/' + state;
     }
 
@@ -1123,6 +1316,40 @@ function renderInteractiveHtml(env) {
         output.innerText = 'Failed to fetch: ' + e.message;
       }
     }
+
+    function getFullUrl() {
+      return window.location.origin + getGeneratedPath();
+    }
+
+    function openCurrentUrl() {
+      window.open(getFullUrl(), '_blank');
+    }
+
+    function copySnippet(type) {
+      const url = getFullUrl();
+      let code = '';
+      if (type === 'curl') {
+        code = 'curl "' + url + '"';
+      } else if (type === 'fetch') {
+        code = 'fetch("' + url + '")\\n  .then(res => res.json())\\n  .then(data => console.log(data));';
+      } else if (type === 'python') {
+        code = 'import requests\\n\\nresponse = requests.get("' + url + '")\\nprint(response.json())';
+      }
+      navigator.clipboard.writeText(code);
+      alert('Copied ' + type.toUpperCase() + ' snippet to clipboard!');
+    }
+
+    function copyOpenApiUrl() {
+      const specUrl = window.location.origin + '/api/openapi.json';
+      navigator.clipboard.writeText(specUrl);
+      alert('Copied OpenAPI / Postman spec URL to clipboard:\\n' + specUrl);
+    }
+
+    // Set Spec URL in tutorial box on load
+    document.addEventListener('DOMContentLoaded', () => {
+      const snippet = document.getElementById('specUrlSnippet');
+      if (snippet) snippet.innerText = window.location.origin + '/api/openapi.json';
+    });
 
     // Initialize on load
     updateFormFields();
