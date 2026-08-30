@@ -1683,31 +1683,65 @@ function renderInteractiveHtml(env) {
       border-radius: var(--radius-lg);
       background: var(--bg-surface);
       margin-top: 1.5rem;
+      box-shadow: var(--shadow-crisp);
+      -webkit-overflow-scrolling: touch;
     }
     .doc-table {
       width: 100%;
-      border-collapse: collapse;
+      min-width: 960px;
+      table-layout: fixed;
+      border-collapse: separate;
+      border-spacing: 0;
       text-align: left;
       font-size: 0.88rem;
     }
     .doc-table th {
       background: var(--bg-elevated);
-      padding: 0.85rem 1.15rem;
+      padding: 0.95rem 1.25rem;
       font-family: var(--font-mono);
       font-size: 0.72rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
       color: var(--ink-muted);
       border-bottom: 1px solid var(--border-subtle);
+      border-right: 1px solid rgba(255, 255, 255, 0.03);
+      font-weight: 600;
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .doc-table th:last-child {
+      border-right: none;
     }
     .doc-table td {
-      padding: 1rem 1.15rem;
+      padding: 1.15rem 1.25rem;
       border-bottom: 1px solid var(--border-subtle);
+      border-right: 1px solid rgba(255, 255, 255, 0.03);
       color: var(--ink-secondary);
-      vertical-align: middle;
+      vertical-align: top;
+      line-height: 1.55;
+      background: transparent;
+      transition: background 0.15s ease;
     }
-    .doc-table tr:last-child td { border-bottom: none; }
-    .doc-table tr:hover td { background: var(--bg-elevated); }
+    .doc-table td:last-child {
+      border-right: none;
+    }
+    .doc-table tr:last-child td {
+      border-bottom: none;
+    }
+    .doc-table tr:hover td {
+      background: rgba(255, 255, 255, 0.025);
+    }
+    .doc-table td code {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      background: var(--bg-subtle);
+      color: var(--accent-marigold);
+      padding: 0.15rem 0.4rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+    }
     .method-get {
       font-family: var(--font-mono);
       font-size: 0.7rem;
@@ -1715,14 +1749,67 @@ function renderInteractiveHtml(env) {
       color: var(--accent-emerald);
       background: var(--accent-emerald-subtle);
       border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 0.15rem 0.45rem;
+      padding: 0.2rem 0.5rem;
       border-radius: var(--radius-sm);
       display: inline-block;
+      letter-spacing: 0.03em;
     }
     .endpoint-code {
       font-family: var(--font-mono);
       color: var(--ink-primary);
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 0.84rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      padding: 0.35rem 0.6rem;
+      border-radius: var(--radius-sm);
+      display: inline-block;
+      word-break: break-all;
+      line-height: 1.4;
+    }
+    .endpoint-code .param {
+      color: var(--accent-saffron);
+    }
+    .table-endpoint-title {
+      font-weight: 700;
+      color: #ffffff;
+      font-size: 0.92rem;
+      margin-bottom: 0.25rem;
+      display: block;
+    }
+    .table-param-note {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      margin-top: 0.4rem;
+      line-height: 1.45;
+    }
+    .endpoint-sample-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-cyan);
+      background: var(--accent-cyan-subtle);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      transition: all 0.15s ease;
+      word-break: break-all;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .endpoint-sample-btn:hover {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent-cyan);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .endpoint-sample-btn .arrow-icon {
+      font-size: 0.85rem;
+      flex-shrink: 0;
     }
 
     /* Toast Notification */
@@ -2209,74 +2296,190 @@ function renderInteractiveHtml(env) {
 
       <div class="doc-table-wrap">
         <table class="doc-table">
+          <colgroup>
+            <col style="width: 90px;">
+            <col style="width: 320px;">
+            <col style="width: 380px;">
+            <col style="width: 250px;">
+          </colgroup>
           <thead>
             <tr>
-              <th>Method</th>
-              <th>Endpoint Structure</th>
-              <th>Description & Key Query Params</th>
-              <th>Live Sample</th>
+              <th style="text-align: center;">Method</th>
+              <th>Endpoint Path</th>
+              <th>Description & Parameters</th>
+              <th>Live Preview</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><span class="method-get">GET</span></td>
-              <td><code class="endpoint-code">/api/holidays/:year/:state</code></td>
-              <td>Merged state and national holidays for a region (<code>year</code>: 2024–2036, <code>state</code>: 2-letter ISO)</td>
-              <td><a href="/api/holidays/2026/TG" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">/api/holidays/2026/TG</a></td>
+              <td style="text-align: center;"><span class="method-get">GET</span></td>
+              <td>
+                <code class="endpoint-code">/api/holidays/<span class="param">:year</span>/<span class="param">:state</span></code>
+              </td>
+              <td>
+                <span class="table-endpoint-title">Regional & State Holidays</span>
+                Merged state gazette and national holidays for any Indian State or Union Territory.
+                <div class="table-param-note"><code>:year</code> 2024–2036 • <code>:state</code> 2-letter ISO (e.g. <code>TG</code>, <code>MH</code>, <code>KA</code>)</div>
+              </td>
+              <td>
+                <a href="/api/holidays/2026/TG" target="_blank" class="endpoint-sample-btn">
+                  <span>/api/holidays/2026/TG</span>
+                  <span class="arrow-icon">↗</span>
+                </a>
+              </td>
             </tr>
             <tr>
-              <td><span class="method-get">GET</span></td>
-              <td><code class="endpoint-code">/api/holidays/:year</code></td>
-              <td>All national gazetted holidays for India in a given year</td>
-              <td><a href="/api/holidays/2026" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">/api/holidays/2026</a></td>
+              <td style="text-align: center;"><span class="method-get">GET</span></td>
+              <td>
+                <code class="endpoint-code">/api/holidays/<span class="param">:year</span></code>
+              </td>
+              <td>
+                <span class="table-endpoint-title">National Gazetted Holidays</span>
+                All mandatory and central government holidays observed across India.
+                <div class="table-param-note"><code>:year</code> 2024–2036</div>
+              </td>
+              <td>
+                <a href="/api/holidays/2026" target="_blank" class="endpoint-sample-btn">
+                  <span>/api/holidays/2026</span>
+                  <span class="arrow-icon">↗</span>
+                </a>
+              </td>
             </tr>
             <tr>
-              <td><span class="method-get">GET</span></td>
-              <td><code class="endpoint-code">/api/holidays/upcoming</code></td>
-              <td>Upcoming holidays starting from today in IST (<code>?state=XX</code>, <code>?limit=5</code>)</td>
-              <td><a href="/api/holidays/upcoming?state=MH&limit=5" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">/api/holidays/upcoming?state=MH</a></td>
+              <td style="text-align: center;"><span class="method-get">GET</span></td>
+              <td>
+                <code class="endpoint-code">/api/holidays/upcoming</code>
+              </td>
+              <td>
+                <span class="table-endpoint-title">Upcoming Holidays Stream</span>
+                Chronological list of next upcoming holidays relative to today's date in IST.
+                <div class="table-param-note"><code>?state=XX</code> (optional) • <code>?limit=N</code> max results (default 5)</div>
+              </td>
+              <td>
+                <a href="/api/holidays/upcoming?state=MH&limit=5" target="_blank" class="endpoint-sample-btn">
+                  <span>/api/holidays/upcoming?state=MH</span>
+                  <span class="arrow-icon">↗</span>
+                </a>
+              </td>
             </tr>
             <tr>
-              <td><span class="method-get">GET</span></td>
-              <td><code class="endpoint-code">/api/long-weekends/:year/:state</code></td>
-              <td>Identifies 3-day and 4-day bridge weekends with leave advice</td>
-              <td><a href="/api/long-weekends/2026/KA" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">/api/long-weekends/2026/KA</a></td>
+              <td style="text-align: center;"><span class="method-get">GET</span></td>
+              <td>
+                <code class="endpoint-code">/api/long-weekends/<span class="param">:year</span>/<span class="param">:state</span></code>
+              </td>
+              <td>
+                <span class="table-endpoint-title">Long Weekend & Bridge Planner</span>
+                Identifies 3-day and 4-day bridge weekends with strategic leave recommendations.
+                <div class="table-param-note"><code>:year</code> 2024–2036 • <code>:state</code> 2-letter ISO (e.g. <code>KA</code>)</div>
+              </td>
+              <td>
+                <a href="/api/long-weekends/2026/KA" target="_blank" class="endpoint-sample-btn">
+                  <span>/api/long-weekends/2026/KA</span>
+                  <span class="arrow-icon">↗</span>
+                </a>
+              </td>
             </tr>
             <tr>
-              <td><span class="method-get">GET</span></td>
-              <td><code class="endpoint-code">/api/business-days</code></td>
-              <td>Calculates working days vs holidays (<code>from=YYYY-MM-DD</code>, <code>to=YYYY-MM-DD</code>, <code>bank_rules=true</code>)</td>
-              <td><a href="/api/business-days?from=2026-03-01&to=2026-03-31&state=MH" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">/api/business-days?from=...</a></td>
+              <td style="text-align: center;"><span class="method-get">GET</span></td>
+              <td>
+                <code class="endpoint-code">/api/business-days</code>
+              </td>
+              <td>
+                <span class="table-endpoint-title">Working & Business Days Calculator</span>
+                Calculates working days between two dates, excluding weekends and official holidays.
+                <div class="table-param-note"><code>?from=YYYY-MM-DD</code> • <code>?to=YYYY-MM-DD</code> • <code>?bank_rules=true</code></div>
+              </td>
+              <td>
+                <a href="/api/business-days?from=2026-03-01&to=2026-03-31&state=MH" target="_blank" class="endpoint-sample-btn">
+                  <span>/api/business-days?from=...</span>
+                  <span class="arrow-icon">↗</span>
+                </a>
+              </td>
             </tr>
             <tr>
-              <td><span class="method-get">GET</span></td>
-              <td><code class="endpoint-code">/api/calendar/:year/:state.ics</code></td>
-              <td>RFC 5545 iCalendar feed for Google Calendar, Apple Calendar, Outlook</td>
-              <td><a href="/api/calendar/2026/TG.ics" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">/api/calendar/2026/TG.ics</a></td>
+              <td style="text-align: center;"><span class="method-get">GET</span></td>
+              <td>
+                <code class="endpoint-code">/api/calendar/<span class="param">:year</span>/<span class="param">:state</span>.ics</code>
+              </td>
+              <td>
+                <span class="table-endpoint-title">iCalendar (.ics) Subscriptions</span>
+                RFC 5545 calendar feed for Google Calendar, Apple Calendar, and Microsoft Outlook.
+                <div class="table-param-note"><code>:year</code> 2024–2036 • <code>:state</code> ISO or <code>IN</code> for national</div>
+              </td>
+              <td>
+                <a href="/api/calendar/2026/TG.ics" target="_blank" class="endpoint-sample-btn">
+                  <span>/api/calendar/2026/TG.ics</span>
+                  <span class="arrow-icon">↗</span>
+                </a>
+              </td>
             </tr>
             <tr>
-              <td><span class="method-get">GET</span></td>
-              <td><code class="endpoint-code">/api/meta/states</code></td>
-              <td>List all 36 supported States & Union Territories with ISO codes</td>
-              <td><a href="/api/meta/states" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">/api/meta/states</a></td>
+              <td style="text-align: center;"><span class="method-get">GET</span></td>
+              <td>
+                <code class="endpoint-code">/api/meta/states</code>
+              </td>
+              <td>
+                <span class="table-endpoint-title">36 States & UTs Directory</span>
+                Complete catalog of all 36 States & Union Territories with ISO-3166-2:IN codes.
+                <div class="table-param-note">No query parameters required</div>
+              </td>
+              <td>
+                <a href="/api/meta/states" target="_blank" class="endpoint-sample-btn">
+                  <span>/api/meta/states</span>
+                  <span class="arrow-icon">↗</span>
+                </a>
+              </td>
             </tr>
             <tr>
-              <td><span class="method-get">GET</span></td>
-              <td><code class="endpoint-code">/api/meta/types</code></td>
-              <td>List all holiday classifications (<code>national</code>, <code>gazetted</code>, <code>restricted</code>, <code>bank</code>)</td>
-              <td><a href="/api/meta/types" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">/api/meta/types</a></td>
+              <td style="text-align: center;"><span class="method-get">GET</span></td>
+              <td>
+                <code class="endpoint-code">/api/meta/types</code>
+              </td>
+              <td>
+                <span class="table-endpoint-title">Holiday Classifications</span>
+                List of all supported holiday classifications (<code>national</code>, <code>gazetted</code>, <code>restricted</code>, <code>bank</code>).
+                <div class="table-param-note">No query parameters required</div>
+              </td>
+              <td>
+                <a href="/api/meta/types" target="_blank" class="endpoint-sample-btn">
+                  <span>/api/meta/types</span>
+                  <span class="arrow-icon">↗</span>
+                </a>
+              </td>
             </tr>
             <tr>
-              <td><span class="method-get">GET</span></td>
-              <td><code class="endpoint-code">/api/openapi.json</code></td>
-              <td>OpenAPI 3.0.3 specification for SDKs and Postman collections</td>
-              <td><a href="/api/openapi.json" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">/api/openapi.json</a></td>
+              <td style="text-align: center;"><span class="method-get">GET</span></td>
+              <td>
+                <code class="endpoint-code">/api/openapi.json</code>
+              </td>
+              <td>
+                <span class="table-endpoint-title">OpenAPI 3.0.3 Specification</span>
+                Standard machine-readable specification for SDK generators and Postman collections.
+                <div class="table-param-note">No query parameters required</div>
+              </td>
+              <td>
+                <a href="/api/openapi.json" target="_blank" class="endpoint-sample-btn">
+                  <span>/api/openapi.json</span>
+                  <span class="arrow-icon">↗</span>
+                </a>
+              </td>
             </tr>
             <tr>
-              <td><span class="method-get">GET</span></td>
-              <td><code class="endpoint-code">/api/health</code></td>
-              <td>Health check status, timezone, and edge version</td>
-              <td><a href="/api/health" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">/api/health</a></td>
+              <td style="text-align: center;"><span class="method-get">GET</span></td>
+              <td>
+                <code class="endpoint-code">/api/health</code>
+              </td>
+              <td>
+                <span class="table-endpoint-title">Edge Health & Timezone Status</span>
+                Health status, cluster uptime, current Asia/Kolkata timestamp, and API version.
+                <div class="table-param-note">No query parameters required</div>
+              </td>
+              <td>
+                <a href="/api/health" target="_blank" class="endpoint-sample-btn">
+                  <span>/api/health</span>
+                  <span class="arrow-icon">↗</span>
+                </a>
+              </td>
             </tr>
           </tbody>
         </table>
