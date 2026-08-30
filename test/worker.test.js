@@ -17,13 +17,26 @@ const mockEnv = {
       const urlStr = typeof input === 'string' ? input : (input.url ? input.url : input.toString());
       const url = new URL(urlStr, 'http://localhost');
       let reqPath = url.pathname.replace(/^\/+/, '').replace(/^data\/+/, '');
-      const filePath = path.join(projectRoot, 'data', reqPath);
+      let filePath = path.join(projectRoot, 'data', reqPath);
+      if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+        filePath = path.join(projectRoot, reqPath);
+      }
 
       if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
-        const content = fs.readFileSync(filePath, 'utf-8');
+        const isFont = filePath.endsWith('.ttf') || filePath.endsWith('.woff') || filePath.endsWith('.woff2');
+        const isIcs = filePath.endsWith('.ics');
+        let contentType = 'application/json';
+        if (isFont) contentType = filePath.endsWith('.woff2') ? 'font/woff2' : (filePath.endsWith('.woff') ? 'font/woff' : 'font/ttf');
+        else if (isIcs) contentType = 'text/calendar; charset=utf-8';
+
+        const content = isFont ? fs.readFileSync(filePath) : fs.readFileSync(filePath, 'utf-8');
         return new Response(content, {
           status: 200,
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': contentType,
+            'Cache-Control': isFont ? 'public, max-age=31536000, immutable' : 'public, max-age=3600',
+            'Access-Control-Allow-Origin': '*',
+          },
         });
       }
       return new Response('Not Found', { status: 404 });
@@ -45,7 +58,7 @@ async function runTests() {
     console.log('✔ GET / (JSON discovery) passed');
   }
 
-  // Test 2: GET / with Accept: text/html (Interactive Web UI)
+  // Test 2: GET / with Accept: text/html (Interactive Web UI with Author font)
   {
     const req = new Request('http://localhost:8787/', {
       headers: { 'Accept': 'text/html,application/xhtml+xml' },
@@ -54,7 +67,8 @@ async function runTests() {
     assert.strictEqual(res.status, 200, 'GET / with text/html should return 200');
     const html = await res.text();
     assert(html.includes('<!DOCTYPE html>') && html.includes('India Holidays API'), 'Should return HTML UI');
-    console.log('✔ GET / (Interactive HTML UI) passed');
+    assert(html.includes("@font-face") && html.includes("font-family: 'Author'") && html.includes('--font-display: \'Author\''), 'Should configure Author font-family');
+    console.log('✔ GET / (Interactive HTML UI with Author font) passed');
   }
 
   // Test 3: GET /health
@@ -192,7 +206,27 @@ async function runTests() {
     console.log('✔ 404 handling passed');
   }
 
-  console.log('\n🎉 All 15 tests passed successfully!');
+  // Test 16: GET /Author-Regular.ttf (Static Font endpoint)
+  {
+    const req = new Request('http://localhost:8787/Author-Regular.ttf');
+    const res = await worker.fetch(req, mockEnv);
+    assert.strictEqual(res.status, 200, 'GET /Author-Regular.ttf should return 200');
+    assert.strictEqual(res.headers.get('Content-Type'), 'font/ttf');
+    const fontBuffer = await res.arrayBuffer();
+    assert.strictEqual(fontBuffer.byteLength, 66276, 'Font size should match Author-Regular.ttf');
+    console.log('✔ GET /Author-Regular.ttf passed (66,276 bytes font/ttf)');
+  }
+
+  // Test 17: GET /fonts/Author-Regular.ttf (Alternative font path)
+  {
+    const req = new Request('http://localhost:8787/fonts/Author-Regular.ttf');
+    const res = await worker.fetch(req, mockEnv);
+    assert.strictEqual(res.status, 200, 'GET /fonts/Author-Regular.ttf should return 200');
+    assert.strictEqual(res.headers.get('Content-Type'), 'font/ttf');
+    console.log('✔ GET /fonts/Author-Regular.ttf passed');
+  }
+
+  console.log('\n🎉 All 17 tests passed successfully!');
 }
 
 runTests().catch(err => {

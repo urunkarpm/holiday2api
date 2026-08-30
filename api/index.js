@@ -12,13 +12,38 @@ const env = {
       const urlStr = typeof input === 'string' ? input : (input.url ? input.url : input.toString());
       const url = new URL(urlStr, 'http://localhost');
       let reqPath = url.pathname.replace(/^\/+/, '').replace(/^data\/+/, '');
-      const filePath = path.join(projectRoot, 'data', reqPath);
+      let filePath = path.join(projectRoot, 'data', reqPath);
+      if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+        filePath = path.join(projectRoot, reqPath);
+      }
 
       if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
-        const content = fs.readFileSync(filePath, 'utf-8');
+        const isFont = filePath.endsWith('.ttf') || filePath.endsWith('.woff') || filePath.endsWith('.woff2');
+        const isIcs = filePath.endsWith('.ics');
+        const isHtml = filePath.endsWith('.html');
+        const isCss = filePath.endsWith('.css');
+        const isJs = filePath.endsWith('.js');
+        let contentType = 'application/json';
+        if (isFont) {
+          contentType = filePath.endsWith('.woff2') ? 'font/woff2' : (filePath.endsWith('.woff') ? 'font/woff' : 'font/ttf');
+        } else if (isIcs) {
+          contentType = 'text/calendar; charset=utf-8';
+        } else if (isHtml) {
+          contentType = 'text/html; charset=utf-8';
+        } else if (isCss) {
+          contentType = 'text/css; charset=utf-8';
+        } else if (isJs) {
+          contentType = 'application/javascript; charset=utf-8';
+        }
+
+        const content = isFont ? fs.readFileSync(filePath) : fs.readFileSync(filePath, 'utf-8');
         return new Response(content, {
           status: 200,
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': contentType,
+            'Cache-Control': isFont ? 'public, max-age=31536000, immutable' : 'public, max-age=3600',
+            'Access-Control-Allow-Origin': '*',
+          },
         });
       }
       return new Response('Not Found', { status: 404 });
@@ -58,6 +83,6 @@ export default async function handler(req, res) {
     res.setHeader(key, val);
   });
 
-  const body = await webRes.text();
-  res.end(body);
+  const buffer = Buffer.from(await webRes.arrayBuffer());
+  res.end(buffer);
 }

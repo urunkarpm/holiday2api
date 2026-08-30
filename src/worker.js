@@ -128,7 +128,12 @@ export default {
         return await serveQueryHolidays(env, request, url.searchParams);
       }
 
-      // 13. Direct static asset binding fallback
+      // 13. Static Font Route: /Author-Regular.ttf, /fonts/Author-Regular.ttf
+      if (path === '/Author-Regular.ttf' || path === '/fonts/Author-Regular.ttf' || path === '/data/fonts/Author-Regular.ttf' || path.endsWith('.ttf') || path.endsWith('.woff') || path.endsWith('.woff2')) {
+        return await serveFont(env, request, path);
+      }
+
+      // 14. Direct static asset binding fallback
       if (env && env.ASSETS && typeof env.ASSETS.fetch === 'function') {
         try {
           const assetResponse = await env.ASSETS.fetch(request);
@@ -140,7 +145,7 @@ export default {
         }
       }
 
-      // 14. 404 Handler
+      // 15. 404 Handler
       return new Response(
         JSON.stringify({
           error: 'Endpoint not found',
@@ -223,6 +228,32 @@ async function serveFile(env, request, filePath) {
     );
   }
   return new Response(JSON.stringify(data, null, 2), { headers: JSON_HEADERS });
+}
+
+/**
+ * Serve static font files with proper headers and caching
+ */
+async function serveFont(env, request, pathname) {
+  const cleanName = pathname.split('/').pop() || 'Author-Regular.ttf';
+  if (env && env.ASSETS && typeof env.ASSETS.fetch === 'function') {
+    try {
+      let res = await env.ASSETS.fetch(new URL(`/${cleanName}`, request ? request.url : 'http://localhost'));
+      if (!res || !res.ok) {
+        res = await env.ASSETS.fetch(new URL(`/fonts/${cleanName}`, request ? request.url : 'http://localhost'));
+      }
+      if (res && res.ok) {
+        const isWoff2 = cleanName.endsWith('.woff2');
+        const isWoff = cleanName.endsWith('.woff');
+        const contentType = isWoff2 ? 'font/woff2' : (isWoff ? 'font/woff' : 'font/ttf');
+        const headers = new Headers(res.headers);
+        headers.set('Content-Type', contentType);
+        headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+        headers.set('Access-Control-Allow-Origin', '*');
+        return new Response(res.body, { status: 200, headers });
+      }
+    } catch (e) {}
+  }
+  return new Response(JSON.stringify({ error: 'Font not found' }), { status: 404, headers: JSON_HEADERS });
 }
 
 /**
@@ -805,10 +836,20 @@ function renderInteractiveHtml(env) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>India Holidays API — The Open Gazette & Holiday Engine</title>
   <meta name="description" content="A fast, human-crafted REST API for Indian holidays. Covers National gazettes and all 36 States & UTs with Postman collections, iCalendar feeds, long weekend planning, and working day calculations.">
+  <link rel="preload" href="/Author-Regular.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,600&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'Author';
+      src: url('/Author-Regular.ttf') format('truetype'),
+           url('/fonts/Author-Regular.ttf') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
     :root {
       --bg: #0e1013;
       --bg-surface: #14171c;
@@ -830,7 +871,7 @@ function renderInteractiveHtml(env) {
       --accent-cyan: #38bdf8;
       --accent-cyan-subtle: rgba(56, 189, 248, 0.12);
       
-      --font-display: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Author', 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --font-serif: 'Newsreader', Georgia, serif;
       --font-mono: 'IBM Plex Mono', monospace;
       
