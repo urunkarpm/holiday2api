@@ -4,6 +4,28 @@ import worker from '../src/worker.js';
 
 const projectRoot = process.cwd();
 
+const ALLOWED_ROOTS = [
+  path.resolve(projectRoot, 'data'),
+  path.resolve(projectRoot, 'public'),
+];
+
+function isPathInside(childPath, parentDir) {
+  const rel = path.relative(parentDir, childPath);
+  return !rel.startsWith('..') && !path.isAbsolute(rel);
+}
+
+function resolveSafeAssetPath(reqPath) {
+  // Strip null bytes and normalize
+  const sanitized = reqPath.replace(/\0/g, '').replace(/^\/+/, '').replace(/^data\/+/, '');
+  for (const rootDir of ALLOWED_ROOTS) {
+    const candidate = path.resolve(rootDir, sanitized);
+    if (isPathInside(candidate, rootDir) && fs.existsSync(candidate) && fs.statSync(candidate).isFile()) {
+      return candidate;
+    }
+  }
+  return null;
+}
+
 const env = {
   TIMEZONE: process.env.TIMEZONE || 'Asia/Kolkata',
   API_VERSION: process.env.API_VERSION || '1.0.0',
@@ -11,16 +33,9 @@ const env = {
     async fetch(input) {
       const urlStr = typeof input === 'string' ? input : (input.url ? input.url : input.toString());
       const url = new URL(urlStr, 'http://localhost');
-      let reqPath = url.pathname.replace(/^\/+/, '').replace(/^data\/+/, '');
-      let filePath = path.join(projectRoot, 'data', reqPath);
-      if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
-        filePath = path.join(projectRoot, 'public', reqPath);
-      }
-      if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
-        filePath = path.join(projectRoot, reqPath);
-      }
+      const filePath = resolveSafeAssetPath(url.pathname);
 
-      if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      if (filePath) {
         const isFont = filePath.endsWith('.ttf') || filePath.endsWith('.woff') || filePath.endsWith('.woff2');
         const isIcs = filePath.endsWith('.ics');
         const isHtml = filePath.endsWith('.html');
@@ -52,6 +67,7 @@ const env = {
             'Content-Type': contentType,
             'Cache-Control': (isFont || isSvg || isIco) ? 'public, max-age=31536000, immutable' : 'public, max-age=3600',
             'Access-Control-Allow-Origin': '*',
+            'X-Content-Type-Options': 'nosniff',
           },
         });
       }

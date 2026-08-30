@@ -256,7 +256,63 @@ async function runTests() {
     console.log('✔ Vercel handler static /favicon.svg passed');
   }
 
-  console.log('\n🎉 All 19 tests passed successfully!');
+  // Test 20: Path Traversal prevention in Vercel handler
+  {
+    const vercelHandler = (await import('../api/index.js')).default;
+    const reqTraversal1 = new Request('http://localhost:3000/data/../../package.json');
+    const resTraversal1 = await vercelHandler(reqTraversal1);
+    assert.strictEqual(resTraversal1.status, 404, 'Path traversal attempting to read package.json should return 404');
+
+    const reqTraversal2 = new Request('http://localhost:3000/../../etc/passwd');
+    const resTraversal2 = await vercelHandler(reqTraversal2);
+    assert.strictEqual(resTraversal2.status, 404, 'Arbitrary file read attempt should return 404');
+    console.log('✔ Path Traversal protection in Vercel handler passed');
+  }
+
+  // Test 21: Date range bounds & DoS protection in /api/business-days
+  {
+    const reqExcessive = new Request('http://localhost:8787/api/business-days?from=1900-01-01&to=2099-12-31');
+    const resExcessive = await worker.fetch(reqExcessive, mockEnv);
+    assert.strictEqual(resExcessive.status, 400, 'Excessive date range should return 400');
+    const dataExcessive = await resExcessive.json();
+    assert(dataExcessive.error.includes('exceeds maximum limit') || dataExcessive.error.includes('range'), 'Should return range limit error');
+    console.log('✔ DoS Date range limit protection in /api/business-days passed');
+  }
+
+  // Test 22: Security Headers check
+  {
+    const req = new Request('http://localhost:8787/api/health');
+    const res = await worker.fetch(req, mockEnv);
+    assert.strictEqual(res.headers.get('X-Content-Type-Options'), 'nosniff', 'Should include X-Content-Type-Options');
+    assert.strictEqual(res.headers.get('X-Frame-Options'), 'DENY', 'Should include X-Frame-Options');
+    assert.strictEqual(res.headers.get('Referrer-Policy'), 'strict-origin-when-cross-origin', 'Should include Referrer-Policy');
+
+    const reqHtml = new Request('http://localhost:8787/', { headers: { 'Accept': 'text/html' } });
+    const resHtml = await worker.fetch(reqHtml, mockEnv);
+    assert(resHtml.headers.get('Content-Security-Policy'), 'HTML should include CSP header');
+    console.log('✔ Security Headers (CSP, X-Content-Type-Options, X-Frame-Options, Referrer-Policy) passed');
+  }
+
+  // Test 23: HTTP HEAD method support
+  {
+    const reqHead = new Request('http://localhost:8787/api/health', { method: 'HEAD' });
+    const resHead = await worker.fetch(reqHead, mockEnv);
+    assert.strictEqual(resHead.status, 200, 'HEAD request should return 200');
+    assert.strictEqual(resHead.headers.get('Content-Type'), 'application/json; charset=utf-8');
+    const text = await resHead.text();
+    assert.strictEqual(text, '', 'HEAD request should have empty body');
+    console.log('✔ HTTP HEAD method support passed');
+  }
+
+  // Test 24: Disallowed HTTP methods return 405
+  {
+    const reqPost = new Request('http://localhost:8787/api/health', { method: 'POST' });
+    const resPost = await worker.fetch(reqPost, mockEnv);
+    assert.strictEqual(resPost.status, 405, 'POST request should return 405 Method Not Allowed');
+    console.log('✔ HTTP Method restriction (405 for POST/PUT) passed');
+  }
+
+  console.log('\n🎉 All 24 tests (including security hardening) passed successfully!');
 }
 
 runTests().catch(err => {

@@ -1,11 +1,19 @@
 // Cloudflare Worker & Universal Edge Router for India Holidays API
 // Handles routing, filtering, calendar (.ics), long weekends, business days, OpenAPI spec, and interactive UI
 
+const SECURITY_HEADERS = {
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+};
+
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
   'Access-Control-Max-Age': '86400',
+  ...SECURITY_HEADERS,
 };
 
 const JSON_HEADERS = {
@@ -13,6 +21,8 @@ const JSON_HEADERS = {
   'Content-Type': 'application/json; charset=utf-8',
   'Cache-Control': 'public, max-age=3600',
 };
+
+const CSP_HEADER = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self';";
 
 const FAVICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
   <defs>
@@ -60,17 +70,15 @@ const FAVICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 12
 
 export default {
   async fetch(request, env, ctx) {
-    const url = new URL(request.url);
-    const path = url.pathname.replace(/\/+$/, '') || '/';
-    const acceptHeader = request.headers.get('accept') || '';
+    const isHead = request.method === 'HEAD';
 
     // Handle CORS preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, { headers: CORS_HEADERS });
     }
 
-    // Only allow GET requests
-    if (request.method !== 'GET') {
+    // Only allow GET and HEAD requests
+    if (request.method !== 'GET' && !isHead) {
       return new Response(
         JSON.stringify({ error: 'Method not allowed' }),
         { status: 405, headers: JSON_HEADERS }
@@ -78,156 +86,175 @@ export default {
     }
 
     try {
-      // 1. Root & Interactive HTML UI / Discovery
-      if (path === '/' || path === '/api') {
-        if (acceptHeader.includes('text/html') && !url.searchParams.has('json')) {
-          return new Response(renderInteractiveHtml(env), {
-            headers: {
-              'Content-Type': 'text/html; charset=utf-8',
-              'Cache-Control': 'public, max-age=3600',
-            },
-          });
-        }
-        return new Response(
-          JSON.stringify(getApiDirectory(env), null, 2),
-          { headers: JSON_HEADERS }
-        );
+      const response = await handleRoute(request, env, ctx);
+      if (isHead) {
+        return new Response(null, { status: response.status, headers: response.headers });
       }
-
-      // 2. Health check
-      if (path === '/api/health' || path === '/health' || path === '/api/health.json') {
-        return new Response(
-          JSON.stringify({
-            status: 'healthy',
-            timestamp: new Date().toISOString(),
-            version: env?.API_VERSION || '1.0.0',
-            timezone: env?.TIMEZONE || 'Asia/Kolkata',
-            uptime: '99.99%',
-          }, null, 2),
-          { headers: JSON_HEADERS }
-        );
-      }
-
-      // 3. OpenAPI 3.0 Specification
-      if (path === '/api/openapi.json' || path === '/openapi.json') {
-        return new Response(
-          JSON.stringify(getOpenApiSpec(url.origin), null, 2),
-          { headers: JSON_HEADERS }
-        );
-      }
-
-      // 4. Metadata: /api/meta/states
-      if (path === '/api/meta/states' || path === '/api/meta/states.json' || path === '/meta/states.json') {
-        return await serveFile(env, request, 'meta/states.json');
-      }
-
-      // 5. Metadata: /api/meta/types
-      if (path === '/api/meta/types' || path === '/api/meta/types.json' || path === '/meta/types.json') {
-        return await serveFile(env, request, 'meta/types.json');
-      }
-
-      // 6. Upcoming / Next Holidays: /api/holidays/upcoming or /api/holidays/next
-      if (path === '/api/holidays/upcoming' || path === '/api/holidays/next') {
-        return await serveUpcomingHolidays(env, request, url.searchParams);
-      }
-
-      // 7. Business & Working Days Calculator: /api/business-days
-      if (path === '/api/business-days' || path === '/api/working-days') {
-        return await serveBusinessDays(env, request, url.searchParams);
-      }
-
-      // 8. Long Weekend Finder: /api/long-weekends/:year or /api/long-weekends/:year/:state
-      const longWeekendMatch = path.match(/^\/api\/long-weekends\/(\d{4})(?:\/([A-Za-z]{2}))?(?:\.json)?$/);
-      if (longWeekendMatch) {
-        const year = longWeekendMatch[1];
-        const stateCode = (longWeekendMatch[2] || url.searchParams.get('state') || '').toUpperCase();
-        return await serveLongWeekends(env, request, year, stateCode, url.searchParams);
-      }
-
-      // 9. iCalendar (.ics) Subscriptions: /api/calendar/:year/:state.ics or /api/holidays/:year.ics or /api/holidays/:year/:state.ics
-      const icsCalendarMatch = path.match(/^\/api\/(?:calendar|holidays)\/(\d{4})(?:\/([A-Za-z]{2}))?\.ics$/);
-      if (icsCalendarMatch) {
-        const year = icsCalendarMatch[1];
-        const stateCode = (icsCalendarMatch[2] || 'IN').toUpperCase();
-        return await serveIcsCalendar(env, request, year, stateCode, url.searchParams);
-      }
-
-      // 10. Route: /api/holidays/:year (e.g. /api/holidays/2026)
-      const yearMatch = path.match(/^\/api\/holidays\/(\d{4})(?:\.json)?$/);
-      if (yearMatch) {
-        const year = yearMatch[1];
-        return await serveYearHolidays(env, request, year, url.searchParams);
-      }
-
-      // 11. Route: /api/holidays/:year/:state (e.g. /api/holidays/2026/TG)
-      const stateMatch = path.match(/^\/api\/holidays\/(\d{4})\/([A-Za-z]{2})(?:\.json)?$/);
-      if (stateMatch) {
-        const year = stateMatch[1];
-        const stateCode = stateMatch[2].toUpperCase();
-        return await serveStateHolidays(env, request, year, stateCode, url.searchParams);
-      }
-
-      // 12. Route: /api/holidays with query params (e.g., ?year=2026&state=MH)
-      if (path === '/api/holidays' || path === '/api/holidays.json') {
-        return await serveQueryHolidays(env, request, url.searchParams);
-      }
-
-      // 13. Static Font Route: /Author-Regular.ttf, /fonts/Author-Regular.ttf
-      if (path === '/Author-Regular.ttf' || path === '/fonts/Author-Regular.ttf' || path === '/data/fonts/Author-Regular.ttf' || path.endsWith('.ttf') || path.endsWith('.woff') || path.endsWith('.woff2')) {
-        return await serveFont(env, request, path);
-      }
-
-      // 14. Favicon Route: /favicon.ico, /favicon.svg
-      if (path === '/favicon.ico' || path === '/favicon.svg') {
-        return new Response(FAVICON_SVG, {
-          headers: {
-            'Content-Type': 'image/svg+xml',
-            'Cache-Control': 'public, max-age=86400, immutable',
-            'Access-Control-Allow-Origin': '*',
-          },
-        });
-      }
-
-      // 14. Direct static asset binding fallback
-      if (env && env.ASSETS && typeof env.ASSETS.fetch === 'function') {
-        try {
-          const assetResponse = await env.ASSETS.fetch(request);
-          if (assetResponse && assetResponse.status !== 404) {
-            return assetResponse;
-          }
-        } catch (e) {
-          // Continue to 404
-        }
-      }
-
-      // 15. 404 Handler
-      return new Response(
-        JSON.stringify({
-          error: 'Endpoint not found',
-          path: path,
-          documentation: '/api',
-          available_endpoints: [
-            '/api/holidays/:year',
-            '/api/holidays/:year/:state',
-            '/api/holidays/upcoming',
-            '/api/long-weekends/:year/:state',
-            '/api/business-days?from=YYYY-MM-DD&to=YYYY-MM-DD',
-            '/api/calendar/:year/:state.ics',
-            '/api/meta/states',
-            '/api/meta/types',
-            '/api/openapi.json',
-          ],
-        }, null, 2),
-        { status: 404, headers: JSON_HEADERS }
-      );
+      return response;
     } catch (error) {
-      return new Response(
-        JSON.stringify({ error: error.message || 'Internal server error' }),
+      const errResponse = new Response(
+        JSON.stringify({ error: 'An internal server error occurred.' }),
         { status: 500, headers: JSON_HEADERS }
       );
+      if (isHead) {
+        return new Response(null, { status: 500, headers: errResponse.headers });
+      }
+      return errResponse;
     }
   },
 };
+
+async function handleRoute(request, env, ctx) {
+  const url = new URL(request.url);
+  const path = url.pathname.replace(/\/+$/, '') || '/';
+  const acceptHeader = request.headers.get('accept') || '';
+
+  // 1. Root & Interactive HTML UI / Discovery
+  if (path === '/' || path === '/api') {
+    if (acceptHeader.includes('text/html') && !url.searchParams.has('json')) {
+      return new Response(renderInteractiveHtml(env), {
+        headers: {
+          ...SECURITY_HEADERS,
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'public, max-age=3600',
+          'Content-Security-Policy': CSP_HEADER,
+        },
+      });
+    }
+    return new Response(
+      JSON.stringify(getApiDirectory(env), null, 2),
+      { headers: JSON_HEADERS }
+    );
+  }
+
+  // 2. Health check
+  if (path === '/api/health' || path === '/health' || path === '/api/health.json') {
+    return new Response(
+      JSON.stringify({
+        status: 'healthy',
+        timestamp: new Date().toISOString(),
+        version: env?.API_VERSION || '1.0.0',
+        timezone: env?.TIMEZONE || 'Asia/Kolkata',
+        uptime: '99.99%',
+      }, null, 2),
+      { headers: JSON_HEADERS }
+    );
+  }
+
+  // 3. OpenAPI 3.0 Specification
+  if (path === '/api/openapi.json' || path === '/openapi.json') {
+    return new Response(
+      JSON.stringify(getOpenApiSpec(url.origin), null, 2),
+      { headers: JSON_HEADERS }
+    );
+  }
+
+  // 4. Metadata: /api/meta/states
+  if (path === '/api/meta/states' || path === '/api/meta/states.json' || path === '/meta/states.json') {
+    return await serveFile(env, request, 'meta/states.json');
+  }
+
+  // 5. Metadata: /api/meta/types
+  if (path === '/api/meta/types' || path === '/api/meta/types.json' || path === '/meta/types.json') {
+    return await serveFile(env, request, 'meta/types.json');
+  }
+
+  // 6. Upcoming / Next Holidays: /api/holidays/upcoming or /api/holidays/next
+  if (path === '/api/holidays/upcoming' || path === '/api/holidays/next') {
+    return await serveUpcomingHolidays(env, request, url.searchParams);
+  }
+
+  // 7. Business & Working Days Calculator: /api/business-days
+  if (path === '/api/business-days' || path === '/api/working-days') {
+    return await serveBusinessDays(env, request, url.searchParams);
+  }
+
+  // 8. Long Weekend Finder: /api/long-weekends/:year or /api/long-weekends/:year/:state
+  const longWeekendMatch = path.match(/^\/api\/long-weekends\/(\d{4})(?:\/([A-Za-z]{2}))?(?:\.json)?$/);
+  if (longWeekendMatch) {
+    const year = longWeekendMatch[1];
+    const stateCode = (longWeekendMatch[2] || url.searchParams.get('state') || '').toUpperCase();
+    return await serveLongWeekends(env, request, year, stateCode, url.searchParams);
+  }
+
+  // 9. iCalendar (.ics) Subscriptions: /api/calendar/:year/:state.ics or /api/holidays/:year.ics or /api/holidays/:year/:state.ics
+  const icsCalendarMatch = path.match(/^\/api\/(?:calendar|holidays)\/(\d{4})(?:\/([A-Za-z]{2}))?\.ics$/);
+  if (icsCalendarMatch) {
+    const year = icsCalendarMatch[1];
+    const stateCode = (icsCalendarMatch[2] || 'IN').toUpperCase();
+    return await serveIcsCalendar(env, request, year, stateCode, url.searchParams);
+  }
+
+  // 10. Route: /api/holidays/:year (e.g. /api/holidays/2026)
+  const yearMatch = path.match(/^\/api\/holidays\/(\d{4})(?:\.json)?$/);
+  if (yearMatch) {
+    const year = yearMatch[1];
+    return await serveYearHolidays(env, request, year, url.searchParams);
+  }
+
+  // 11. Route: /api/holidays/:year/:state (e.g. /api/holidays/2026/TG)
+  const stateMatch = path.match(/^\/api\/holidays\/(\d{4})\/([A-Za-z]{2})(?:\.json)?$/);
+  if (stateMatch) {
+    const year = stateMatch[1];
+    const stateCode = stateMatch[2].toUpperCase();
+    return await serveStateHolidays(env, request, year, stateCode, url.searchParams);
+  }
+
+  // 12. Route: /api/holidays with query params (e.g., ?year=2026&state=MH)
+  if (path === '/api/holidays' || path === '/api/holidays.json') {
+    return await serveQueryHolidays(env, request, url.searchParams);
+  }
+
+  // 13. Static Font Route: /Author-Regular.ttf, /fonts/Author-Regular.ttf
+  if (path === '/Author-Regular.ttf' || path === '/fonts/Author-Regular.ttf' || path === '/data/fonts/Author-Regular.ttf' || path.endsWith('.ttf') || path.endsWith('.woff') || path.endsWith('.woff2')) {
+    return await serveFont(env, request, path);
+  }
+
+  // 14. Favicon Route: /favicon.ico, /favicon.svg
+  if (path === '/favicon.ico' || path === '/favicon.svg') {
+    return new Response(FAVICON_SVG, {
+      headers: {
+        'Content-Type': 'image/svg+xml',
+        'Cache-Control': 'public, max-age=86400, immutable',
+        'Access-Control-Allow-Origin': '*',
+        ...SECURITY_HEADERS,
+      },
+    });
+  }
+
+  // 15. Direct static asset binding fallback
+  if (env && env.ASSETS && typeof env.ASSETS.fetch === 'function') {
+    try {
+      const assetResponse = await env.ASSETS.fetch(request);
+      if (assetResponse && assetResponse.status !== 404) {
+        return assetResponse;
+      }
+    } catch (e) {
+      // Continue to 404
+    }
+  }
+
+  // 16. 404 Handler
+  return new Response(
+    JSON.stringify({
+      error: 'Endpoint not found',
+      path: path,
+      documentation: '/api',
+      available_endpoints: [
+        '/api/holidays/:year',
+        '/api/holidays/:year/:state',
+        '/api/holidays/upcoming',
+        '/api/long-weekends/:year/:state',
+        '/api/business-days?from=YYYY-MM-DD&to=YYYY-MM-DD',
+        '/api/calendar/:year/:state.ics',
+        '/api/meta/states',
+        '/api/meta/types',
+        '/api/openapi.json',
+      ],
+    }, null, 2),
+    { status: 404, headers: JSON_HEADERS }
+  );
+}
 
 /**
  * Load JSON data from ASSETS binding, test mock store, or base URL
@@ -591,6 +618,14 @@ async function serveBusinessDays(env, request, params) {
     );
   }
 
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateRegex.test(fromStr) || !dateRegex.test(toStr)) {
+    return new Response(
+      JSON.stringify({ error: 'Invalid date format. Expected YYYY-MM-DD for both "from" and "to".' }),
+      { status: 400, headers: JSON_HEADERS }
+    );
+  }
+
   const fromDate = new Date(`${fromStr}T00:00:00+05:30`);
   const toDate = new Date(`${toStr}T00:00:00+05:30`);
 
@@ -601,9 +636,28 @@ async function serveBusinessDays(env, request, params) {
     );
   }
 
+  // Prevent Denial of Service: bound date calculation span to max 5 years (1826 days)
+  const diffDays = Math.round((toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
+  if (diffDays > 1826) {
+    return new Response(
+      JSON.stringify({
+        error: 'Date range span exceeds maximum limit of 5 years (1826 days). Please query a shorter span.',
+      }),
+      { status: 400, headers: JSON_HEADERS }
+    );
+  }
+
   // Collect holidays across all years in date range
   const startYear = fromDate.getFullYear();
   const endYear = toDate.getFullYear();
+  if (startYear < 2020 || endYear > 2040) {
+    return new Response(
+      JSON.stringify({
+        error: 'Year range must be within supported range (2024–2036).',
+      }),
+      { status: 400, headers: JSON_HEADERS }
+    );
+  }
   let holidays = [];
   for (let yr = startYear; yr <= endYear; yr++) {
     const yrHols = await getMergedHolidaysForYearState(env, request, yr.toString(), stateCode);
@@ -3076,6 +3130,16 @@ function renderInteractiveHtml(env) {
       }
     }
 
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
     function renderPayloadViews(data, isIcs) {
       const visualContainer = document.getElementById('visualDisplayArea');
       const rawContainer = document.getElementById('rawDisplayArea');
@@ -3084,6 +3148,7 @@ function renderInteractiveHtml(env) {
       if (isIcs) {
         rawContainer.innerText = data;
         const currentPath = getGeneratedPath();
+        const safeEncodedPath = encodeURI(currentPath);
         const fullIcsUrl = window.location.origin + currentPath;
         visualContainer.innerHTML = '<div style="grid-column: 1/-1; padding: 1.5rem; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-crisp);">' +
           '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.5rem;">' +
@@ -3095,10 +3160,15 @@ function renderInteractiveHtml(env) {
             'This universal calendar subscription contains all gazetted holidays locked to Asia/Kolkata timezone. Subscribe once to get automatic updates on Apple Calendar, Google Calendar, or Outlook.' +
           '</p>' +
           '<div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">' +
-            '<button class="btn btn-sm btn-primary" onclick="window.open(\\'' + currentPath + '\\', \\'_blank\\')">📥 Download .ics File</button>' +
-            '<button class="btn btn-sm btn-outline" onclick="copySnippetText(\\'' + fullIcsUrl + '\\')">📋 Copy WebCal URL</button>' +
+            '<a class="btn btn-sm btn-primary" href="' + escapeHtml(safeEncodedPath) + '" target="_blank" rel="noopener noreferrer">📥 Download .ics File</a>' +
+            '<button class="btn btn-sm btn-outline" id="btnCopyWebCal">📋 Copy WebCal URL</button>' +
           '</div>' +
         '</div>';
+
+        const btnCopy = document.getElementById('btnCopyWebCal');
+        if (btnCopy) {
+          btnCopy.addEventListener('click', () => copySnippetText(fullIcsUrl));
+        }
         return;
       }
 
@@ -3112,23 +3182,23 @@ function renderInteractiveHtml(env) {
         let html = '';
         if (totalCount !== undefined) {
           html += '<div style="grid-column: 1/-1; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; padding: 0 0.2rem;">' +
-            '<span style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: var(--ink-secondary); text-transform: uppercase;">' + (state ? state + ' — ' : '') + year + ' (' + totalCount + ' Long Weekends Found)</span>' +
-            '<span class="tag-badge gazetted">' + totalCount + ' Opportunities</span>' +
+            '<span style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: var(--ink-secondary); text-transform: uppercase;">' + (state ? escapeHtml(state) + ' — ' : '') + escapeHtml(year) + ' (' + escapeHtml(totalCount) + ' Long Weekends Found)</span>' +
+            '<span class="tag-badge gazetted">' + escapeHtml(totalCount) + ' Opportunities</span>' +
           '</div>';
         }
         lwList.forEach(lw => {
           const isBridge = (lw.type === 'bridge_weekend') || (lw.bridge_days_needed > 0) || (lw.total_days >= 4);
           const badgeClass = isBridge ? 'gazetted' : 'national';
-          const badgeText = lw.total_days ? lw.total_days + ' Days Off' : 'Long Weekend';
+          const badgeText = lw.total_days ? escapeHtml(lw.total_days) + ' Days Off' : 'Long Weekend';
           const holidaysIncludedNames = Array.isArray(lw.holidays_included) ? lw.holidays_included.map(h => h.name).join(', ') : '';
 
           html += '<div class="lw-card" style="grid-column: 1/-1;">' +
             '<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.45rem; flex-wrap: wrap; gap: 0.5rem;">' +
-              '<div class="lw-title">' + (holidaysIncludedNames || lw.name || 'Long Weekend') + '</div>' +
+              '<div class="lw-title">' + escapeHtml(holidaysIncludedNames || lw.name || 'Long Weekend') + '</div>' +
               '<span class="tag-badge ' + badgeClass + '">' + badgeText + '</span>' +
             '</div>' +
-            '<div class="lw-meta">🗓️ ' + lw.start_date + ' → ' + lw.end_date + ' • ' + (isBridge ? 'Bridge Leave (' + lw.bridge_days_needed + ' day leave)' : 'Natural Weekend') + '</div>' +
-            '<div class="lw-advice">💡 ' + (lw.recommendation || lw.leave_required || 'No additional leave required — natural weekend.') + '</div>' +
+            '<div class="lw-meta">🗓️ ' + escapeHtml(lw.start_date) + ' → ' + escapeHtml(lw.end_date) + ' • ' + (isBridge ? 'Bridge Leave (' + escapeHtml(lw.bridge_days_needed) + ' day leave)' : 'Natural Weekend') + '</div>' +
+            '<div class="lw-advice">💡 ' + escapeHtml(lw.recommendation || lw.leave_required || 'No additional leave required — natural weekend.') + '</div>' +
           '</div>';
         });
         return html;
@@ -3142,9 +3212,9 @@ function renderInteractiveHtml(env) {
         let html = '';
         holidayList.forEach(h => {
           const dateObj = new Date(h.date + 'T00:00:00+05:30');
-          const monthStr = dateObj.toLocaleDateString('en-US', { month: 'short', timeZone: 'Asia/Kolkata' });
-          const dayNum = dateObj.getDate();
-          const weekday = h.day || h.day_of_week || dateObj.toLocaleDateString('en-US', { weekday: 'short', timeZone: 'Asia/Kolkata' });
+          const monthStr = isNaN(dateObj.getTime()) ? '' : dateObj.toLocaleDateString('en-US', { month: 'short', timeZone: 'Asia/Kolkata' });
+          const dayNum = isNaN(dateObj.getTime()) ? '' : dateObj.getDate();
+          const weekday = h.day || h.day_of_week || (isNaN(dateObj.getTime()) ? '' : dateObj.toLocaleDateString('en-US', { weekday: 'short', timeZone: 'Asia/Kolkata' }));
 
           let typeBadgeClass = 'tag-badge';
           const typeLower = (h.type || '').toLowerCase();
@@ -3153,12 +3223,12 @@ function renderInteractiveHtml(env) {
           else if (typeLower === 'bank') typeBadgeClass += ' bank';
           else if (typeLower === 'restricted' || typeLower === 'optional') typeBadgeClass += ' restricted';
 
-          const typeBadge = '<span class="' + typeBadgeClass + '">' + (h.type || 'holiday') + '</span>';
-          const stateBadge = h.state_code ? '<span class="tag-badge national">' + h.state_code + '</span>' : '';
+          const typeBadge = '<span class="' + typeBadgeClass + '">' + escapeHtml(h.type || 'holiday') + '</span>';
+          const stateBadge = h.state_code ? '<span class="tag-badge national">' + escapeHtml(h.state_code) + '</span>' : '';
           
           let countdownBadge = '';
           if (h.days_until !== undefined) {
-            let countdownText = 'In ' + h.days_until + ' days';
+            let countdownText = 'In ' + escapeHtml(h.days_until) + ' days';
             if (h.days_until === 0) countdownText = '🌟 Today';
             else if (h.days_until === 1) countdownText = '⚡ Tomorrow';
             countdownBadge = '<span class="tag-badge upcoming-countdown">' + countdownText + '</span>';
@@ -3167,10 +3237,10 @@ function renderInteractiveHtml(env) {
           html += '<div class="holiday-card">' +
             '<div>' +
               '<div class="holiday-date-strip">' +
-                '<div><span class="holiday-day-num">' + dayNum + '</span> <span class="holiday-month-name">' + monthStr + '</span></div>' +
-                '<span class="holiday-weekday">' + weekday + '</span>' +
+                '<div><span class="holiday-day-num">' + escapeHtml(dayNum) + '</span> <span class="holiday-month-name">' + escapeHtml(monthStr) + '</span></div>' +
+                '<span class="holiday-weekday">' + escapeHtml(weekday) + '</span>' +
               '</div>' +
-              '<div class="holiday-name">' + h.name + '</div>' +
+              '<div class="holiday-name">' + escapeHtml(h.name) + '</div>' +
             '</div>' +
             '<div class="holiday-tags">' + typeBadge + stateBadge + countdownBadge + '</div>' +
           '</div>';
@@ -3210,22 +3280,22 @@ function renderInteractiveHtml(env) {
           let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.35rem; box-shadow: var(--shadow-crisp);">' +
             '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.15rem; flex-wrap: wrap; gap: 0.5rem;">' +
               '<h4 style="font-size: 1.15rem; color: var(--ink-primary); font-weight: 700;">💼 Working Days Calculation</h4>' +
-              '<span class="tag-badge national">' + (data.state_code || 'IN') + '</span>' +
+              '<span class="tag-badge national">' + escapeHtml(data.state_code || 'IN') + '</span>' +
             '</div>' +
             '<div class="kpi-grid">' +
-              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-emerald);">' + data.working_days + '</div><div class="kpi-label">Working Days</div></div>' +
-              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-saffron);">' + (data.holiday_days_count || 0) + '</div><div class="kpi-label">Holidays</div></div>' +
-              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-marigold);">' + (data.weekend_days || 0) + '</div><div class="kpi-label">Weekend Days</div></div>' +
-              '<div class="kpi-card"><div class="kpi-val" style="color: var(--ink-primary);">' + (data.total_calendar_days || 0) + '</div><div class="kpi-label">Total Span</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-emerald);">' + escapeHtml(data.working_days) + '</div><div class="kpi-label">Working Days</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-saffron);">' + escapeHtml(data.holiday_days_count || 0) + '</div><div class="kpi-label">Holidays</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-marigold);">' + escapeHtml(data.weekend_days || 0) + '</div><div class="kpi-label">Weekend Days</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--ink-primary);">' + escapeHtml(data.total_calendar_days || 0) + '</div><div class="kpi-label">Total Span</div></div>' +
             '</div>' +
             '<div style="font-size: 0.85rem; font-family: var(--font-mono); color: var(--ink-secondary); margin-bottom: 1rem; background: var(--bg-surface); padding: 0.75rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">' +
-              'Date Span: <strong style="color: var(--ink-primary);">' + data.from + '</strong> → <strong style="color: var(--ink-primary);">' + data.to + '</strong> • Rules: <strong style="color: var(--accent-saffron);">' + (data.rules || 'Standard') + '</strong>' +
+              'Date Span: <strong style="color: var(--ink-primary);">' + escapeHtml(data.from) + '</strong> → <strong style="color: var(--ink-primary);">' + escapeHtml(data.to) + '</strong> • Rules: <strong style="color: var(--accent-saffron);">' + escapeHtml(data.rules || 'Standard') + '</strong>' +
             '</div>';
 
           if (Array.isArray(data.holidays_on_weekdays) && data.holidays_on_weekdays.length > 0) {
             html += '<div style="margin-top: 1rem;"><strong style="font-size: 0.76rem; font-family: var(--font-mono); color: var(--accent-saffron); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.45rem;">Weekdays Holidays:</strong><div style="display:flex; flex-wrap:wrap; gap:0.4rem;">';
             data.holidays_on_weekdays.forEach(hw => {
-              html += '<span class="tag-badge gazetted">' + hw.date + ' — ' + hw.name + ' (' + hw.day + ')</span>';
+              html += '<span class="tag-badge gazetted">' + escapeHtml(hw.date) + ' — ' + escapeHtml(hw.name) + ' (' + escapeHtml(hw.day) + ')</span>';
             });
             html += '</div></div>';
           }
@@ -3233,7 +3303,7 @@ function renderInteractiveHtml(env) {
           if (Array.isArray(data.holidays_on_weekends) && data.holidays_on_weekends.length > 0) {
             html += '<div style="margin-top: 1rem;"><strong style="font-size: 0.76rem; font-family: var(--font-mono); color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.45rem;">Weekend Holidays:</strong><div style="display:flex; flex-wrap:wrap; gap:0.4rem;">';
             data.holidays_on_weekends.forEach(he => {
-              html += '<span class="tag-badge">' + he.date + ' — ' + he.name + ' (' + he.day + ')</span>';
+              html += '<span class="tag-badge">' + escapeHtml(he.date) + ' — ' + escapeHtml(he.name) + ' (' + escapeHtml(he.day) + ')</span>';
             });
             html += '</div></div>';
           }
@@ -3254,14 +3324,17 @@ function renderInteractiveHtml(env) {
 
             html += '<div class="meta-card">' +
               '<div class="meta-card-header">' +
-                '<span style="font-family: var(--font-mono); font-size: 1.15rem; font-weight: 800; color: var(--accent-saffron);">' + st.code + '</span>' +
-                '<span class="tag-badge ' + badgeClass + '">' + typeLabel + '</span>' +
+                '<span style="font-family: var(--font-mono); font-size: 1.15rem; font-weight: 800; color: var(--accent-saffron);">' + escapeHtml(st.code) + '</span>' +
+                '<span class="tag-badge ' + badgeClass + '">' + escapeHtml(typeLabel) + '</span>' +
               '</div>' +
-              '<div class="meta-card-title">' + st.name + '</div>' +
-              '<button class="btn btn-sm btn-outline" style="margin-top: 0.45rem; justify-content: center;" onclick="quickSelectState(\\'' + st.code + '\\')">⚡ Query ' + st.code + '</button>' +
+              '<div class="meta-card-title">' + escapeHtml(st.name) + '</div>' +
+              '<button class="btn btn-sm btn-outline btn-quick-state" style="margin-top: 0.45rem; justify-content: center;" data-state="' + escapeHtml(st.code) + '">⚡ Query ' + escapeHtml(st.code) + '</button>' +
             '</div>';
           });
           visualContainer.innerHTML = html;
+          visualContainer.querySelectorAll('.btn-quick-state').forEach(btn => {
+            btn.addEventListener('click', () => quickSelectState(btn.getAttribute('data-state')));
+          });
           return;
         }
 
@@ -3272,10 +3345,10 @@ function renderInteractiveHtml(env) {
             const badgeClass = tp.id === 'national' ? 'national' : (tp.id === 'public' || tp.id === 'state') ? 'gazetted' : '';
             html += '<div class="meta-card">' +
               '<div class="meta-card-header">' +
-                '<span class="meta-card-title">' + tp.name + '</span>' +
-                '<span class="tag-badge ' + badgeClass + '">' + tp.id + '</span>' +
+                '<span class="meta-card-title">' + escapeHtml(tp.name) + '</span>' +
+                '<span class="tag-badge ' + badgeClass + '">' + escapeHtml(tp.id) + '</span>' +
               '</div>' +
-              '<div class="meta-card-desc">' + tp.description + '</div>' +
+              '<div class="meta-card-desc">' + escapeHtml(tp.description) + '</div>' +
             '</div>';
           });
           visualContainer.innerHTML = html;
@@ -3287,15 +3360,15 @@ function renderInteractiveHtml(env) {
           let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.35rem; box-shadow: var(--shadow-crisp);">' +
             '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem;">' +
               '<h4 style="font-size: 1.15rem; color: var(--ink-primary); font-weight: 700;">📡 API Edge Status & Health</h4>' +
-              '<span class="status-indicator"><span class="ping-dot"></span><span>' + (data.status.toUpperCase()) + '</span></span>' +
+              '<span class="status-indicator"><span class="ping-dot"></span><span>' + escapeHtml((data.status || 'OK').toUpperCase()) + '</span></span>' +
             '</div>' +
             '<div class="kpi-grid">' +
-              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-emerald);">' + (data.status || 'OK') + '</div><div class="kpi-label">Edge Health</div></div>' +
-              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-cyan);">' + (data.uptime || '99.99%') + '</div><div class="kpi-label">Uptime</div></div>' +
-              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-saffron); font-size: 1.2rem;">' + (data.timezone || 'Asia/Kolkata') + '</div><div class="kpi-label">Timezone</div></div>' +
-              '<div class="kpi-card"><div class="kpi-val" style="color: var(--ink-primary);">' + (data.version || '1.0.0') + '</div><div class="kpi-label">API Version</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-emerald);">' + escapeHtml(data.status || 'OK') + '</div><div class="kpi-label">Edge Health</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-cyan);">' + escapeHtml(data.uptime || '99.99%') + '</div><div class="kpi-label">Uptime</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-saffron); font-size: 1.2rem;">' + escapeHtml(data.timezone || 'Asia/Kolkata') + '</div><div class="kpi-label">Timezone</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--ink-primary);">' + escapeHtml(data.version || '1.0.0') + '</div><div class="kpi-label">API Version</div></div>' +
             '</div>' +
-            '<div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--ink-muted); margin-top: 0.65rem;">Server Timestamp: ' + (data.timestamp || new Date().toISOString()) + '</div>' +
+            '<div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--ink-muted); margin-top: 0.65rem;">Server Timestamp: ' + escapeHtml(data.timestamp || new Date().toISOString()) + '</div>' +
           '</div>';
           visualContainer.innerHTML = html;
           return;
@@ -3305,10 +3378,10 @@ function renderInteractiveHtml(env) {
         if (data.openapi && data.paths) {
           let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.35rem; margin-bottom: 0.75rem; box-shadow: var(--shadow-crisp);">' +
             '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.5rem;">' +
-              '<h4 style="font-size: 1.2rem; color: var(--ink-primary); font-weight: 700;">' + (data.info?.title || 'OpenAPI 3.0 Spec') + '</h4>' +
-              '<span class="tag-badge gazetted">v' + (data.info?.version || '1.0.0') + '</span>' +
+              '<h4 style="font-size: 1.2rem; color: var(--ink-primary); font-weight: 700;">' + escapeHtml(data.info?.title || 'OpenAPI 3.0 Spec') + '</h4>' +
+              '<span class="tag-badge gazetted">v' + escapeHtml(data.info?.version || '1.0.0') + '</span>' +
             '</div>' +
-            '<p style="color: var(--ink-secondary); font-size: 0.88rem; margin-bottom: 1.15rem; line-height: 1.5;">' + (data.info?.description || '') + '</p>' +
+            '<p style="color: var(--ink-secondary); font-size: 0.88rem; margin-bottom: 1.15rem; line-height: 1.5;">' + escapeHtml(data.info?.description || '') + '</p>' +
             '<div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">' +
               '<a href="/api/openapi.json" target="_blank" class="btn btn-sm btn-primary">📥 Open Full Spec JSON</a>' +
               '<button class="btn btn-sm btn-outline" onclick="copyOpenApiUrl()">📋 Copy Spec URL</button>' +
@@ -3323,10 +3396,10 @@ function renderInteractiveHtml(env) {
                 '<div class="meta-card-header">' +
                   '<div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">' +
                     '<span class="tag-badge national" style="font-weight: 700;">GET</span>' +
-                    '<code style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-cyan);">' + p + '</code>' +
+                    '<code style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-cyan);">' + escapeHtml(p) + '</code>' +
                   '</div>' +
                 '</div>' +
-                '<div class="meta-card-desc">' + (getMethod.summary || '') + '</div>' +
+                '<div class="meta-card-desc">' + escapeHtml(getMethod.summary || '') + '</div>' +
               '</div>';
             }
           });
@@ -3336,7 +3409,7 @@ function renderInteractiveHtml(env) {
 
         // Generic Object fallback
         let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.35rem; box-shadow: var(--shadow-crisp);">' +
-          '<pre style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent-cyan); line-height: 1.5;">' + JSON.stringify(data, null, 2) + '</pre>' +
+          '<pre style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent-cyan); line-height: 1.5;">' + escapeHtml(JSON.stringify(data, null, 2)) + '</pre>' +
         '</div>';
         visualContainer.innerHTML = html;
       }
