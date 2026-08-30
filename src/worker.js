@@ -840,7 +840,7 @@ function renderInteractiveHtml(env) {
   <script>
     (function() {
       try {
-        var theme = localStorage.getItem('holiday2api_theme') || 'dark';
+        var theme = localStorage.getItem('holiday2api_theme') || 'light';
         document.documentElement.setAttribute('data-theme', theme);
       } catch (e) {}
     })();
@@ -858,41 +858,7 @@ function renderInteractiveHtml(env) {
       font-display: swap;
     }
 
-    :root, [data-theme="dark"] {
-      --bg: #0e1013;
-      --bg-surface: #14171c;
-      --bg-elevated: #1b1f26;
-      --bg-subtle: #232832;
-      --border-subtle: #282e3a;
-      --border-strong: #3b4455;
-      
-      --ink-primary: #f3f4f6;
-      --ink-secondary: #9da7b8;
-      --ink-muted: #626d80;
-      
-      --accent-saffron: #f97316;
-      --accent-saffron-subtle: rgba(249, 115, 22, 0.12);
-      --accent-marigold: #fbbf24;
-      --accent-emerald: #10b981;
-      --accent-emerald-subtle: rgba(16, 185, 129, 0.12);
-      --accent-terracotta: #ea580c;
-      --accent-cyan: #38bdf8;
-      --accent-cyan-subtle: rgba(56, 189, 248, 0.12);
-      
-      --font-display: 'Author', 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      --font-serif: 'Newsreader', Georgia, serif;
-      --font-mono: 'IBM Plex Mono', monospace;
-      
-      --radius-sm: 4px;
-      --radius-md: 8px;
-      --radius-lg: 12px;
-      --shadow-crisp: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.25);
-      --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.45);
-      --nav-bg: rgba(14, 16, 19, 0.88);
-      --grid-dot: rgba(255, 255, 255, 0.015);
-    }
-
-    [data-theme="light"] {
+    :root, [data-theme="light"] {
       --bg: #f8fafc;
       --bg-surface: #ffffff;
       --bg-elevated: #f1f5f9;
@@ -913,10 +879,44 @@ function renderInteractiveHtml(env) {
       --accent-cyan: #0284c7;
       --accent-cyan-subtle: rgba(2, 132, 199, 0.08);
       
+      --font-display: 'Author', 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+      
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
       --shadow-crisp: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.04);
       --shadow-elevated: 0 10px 30px rgba(0, 0, 0, 0.08);
       --nav-bg: rgba(255, 255, 255, 0.92);
       --grid-dot: rgba(0, 0, 0, 0.03);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0e1013;
+      --bg-surface: #14171c;
+      --bg-elevated: #1b1f26;
+      --bg-subtle: #232832;
+      --border-subtle: #282e3a;
+      --border-strong: #3b4455;
+      
+      --ink-primary: #f3f4f6;
+      --ink-secondary: #9da7b8;
+      --ink-muted: #626d80;
+      
+      --accent-saffron: #f97316;
+      --accent-saffron-subtle: rgba(249, 115, 22, 0.12);
+      --accent-marigold: #fbbf24;
+      --accent-emerald: #10b981;
+      --accent-emerald-subtle: rgba(16, 185, 129, 0.12);
+      --accent-terracotta: #ea580c;
+      --accent-cyan: #38bdf8;
+      --accent-cyan-subtle: rgba(56, 189, 248, 0.12);
+      
+      --shadow-crisp: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.25);
+      --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.45);
+      --nav-bg: rgba(14, 16, 19, 0.88);
+      --grid-dot: rgba(255, 255, 255, 0.015);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1043,10 +1043,10 @@ function renderInteractiveHtml(env) {
       line-height: 1;
       display: inline-block;
     }
-    [data-theme="light"] .moon-icon { display: none; }
-    [data-theme="light"] .sun-icon { display: inline-block; }
-    :root:not([data-theme="light"]) .sun-icon { display: none; }
-    :root:not([data-theme="light"]) .moon-icon { display: inline-block; }
+    [data-theme="dark"] .sun-icon { display: none; }
+    [data-theme="dark"] .moon-icon { display: inline-block; }
+    :root:not([data-theme="dark"]) .moon-icon { display: none; }
+    :root:not([data-theme="dark"]) .sun-icon { display: inline-block; }
 
     .container {
       max-width: 1240px;
@@ -1989,10 +1989,10 @@ function renderInteractiveHtml(env) {
         <a href="#postman" class="nav-link">Postman Spec</a>
         <a href="#states" class="nav-link">36 States</a>
         <a href="#docs" class="nav-link">Endpoints</a>
-        <button id="themeToggleBtn" class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Night / Day Mode" title="Toggle Night / Day Mode">
+        <button id="themeToggleBtn" class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Day / Night Mode" title="Toggle Day / Night Mode">
           <span class="theme-icon moon-icon">🌙</span>
           <span class="theme-icon sun-icon">☀️</span>
-          <span class="theme-label" id="themeLabel">Night</span>
+          <span class="theme-label" id="themeLabel">Day</span>
         </button>
         <div class="status-indicator">
           <span class="ping-dot"></span>
@@ -2601,13 +2601,13 @@ function renderInteractiveHtml(env) {
 
   <script>
     function initTheme() {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
       updateThemeUI(currentTheme);
     }
 
     function toggleTheme() {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', nextTheme);
       try {
         localStorage.setItem('holiday2api_theme', nextTheme);
@@ -2619,7 +2619,7 @@ function renderInteractiveHtml(env) {
     function updateThemeUI(theme) {
       const label = document.getElementById('themeLabel');
       if (label) {
-        label.textContent = theme === 'light' ? 'Day' : 'Night';
+        label.textContent = theme === 'dark' ? 'Night' : 'Day';
       }
     }
 
