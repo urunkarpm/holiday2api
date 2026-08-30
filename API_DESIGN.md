@@ -1,23 +1,21 @@
-# India Holidays API - REST API Design Specification
+# India Holidays API - REST API Specification
 
 ## 1. Overview
 
-This document specifies the REST API design for the **India Holidays API**. The API provides public access to Indian holiday data including national, gazetted, state-specific, bank, and restricted holidays across all 28 Indian States and 8 Union Territories.
+The **India Holidays API** is an open, high-performance RESTful service delivering Indian holiday calendars across national, central gazetted, state-specific, bank, and restricted holiday categories for all 28 Indian States and 8 Union Territories.
 
-- **Base URL**: `https://india-holidays.pages.dev/api`
+- **Base URL**: `https://india-holidays.pages.dev` (or custom Vercel / Cloudflare domain)
 - **Timezone**: `Asia/Kolkata` (`IST` / `UTC+5:30`)
 - **Authentication**: None (open public API)
-- **Rate Limits**: None (unlimited CDN edge-cached requests)
-- **Protocol**: HTTP/1.1 and HTTP/2 over TLS (HTTPS)
+- **Rate Limits**: None
+- **Formats**: JSON (`application/json`) and iCalendar (`text/calendar`)
 
 ---
 
-## 2. Common HTTP Response Headers
-
-Every successful API response returns standard CORS and caching headers:
+## 2. Standard Response Headers
 
 ```http
-Content-Type: application/json
+Content-Type: application/json; charset=utf-8
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: GET, OPTIONS
 Access-Control-Allow-Headers: Content-Type
@@ -27,245 +25,32 @@ Cache-Control: public, max-age=3600
 
 ---
 
-## 3. Data Schemas
+## 3. Endpoints
 
-### 3.1 Holiday Object
-
-```typescript
-interface Holiday {
-  date: string;        // ISO 8601 calendar date format: "YYYY-MM-DD"
-  name: string;        // Official name of the holiday
-  type: HolidayType;   // Holiday classification
-  state_code: string;  // "IN" for national, or 2-letter ISO 3166-2:IN state code
-  description: string; // Brief description or significance
-}
-
-type HolidayType = 
-  | "national"  // Mandatory national holidays (Republic Day, Independence Day, Gandhi Jayanti)
-  | "public"    // Central Government Gazetted holidays
-  | "state"     // State-specific celebrations and state formation days
-  | "bank"      // Negotiable Instruments Act bank holidays declared by RBI
-  | "regional"  // Local / district level observances
-  | "optional"; // Restricted / optional holidays
-```
-
-### 3.2 State Metadata Object
-
-```typescript
-interface StateMetadata {
-  code: string;        // 2-letter ISO 3166-2:IN code (e.g. "TG", "MH", "KA", "DL", "IN")
-  name: string;        // Full name of State or Union Territory
-  type: "national" | "state" | "union_territory";
-}
-```
+### 3.1 Interactive Web Explorer & Discovery
+- **Path**: `GET /`
+- **Behavior**:
+  - If requested from a web browser (`Accept: text/html`), renders the Interactive Web Playground UI.
+  - If requested as JSON (`Accept: application/json` or `?json=true`), returns the API directory and endpoint index.
 
 ---
 
-## 4. Endpoints
-
-### 4.1 Service & Health Check
-
-#### API Root
-Returns API discovery metadata and list of available endpoints.
-
-- **Method**: `GET`
-- **Path**: `/` or `/api`
-- **Example Request**:
-  ```bash
-  curl https://india-holidays.pages.dev/api
-  ```
-- **Response (200 OK)**:
-  ```json
-  {
-    "name": "India Holidays API",
-    "version": "1.0.0",
-    "description": "Free, fast, reliable API for Indian holidays",
-    "timezone": "Asia/Kolkata",
-    "endpoints": {
-      "GET /api/holidays/:year": "Get all holidays for a year",
-      "GET /api/holidays/:year/:state": "Get holidays for a specific state",
-      "GET /api/holidays?year=&state=&type=&date=": "Filter holidays by query params",
-      "GET /api/meta/states": "List supported states",
-      "GET /api/meta/types": "List holiday types",
-      "GET /api/health": "Health check status"
-    }
-  }
-  ```
-
-#### Health Check
-- **Method**: `GET`
-- **Path**: `/api/health` or `/health`
-- **Example Request**:
-  ```bash
-  curl https://india-holidays.pages.dev/api/health
-  ```
-- **Response (200 OK)**:
-  ```json
-  {
-    "status": "healthy",
-    "timestamp": "2026-08-30T09:15:00.000Z",
-    "version": "1.0.0",
-    "timezone": "Asia/Kolkata"
-  }
-  ```
+### 3.2 OpenAPI 3.0.3 Specification
+- **Path**: `GET /api/openapi.json`
+- **Description**: Returns complete OpenAPI 3.0.3 schema for SDK generation, Swagger UI, and Postman collections.
 
 ---
 
-### 4.2 Metadata Endpoints
-
-#### List Supported States & Union Territories
-- **Method**: `GET`
-- **Path**: `/api/meta/states`
-- **Example Request**:
-  ```bash
-  curl https://india-holidays.pages.dev/api/meta/states
-  ```
-- **Response (200 OK)**:
-  ```json
-  {
-    "states": [
-      {
-        "code": "IN",
-        "name": "National",
-        "type": "national"
-      },
-      {
-        "code": "AP",
-        "name": "Andhra Pradesh",
-        "type": "state"
-      },
-      {
-        "code": "DL",
-        "name": "Delhi",
-        "type": "union_territory"
-      },
-      {
-        "code": "MH",
-        "name": "Maharashtra",
-        "type": "state"
-      },
-      {
-        "code": "TG",
-        "name": "Telangana",
-        "type": "state"
-      }
-    ],
-    "timezone": "Asia/Kolkata",
-    "last_updated": "2026-01-01T00:00:00+05:30"
-  }
-  ```
-
-#### List Holiday Classifications
-- **Method**: `GET`
-- **Path**: `/api/meta/types`
-- **Example Request**:
-  ```bash
-  curl https://india-holidays.pages.dev/api/meta/types
-  ```
-- **Response (200 OK)**:
-  ```json
-  {
-    "types": [
-      {
-        "id": "national",
-        "name": "National Holiday",
-        "description": "Mandatory holidays observed across all India (Republic Day, Independence Day, Gandhi Jayanti)"
-      },
-      {
-        "id": "public",
-        "name": "Public Holiday",
-        "description": "Gazetted holidays declared by the Central Government"
-      },
-      {
-        "id": "state",
-        "name": "State Holiday",
-        "description": "Holidays specific to a particular state or union territory"
-      },
-      {
-        "id": "bank",
-        "name": "Bank Holiday",
-        "description": "Holidays when banks are closed as per RBI guidelines"
-      },
-      {
-        "id": "regional",
-        "name": "Regional Holiday",
-        "description": "District or city-specific observances"
-      },
-      {
-        "id": "optional",
-        "name": "Optional/Restricted Holiday",
-        "description": "Restricted holidays that employees can choose to avail"
-      }
-    ],
-    "timezone": "Asia/Kolkata",
-    "last_updated": "2026-01-01T00:00:00+05:30"
-  }
-  ```
-
----
-
-### 4.3 Holiday Data Endpoints
-
-#### Get Holidays by Year
-Retrieves national holidays for a given year. If the `?state=` query parameter is supplied, it automatically includes that state's holidays.
-
-- **Method**: `GET`
-- **Path**: `/api/holidays/:year`
+### 3.3 State Holidays
+- **Path**: `GET /api/holidays/:year/:state`
 - **Path Parameters**:
-  - `year` (string, required): 4-digit year (e.g. `2026`).
+  - `year`: 4-digit year (`2024`–`2036`)
+  - `state`: 2-letter ISO 3166-2:IN code (`TG`, `MH`, `KA`, etc.)
 - **Query Parameters**:
-  - `state` (string, optional): 2-letter ISO 3166-2:IN code (e.g. `MH`, `KA`, `TG`).
-  - `type` (string, optional): Filter by holiday type (e.g. `national`, `public`, `state`, `bank`).
-  - `date` (string, optional): Filter by specific date in `YYYY-MM-DD` format.
-- **Example Request**:
-  ```bash
-  curl https://india-holidays.pages.dev/api/holidays/2026
-  ```
-- **Response (200 OK)**:
-  ```json
-  [
-    {
-      "date": "2026-01-26",
-      "name": "Republic Day",
-      "type": "national",
-      "state_code": "IN",
-      "description": "Celebrates the adoption of the Constitution of India"
-    },
-    {
-      "date": "2026-08-15",
-      "name": "Independence Day",
-      "type": "national",
-      "state_code": "IN",
-      "description": "Marks India's independence from British rule in 1947"
-    },
-    {
-      "date": "2026-10-02",
-      "name": "Gandhi Jayanti",
-      "type": "national",
-      "state_code": "IN",
-      "description": "Birthday of Mahatma Gandhi, Father of the Nation"
-    }
-  ]
-  ```
-
----
-
-#### Get Holidays by Year and State
-Retrieves combined national and state-specific holidays for a specific region.
-
-- **Method**: `GET`
-- **Path**: `/api/holidays/:year/:state`
-- **Path Parameters**:
-  - `year` (string, required): 4-digit year (`2026`).
-  - `state` (string, required): 2-letter state code (e.g., `TG`, `MH`, `KA`, `DL`, `TN`, `WB`).
-- **Query Parameters**:
-  - `type` (string, optional): Filter by holiday type (`national`, `state`, `bank`, `public`, `optional`).
-  - `date` (string, optional): Filter by date `YYYY-MM-DD`.
-- **Example Request**:
-  ```bash
-  curl https://india-holidays.pages.dev/api/holidays/2026/TG
-  ```
-- **Response (200 OK)**:
+  - `type`: Filter by type (`national`, `state`, `bank`, `public`, `optional`)
+  - `month`: Filter by month (`01`–`12`)
+  - `date`: Filter by exact date (`YYYY-MM-DD`)
+- **Example Response (200 OK)**:
   ```json
   [
     {
@@ -281,85 +66,117 @@ Retrieves combined national and state-specific holidays for a specific region.
       "type": "national",
       "state_code": "IN",
       "description": "Celebrates the adoption of the Constitution of India"
-    },
-    {
-      "date": "2026-03-20",
-      "name": "Ugadi",
-      "type": "state",
-      "state_code": "TG",
-      "description": "Telugu New Year Day"
-    },
-    {
-      "date": "2026-08-15",
-      "name": "Independence Day",
-      "type": "national",
-      "state_code": "IN",
-      "description": "Marks India's independence from British rule in 1947"
     }
   ]
   ```
 
 ---
 
-#### Query Holidays with Filters
-Dynamic search endpoint that accepts any combination of query parameters.
-
-- **Method**: `GET`
-- **Path**: `/api/holidays`
+### 3.4 Upcoming Holidays
+- **Path**: `GET /api/holidays/upcoming`
 - **Query Parameters**:
-  - `year` (string, optional, defaults to current year): e.g. `2026`
-  - `state` (string, optional): e.g. `MH`, `KA`, `DL`
-  - `type` (string, optional): e.g. `national`, `public`, `state`, `bank`
-  - `date` (string, optional): e.g. `2026-01-26`
-- **Example Requests**:
-  ```bash
-  # Filter by state and type
-  curl "https://india-holidays.pages.dev/api/holidays?year=2026&state=MH&type=state"
-
-  # Find if a particular date is a holiday
-  curl "https://india-holidays.pages.dev/api/holidays?year=2026&date=2026-01-26"
+  - `state`: 2-letter state code (default: `IN`)
+  - `limit`: Number of holidays to return (default: `10`, max: `50`)
+  - `type`: Optional holiday type filter
+  - `date`: Optional starting date override (default: current date in IST)
+- **Example Response (200 OK)**:
+  ```json
+  [
+    {
+      "date": "2026-10-02",
+      "name": "Gandhi Jayanti",
+      "type": "national",
+      "state_code": "IN",
+      "description": "Birthday of Mahatma Gandhi, Father of the Nation",
+      "day_of_week": "Friday",
+      "days_until": 33
+    }
+  ]
   ```
 
 ---
 
-## 5. Error Handling
-
-Errors return JSON responses with appropriate HTTP status codes:
-
-```json
-{
-  "error": "Detailed description of error"
-}
-```
-
-| HTTP Status | Reason | Example |
-|---|---|---|
-| `404 Not Found` | Unknown route or no data found for specified year/state | `{"error": "No holiday data found for year: 1999"}` |
-| `405 Method Not Allowed` | Non-GET/OPTIONS request method used | `{"error": "Method not allowed"}` |
-| `500 Internal Server Error` | Unexpected worker exception | `{"error": "Failed to parse data"}` |
+### 3.5 Long Weekend & Vacation Finder
+- **Path**: `GET /api/long-weekends/:year/:state`
+- **Description**: Analyzes holiday calendar to find natural 3-day weekends and bridge 4-day weekends with recommended leave days.
+- **Example Response (200 OK)**:
+  ```json
+  {
+    "year": 2026,
+    "state_code": "TG",
+    "total_long_weekends": 17,
+    "long_weekends": [
+      {
+        "type": "natural_long_weekend",
+        "start_date": "2026-04-03",
+        "end_date": "2026-04-05",
+        "total_days": 3,
+        "holidays_included": [
+          {
+            "date": "2026-04-03",
+            "name": "Good Friday",
+            "type": "public",
+            "state_code": "IN"
+          }
+        ],
+        "bridge_days_needed": 0,
+        "recommendation": "3-day weekend (Friday to Sunday)"
+      },
+      {
+        "type": "bridge_weekend",
+        "start_date": "2026-03-19",
+        "end_date": "2026-03-22",
+        "total_days": 4,
+        "holidays_included": [
+          {
+            "date": "2026-03-19",
+            "name": "Gudi Padwa / Ugadi",
+            "type": "state",
+            "state_code": "TG"
+          }
+        ],
+        "bridge_days_needed": 1,
+        "bridge_dates": ["2026-03-20"],
+        "recommendation": "Take leave on Friday (2026-03-20) for a 4-day weekend (Thursday to Sunday)"
+      }
+    ]
+  }
+  ```
 
 ---
 
-## 6. Supported Regional State Codes Reference
+### 3.6 Business & Working Days Calculator
+- **Path**: `GET /api/business-days`
+- **Query Parameters**:
+  - `from` (required): Start date (`YYYY-MM-DD`)
+  - `to` (required): End date (`YYYY-MM-DD`)
+  - `state` (optional): State code (`IN`, `MH`, `KA`, etc.)
+  - `bank_rules` (optional): Set to `true` to apply RBI bank holiday rules (2nd/4th Saturdays are off; 1st, 3rd, 5th are working days)
+  - `include_saturdays` (optional): Set to `true` to treat all Saturdays as working days
+- **Example Response (200 OK)**:
+  ```json
+  {
+    "from": "2026-03-01",
+    "to": "2026-03-31",
+    "state_code": "MH",
+    "rules": "RBI Bank Rules (2nd/4th Sat off)",
+    "total_calendar_days": 31,
+    "working_days": 21,
+    "weekend_days": 8,
+    "holiday_days_count": 4,
+    "holidays_on_weekdays": [
+      { "date": "2026-03-04", "name": "Holi", "day": "Wednesday" },
+      { "date": "2026-03-19", "name": "Gudi Padwa", "day": "Thursday" }
+    ],
+    "holidays_on_weekends": [
+      { "date": "2026-03-21", "name": "Eid ul-Fitr", "day": "Saturday" }
+    ]
+  }
+  ```
 
-| Code | State / UT Name | Category | Code | State / UT Name | Category |
-|---|---|---|---|---|---|
-| `IN` | National (All India) | National | `LD` | Lakshadweep | Union Territory |
-| `AN` | Andaman and Nicobar Islands | Union Territory | `MP` | Madhya Pradesh | State |
-| `AP` | Andhra Pradesh | State | `MH` | Maharashtra | State |
-| `AR` | Arunachal Pradesh | State | `MN` | Manipur | State |
-| `AS` | Assam | State | `ML` | Meghalaya | State |
-| `BR` | Bihar | State | `MZ` | Mizoram | State |
-| `CH` | Chandigarh | Union Territory | `NL` | Nagaland | State |
-| `CT` | Chhattisgarh | State | `OR` | Odisha | State |
-| `DN` | Dadra & Nagar Haveli and Daman & Diu | Union Territory | `PY` | Puducherry | Union Territory |
-| `DL` | Delhi | Union Territory | `PB` | Punjab | State |
-| `GA` | Goa | State | `RJ` | Rajasthan | State |
-| `GJ` | Gujarat | State | `SK` | Sikkim | State |
-| `HR` | Haryana | State | `TN` | Tamil Nadu | State |
-| `HP` | Himachal Pradesh | State | `TG` | Telangana | State |
-| `JK` | Jammu and Kashmir | Union Territory | `TR` | Tripura | State |
-| `JH` | Jharkhand | State | `UP` | Uttar Pradesh | State |
-| `KA` | Karnataka | State | `UT` | Uttarakhand | State |
-| `KL` | Kerala | State | `WB` | West Bengal | State |
-| `LA` | Ladakh | Union Territory | | | |
+---
+
+### 3.7 iCalendar (.ics) Feed Export
+- **Path**: `GET /api/calendar/:year/:state.ics` (or `GET /api/holidays/:year/:state.ics`)
+- **Response Format**: `text/calendar; charset=utf-8` (RFC 5545)
+- **Usage**: Directly subscribable in Google Calendar, Apple Calendar, and Outlook.

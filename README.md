@@ -4,96 +4,98 @@
 [![Deploy](https://github.com/urunkarpm/holiday2api/actions/workflows/deploy.yml/badge.svg)](https://github.com/urunkarpm/holiday2api/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A free, fast, and reliable REST API for Indian holidays (national, gazetted, state-specific, bank, and restricted). No authentication required. No rate limits.
+A free, fast, and reliable REST API for Indian holidays (national, gazetted, state-specific, bank, and restricted). Features long weekend vacation planners, iCalendar (.ics) exports, business days calculations, and a built-in interactive playground UI. No authentication required. No rate limits.
 
 ---
 
 ## ✨ Features
 
-- ⚡ **Ultra Fast**: Sub-100ms response times globally via Cloudflare CDN edge caching.
-- 💸 **100% Free**: Zero cost, public access, no API keys or registration needed.
-- 🌐 **Comprehensive Coverage**: All 28 Indian States + 8 Union Territories (36 regional jurisdictions) + National (All India).
-- 📅 **Multi-Year Support**: Data pre-calculated for years **2024** and **2026–2036**.
-- ⏰ **Timezone-Aware**: All dates use **Asia/Kolkata** (`IST` / `UTC+5:30`).
-- 🔍 **Flexible Querying**: Query by year, state code, holiday type, or specific calendar date.
-- 🛡️ **Zero Database Overhead**: Built on static JSON partitions with automated GitHub Actions updates.
+- ⚡ **Sub-100ms Responses**: Edge-cached globally on Cloudflare CDN and Vercel Edge.
+- 💸 **100% Free & Open**: Zero authentication, no API keys, no rate limits.
+- 🌐 **All 36 States & UTs**: Full coverage for 28 States + 8 Union Territories + National (All India).
+- 📅 **13-Year Dataset**: Pre-calculated holiday data covering **2024 through 2036**.
+- 🏖️ **Long Weekend Finder**: Automatically finds 3-day and 4-day bridge long weekends with leave recommendations.
+- ⏱️ **Upcoming Holidays**: Instant lookup for upcoming holidays starting from current date in IST (`Asia/Kolkata`).
+- 📆 **iCalendar (.ics) Subscriptions**: 1-click subscription for Google Calendar, Apple Calendar, and Microsoft Outlook.
+- 💼 **Business / Working Days Calculator**: Accurate working days calculator with standard 5-day week and RBI Bank rules (2nd/4th Saturdays).
+- 📖 **OpenAPI 3.0 Spec**: Standard OpenAPI JSON specification at `/api/openapi.json`.
+- 🛠️ **Interactive Web Playground**: Built-in visual API explorer at `/` with live requests and formatted code snippets.
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start Examples
 
-### 1. Get all national holidays for a year
+### 1. Get Holidays for a State
 ```bash
-curl https://india-holidays.pages.dev/api/holidays/2026
-```
-
-### 2. Get holidays for a specific state (National + State-specific)
-```bash
-# Telangana (TG)
+# Telangana (TG) for 2026
 curl https://india-holidays.pages.dev/api/holidays/2026/TG
 
-# Maharashtra (MH)
+# Maharashtra (MH) for 2026
 curl https://india-holidays.pages.dev/api/holidays/2026/MH
-
-# Karnataka (KA)
-curl https://india-holidays.pages.dev/api/holidays/2026/KA
 ```
 
-### 3. Filter holidays by query parameters
+### 2. Find Long Weekends & Vacation Recommendations
 ```bash
-# Filter by state and holiday type
-curl "https://india-holidays.pages.dev/api/holidays?year=2026&state=TN&type=state"
-
-# Check if a specific date is a holiday
-curl "https://india-holidays.pages.dev/api/holidays?year=2026&date=2026-01-26"
+# Long weekends in Karnataka (KA) for 2026
+curl https://india-holidays.pages.dev/api/long-weekends/2026/KA
 ```
 
-### 4. Fetch metadata
+### 3. Get Upcoming Holidays (from Today in IST)
 ```bash
-# List all supported states and UTs
-curl https://india-holidays.pages.dev/api/meta/states
+curl "https://india-holidays.pages.dev/api/holidays/upcoming?state=TG&limit=5"
+```
 
-# List all holiday types
-curl https://india-holidays.pages.dev/api/meta/types
+### 4. Calculate Business / Working Days
+```bash
+# Calculate working days in March 2026 with RBI Bank rules
+curl "https://india-holidays.pages.dev/api/business-days?from=2026-03-01&to=2026-03-31&state=MH&bank_rules=true"
+```
+
+### 5. Subscribe via Google / Apple Calendar (.ics)
+```bash
+# Import or subscribe directly in calendar apps:
+https://india-holidays.pages.dev/api/calendar/2026/TG.ics
 ```
 
 ---
 
-## 📡 API Endpoints
+## 📡 API Endpoints Directory
 
 | Method | Endpoint | Description |
 |---|---|---|
-| `GET` | `/` or `/api` | API directory and service metadata |
-| `GET` | `/api/health` | Health check and status |
-| `GET` | `/api/meta/states` | List all 36 supported states and union territories with codes |
+| `GET` | `/` | Interactive Web Playground (Browser) / API Directory (JSON) |
+| `GET` | `/api/health` | Health check and uptime status |
+| `GET` | `/api/openapi.json` | OpenAPI 3.0.3 Specification |
+| `GET` | `/api/meta/states` | List all 36 supported States & Union Territories |
 | `GET` | `/api/meta/types` | List all holiday classifications (`national`, `public`, `state`, `bank`, etc.) |
-| `GET` | `/api/holidays/:year` | Get all national holidays for a given year (plus state holidays if `?state=XX` is passed) |
-| `GET` | `/api/holidays/:year/:state` | Get holidays for a specific state code (e.g. `MH`, `DL`, `KA`, `TG`) |
-| `GET` | `/api/holidays?year=&state=&type=&date=` | Dynamic search and filter across holiday datasets |
+| `GET` | `/api/holidays/:year` | National holidays for a year (optional `?state=` query) |
+| `GET` | `/api/holidays/:year/:state` | Combined National + State-specific holidays for a region |
+| `GET` | `/api/holidays/upcoming` | Next upcoming holidays from current IST date |
+| `GET` | `/api/long-weekends/:year/:state` | Find 3-day and 4-day bridge long weekends |
+| `GET` | `/api/business-days` | Calculate working days between two dates |
+| `GET` | `/api/calendar/:year/:state.ics` | Download/Subscribe to RFC 5545 iCalendar feed |
 
 ---
 
 ## 🔎 Query Parameters
 
+### `/api/holidays` & `/api/holidays/:year`
 | Parameter | Type | Description | Example |
 |---|---|---|---|
-| `year` | string | Year in `YYYY` format (default: current year) | `2026` |
-| `state` | string | 2-letter ISO 3166-2:IN state code | `TG`, `MH`, `KA`, `DL` |
-| `type` | string | Filter by holiday classification | `national`, `public`, `state`, `bank`, `regional`, `optional` |
-| `date` | string | Filter by specific date (`YYYY-MM-DD`) | `2026-08-15` |
+| `year` | string | 4-digit year (`2024`–`2036`) | `2026` |
+| `state` | string | 2-letter ISO 3166-2:IN code | `TG`, `MH`, `KA`, `DL` |
+| `type` | string | Filter by holiday type | `national`, `public`, `state`, `bank` |
+| `date` | string | Filter by exact date (`YYYY-MM-DD`) | `2026-08-15` |
+| `month` | string | Filter by month number (`1`–`12`) | `08` |
 
----
-
-## 🏷️ Holiday Types
-
-| Type | Description |
-|---|---|
-| `national` | Mandatory holidays observed across all of India (Republic Day, Independence Day, Gandhi Jayanti). |
-| `public` | Gazetted holidays declared by the Central Government. |
-| `state` | State-specific festivals and official state establishment days. |
-| `bank` | Bank holidays as per Section 25 of the Negotiable Instruments Act (RBI). |
-| `regional` | District or regional observances. |
-| `optional` | Restricted holidays (employees may choose from list). |
+### `/api/business-days`
+| Parameter | Type | Description | Default |
+|---|---|---|---|
+| `from` | string (required) | Start date in `YYYY-MM-DD` | — |
+| `to` | string (required) | End date in `YYYY-MM-DD` | — |
+| `state` | string | State code for regional holidays | `IN` |
+| `bank_rules` | boolean | Enable RBI rules (2nd/4th Sat off, 1st/3rd/5th working) | `false` |
+| `include_saturdays` | boolean | Treat all Saturdays as working days | `false` |
 
 ---
 
@@ -123,132 +125,40 @@ curl https://india-holidays.pages.dev/api/meta/types
 
 ---
 
-## 📦 JSON Response Schema
+## 💻 Local Development & Testing
 
-### Single Holiday Object
-```json
-{
-  "date": "2026-01-26",
-  "name": "Republic Day",
-  "type": "national",
-  "state_code": "IN",
-  "description": "Celebrates the adoption of the Constitution of India"
-}
-```
-
-### Example Response (`GET /api/holidays/2026/TG`)
-```json
-[
-  {
-    "date": "2026-01-14",
-    "name": "Bhogi / Makar Sankranti",
-    "type": "state",
-    "state_code": "TG",
-    "description": "Harvest festival dedicated to the Sun God Surya"
-  },
-  {
-    "date": "2026-01-26",
-    "name": "Republic Day",
-    "type": "national",
-    "state_code": "IN",
-    "description": "Celebrates the adoption of the Constitution of India"
-  },
-  {
-    "date": "2026-03-20",
-    "name": "Ugadi",
-    "type": "state",
-    "state_code": "TG",
-    "description": "Telugu New Year Day"
-  },
-  {
-    "date": "2026-08-15",
-    "name": "Independence Day",
-    "type": "national",
-    "state_code": "IN",
-    "description": "Marks India's independence from British rule in 1947"
-  },
-  {
-    "date": "2026-10-02",
-    "name": "Gandhi Jayanti",
-    "type": "national",
-    "state_code": "IN",
-    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
-  }
-]
-```
-
----
-
-## 🏗️ Architecture & Deployment
-
-```
-┌──────────────────────────────┐
-│ scripts/generate_holidays.py │ (Generates astronomical/gazetted calendar data)
-└──────────────┬───────────────┘
-               ▼
-┌──────────────────────────────┐
-│  data/{year}/{state}.json    │ (Git-managed static JSON files)
-└──────────────┬───────────────┘
-               ▼
-┌──────────────────────────────┐
-│      src/worker.js           │ (Cloudflare Worker routing & dynamic filtering)
-└──────────────┬───────────────┘
-               ▼
-┌──────────────────────────────┐
-│   Cloudflare Edge Network    │ (Cached with Cache-Control: public, max-age=3600)
-└──────────────┬───────────────┘
-               ▼
-┌──────────────────────────────┐
-│        API Consumers         │ (Sub-100ms response time)
-└──────────────────────────────┘
-```
-
----
-
-## 💻 Local Development
-
-### Prerequisites
-- Node.js (v18+)
-- Python 3.9+ (for running calendar generator / validator)
-- Wrangler CLI (`npm install -g wrangler` or via local devDependencies)
-
-### Installation & Testing
 ```bash
-# 1. Clone the repository
-git clone https://github.com/urunkarpm/holiday2api.git
-cd holiday2api
-
-# 2. Install dependencies
+# 1. Install dependencies
 npm install
 
-# 3. Run automated tests
+# 2. Run automated test suite (15 integration tests)
 npm test
 
-# 4. Validate all data JSON files
+# 3. Validate all JSON datasets (10,000+ holiday entries)
 npm run validate
 
-# 5. Start local development server (Cloudflare Worker)
+# 4. Start local development server
 npm run dev
 ```
 
-### Regenerating Holiday Data
-To re-generate or extend the calendar data across all 36 states and union territories for years 2026–2036:
-```bash
-python scripts/generate_holidays.py
-```
-
 ---
 
-## 🤝 Contributing
+## 🚀 Deploying to Cloudflare or Vercel
 
-Contributions and corrections are welcome!
-1. Verify official state gazette circulars or RBI notifications.
-2. Update/add the respective files under `data/{year}/{state}.json` or enhance `scripts/generate_holidays.py`.
-3. Run `npm test` and `npm run validate`.
-4. Open a Pull Request.
+### Deploy to Cloudflare Workers
+```bash
+npx wrangler login
+npm run deploy
+```
+
+### Deploy to Vercel
+```bash
+npx vercel --prod
+```
+*(Or connect your GitHub repository directly in the Vercel Dashboard for 1-click automatic deployments).*
 
 ---
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is open source and available under the [MIT License](LICENSE).

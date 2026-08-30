@@ -1,0 +1,163 @@
+[
+  {
+    "date": "2025-01-06",
+    "name": "Si-Donyi Festival",
+    "type": "state",
+    "state_code": "AR",
+    "description": "Traditional festival of the Tagin tribe"
+  },
+  {
+    "date": "2025-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "AR",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2025-02-20",
+    "name": "Statehood Day",
+    "type": "state",
+    "state_code": "AR",
+    "description": "Celebrates the statehood of Arunachal Pradesh"
+  },
+  {
+    "date": "2025-02-26",
+    "name": "Nyokum",
+    "type": "state",
+    "state_code": "AR",
+    "description": "Agricultural festival of the Nyishi tribe"
+  },
+  {
+    "date": "2025-02-26",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "AR",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2025-03-14",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "AR",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2025-03-31",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "AR",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2025-04-05",
+    "name": "Mopin",
+    "type": "state",
+    "state_code": "AR",
+    "description": "Harvest festival of the Galo tribe"
+  },
+  {
+    "date": "2025-04-06",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "AR",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2025-04-10",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "AR",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2025-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "AR",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2025-04-18",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "AR",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2025-05-12",
+    "name": "Buddha Purnima",
+    "type": "state",
+    "state_code": "AR",
+    "description": "Celebrates the birth of Lord Buddha"
+  },
+  {
+    "date": "2025-06-07",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "AR",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2025-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "AR",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2025-08-16",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "AR",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2025-09-01",
+    "name": "Solung",
+    "type": "state",
+    "state_code": "AR",
+    "description": "Agricultural festival of the Adi tribe"
+  },
+  {
+    "date": "2025-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "AR",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2025-10-02",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "AR",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2025-10-20",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "AR",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2025-10-22",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "AR",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2025-11-05",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "AR",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2025-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "AR",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

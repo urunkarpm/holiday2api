@@ -47,9 +47,50 @@ STATES = [
     {"code": "WB", "name": "West Bengal", "type": "state"}
 ]
 
-# Calendar data for Indian festivals and holidays across years 2026-2036
+# Calendar data for Indian festivals and holidays across years 2025-2036
 # Exact dates verified against Indian National Calendar and Astronomical Ephemeris
 FESTIVAL_CALENDAR = {
+    2025: {
+        "Makar Sankranti": "2025-01-14",
+        "Pongal": "2025-01-14",
+        "Thai Pongal": "2025-01-15",
+        "Mattu Pongal": "2025-01-16",
+        "Kaanum Pongal": "2025-01-17",
+        "Basant Panchami": "2025-02-02",
+        "Maha Shivaratri": "2025-02-26",
+        "Holi": "2025-03-14",
+        "Gudi Padwa": "2025-03-30",
+        "Ugadi": "2025-03-30",
+        "Eid ul-Fitr": "2025-03-31",
+        "Ram Navami": "2025-04-06",
+        "Mahavir Jayanti": "2025-04-10",
+        "Good Friday": "2025-04-18",
+        "Easter Sunday": "2025-04-20",
+        "Tamil New Year": "2025-04-14",
+        "Vishu": "2025-04-14",
+        "Bohag Bihu": "2025-04-14",
+        "Pana Sankranti": "2025-04-14",
+        "Pohela Boishakh": "2025-04-15",
+        "Buddha Purnima": "2025-05-12",
+        "Eid ul-Adha": "2025-06-07",
+        "Rath Yatra": "2025-06-27",
+        "Muharram": "2025-07-06",
+        "Parsi New Year": "2025-08-15",
+        "Milad un-Nabi": "2025-09-05",
+        "Raksha Bandhan": "2025-08-09",
+        "Janmashtami": "2025-08-16",
+        "Onam": "2025-09-05",
+        "Ganesh Chaturthi": "2025-08-27",
+        "Durga Ashtami": "2025-09-30",
+        "Maha Navami": "2025-10-01",
+        "Vijayadashami": "2025-10-02",
+        "Karwa Chauth": "2025-10-10",
+        "Diwali": "2025-10-20",
+        "Govardhan Puja": "2025-10-22",
+        "Bhai Dooj": "2025-10-23",
+        "Chhath Puja": "2025-10-27",
+        "Guru Nanak Jayanti": "2025-11-05"
+    },
     2026: {
         "Makar Sankranti": "2026-01-14",
         "Pongal": "2026-01-14",
@@ -1024,7 +1065,7 @@ def main():
     total_files = 0
     total_entries = 0
     
-    for year in range(2026, 2037):
+    for year in range(2025, 2037):
         year_dir = base_dir / str(year)
         year_dir.mkdir(parents=True, exist_ok=True)
         
@@ -1050,7 +1091,7 @@ def main():
             
         print(f"[OK] Generated Year {year}: national + {len(STATES)} states/UTs ({len(national_holidays)} national holidays)")
 
-    print(f"\nSuccessfully created {total_files} holiday data files ({total_entries} total holiday entries) for 2026-2036!")
+    print(f"\nSuccessfully created {total_files} holiday data files ({total_entries} total holiday entries) for 2025-2036!")
 
 if __name__ == "__main__":
     main()
