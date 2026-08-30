@@ -1759,10 +1759,10 @@ function renderInteractiveHtml(env) {
 
       <!-- Quick cURL Bar -->
       <div class="hero-terminal">
-        <div class="terminal-cmd">
-          <span>$ </span>curl https://india-holidays.pages.dev/api/holidays/2026/TG
+        <div class="terminal-cmd" id="heroTerminalCmd">
+          <span>$ </span>curl <span id="heroTerminalUrl">https://your-domain.com/api/holidays/2026/TG</span>
         </div>
-        <button class="btn btn-sm btn-outline" onclick="copySnippetText('curl https://india-holidays.pages.dev/api/holidays/2026/TG')">
+        <button class="btn btn-sm btn-outline" onclick="copyHeroCurl()">
           📋 Copy cURL
         </button>
       </div>
@@ -2427,6 +2427,12 @@ function renderInteractiveHtml(env) {
       setTimeout(() => { toast.classList.remove('show'); }, 2200);
     }
 
+    function copyHeroCurl() {
+      const url = window.location.origin + '/api/holidays/2026/TG';
+      navigator.clipboard.writeText('curl ' + url);
+      showToast('Copied cURL command');
+    }
+
     function copySnippetText(txt) {
       navigator.clipboard.writeText(txt);
       showToast('Copied cURL command');
@@ -2490,7 +2496,13 @@ function renderInteractiveHtml(env) {
 
     // Initialize on page ready
     document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('postmanSpecUrlText').innerText = window.location.origin + '/api/openapi.json';
+      const heroUrl = window.location.origin + '/api/holidays/2026/TG';
+      const heroEl = document.getElementById('heroTerminalUrl');
+      if (heroEl) heroEl.innerText = heroUrl;
+
+      const specEl = document.getElementById('postmanSpecUrlText');
+      if (specEl) specEl.innerText = window.location.origin + '/api/openapi.json';
+
       updateFormFields();
       executeWorkbenchRequest();
     });
