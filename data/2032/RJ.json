@@ -1,0 +1,163 @@
+[
+  {
+    "date": "2032-01-15",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "RJ",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2032-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "RJ",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2032-02-16",
+    "name": "Basant Panchami",
+    "type": "state",
+    "state_code": "RJ",
+    "description": "Festival celebrating the arrival of spring"
+  },
+  {
+    "date": "2032-03-10",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "RJ",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2032-03-23",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "RJ",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2032-03-26",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "RJ",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2032-03-27",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "RJ",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2032-03-30",
+    "name": "Rajasthan Day",
+    "type": "state",
+    "state_code": "RJ",
+    "description": "Commemorates the formation of the state of Rajasthan in 1949"
+  },
+  {
+    "date": "2032-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "RJ",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2032-04-19",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "RJ",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2032-04-23",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "RJ",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2032-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "RJ",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2032-08-20",
+    "name": "Raksha Bandhan",
+    "type": "state",
+    "state_code": "RJ",
+    "description": "Festival celebrating sibling bond"
+  },
+  {
+    "date": "2032-08-28",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "RJ",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2032-09-08",
+    "name": "Ganesh Chaturthi",
+    "type": "state",
+    "state_code": "RJ",
+    "description": "Celebration of Lord Ganesha"
+  },
+  {
+    "date": "2032-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "RJ",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2032-10-12",
+    "name": "Durga Ashtami",
+    "type": "state",
+    "state_code": "RJ",
+    "description": "Eighth day of Navratri festival"
+  },
+  {
+    "date": "2032-10-13",
+    "name": "Maha Navami",
+    "type": "state",
+    "state_code": "RJ",
+    "description": "Ninth day of Navratri festival"
+  },
+  {
+    "date": "2032-10-14",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "RJ",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2032-11-02",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "RJ",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2032-11-03",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "RJ",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2032-11-17",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "RJ",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2032-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "RJ",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

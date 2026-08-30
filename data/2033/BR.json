@@ -1,0 +1,177 @@
+[
+  {
+    "date": "2033-01-03",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "BR",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2033-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "BR",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2033-02-04",
+    "name": "Basant Panchami / Saraswati Puja",
+    "type": "state",
+    "state_code": "BR",
+    "description": "Worship of goddess of knowledge Saraswati"
+  },
+  {
+    "date": "2033-02-27",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "BR",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2033-03-12",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "BR",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2033-03-16",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "BR",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2033-03-22",
+    "name": "Bihar Diwas",
+    "type": "state",
+    "state_code": "BR",
+    "description": "Commemorates the formation of the state of Bihar"
+  },
+  {
+    "date": "2033-04-07",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "BR",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2033-04-11",
+    "name": "Muharram",
+    "type": "state",
+    "state_code": "BR",
+    "description": "Islamic day of mourning"
+  },
+  {
+    "date": "2033-04-12",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "BR",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2033-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "BR",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2033-04-15",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "BR",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2033-05-14",
+    "name": "Buddha Purnima",
+    "type": "state",
+    "state_code": "BR",
+    "description": "Celebrates the birth of Lord Buddha"
+  },
+  {
+    "date": "2033-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "BR",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2033-08-17",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "BR",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2033-10-01",
+    "name": "Durga Ashtami",
+    "type": "state",
+    "state_code": "BR",
+    "description": "Eighth day of Navratri festival"
+  },
+  {
+    "date": "2033-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "BR",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2033-10-02",
+    "name": "Maha Navami",
+    "type": "state",
+    "state_code": "BR",
+    "description": "Ninth day of Navratri festival"
+  },
+  {
+    "date": "2033-10-03",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "BR",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2033-10-22",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "BR",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2033-10-23",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "BR",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2033-10-24",
+    "name": "Bhai Dooj",
+    "type": "state",
+    "state_code": "BR",
+    "description": "Celebration of sibling bond"
+  },
+  {
+    "date": "2033-10-28",
+    "name": "Chhath Puja",
+    "type": "state",
+    "state_code": "BR",
+    "description": "Ancient Hindu festival dedicated to the Sun God Surya"
+  },
+  {
+    "date": "2033-11-06",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "BR",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2033-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "BR",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

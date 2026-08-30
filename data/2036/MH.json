@@ -1,0 +1,191 @@
+[
+  {
+    "date": "2036-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "MH",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2036-02-08",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "MH",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2036-02-19",
+    "name": "Chhatrapati Shivaji Maharaj Jayanti",
+    "type": "state",
+    "state_code": "MH",
+    "description": "Birth anniversary of legendary Maratha warrior king Shivaji Maharaj"
+  },
+  {
+    "date": "2036-02-25",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "MH",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2036-03-09",
+    "name": "Muharram",
+    "type": "state",
+    "state_code": "MH",
+    "description": "Islamic day of mourning"
+  },
+  {
+    "date": "2036-03-12",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "MH",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2036-03-28",
+    "name": "Gudi Padwa",
+    "type": "state",
+    "state_code": "MH",
+    "description": "Marathi New Year festival"
+  },
+  {
+    "date": "2036-04-05",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "MH",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2036-04-09",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "MH",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2036-04-11",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "MH",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2036-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "MH",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2036-05-01",
+    "name": "Maharashtra Day",
+    "type": "state",
+    "state_code": "MH",
+    "description": "Commemorates the formation of Maharashtra state in 1960"
+  },
+  {
+    "date": "2036-05-10",
+    "name": "Buddha Purnima",
+    "type": "state",
+    "state_code": "MH",
+    "description": "Celebrates the birth of Lord Buddha"
+  },
+  {
+    "date": "2036-08-07",
+    "name": "Raksha Bandhan / Narali Purnima",
+    "type": "state",
+    "state_code": "MH",
+    "description": "Festival celebrating sibling bond and fishermen's offering to sea"
+  },
+  {
+    "date": "2036-08-14",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "MH",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2036-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "MH",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2036-08-15",
+    "name": "Parsi New Year (Navroz)",
+    "type": "state",
+    "state_code": "MH",
+    "description": "Zoroastrian New Year celebrated widely in Maharashtra"
+  },
+  {
+    "date": "2036-08-25",
+    "name": "Ganesh Chaturthi",
+    "type": "state",
+    "state_code": "MH",
+    "description": "Biggest cultural festival in Maharashtra"
+  },
+  {
+    "date": "2036-09-28",
+    "name": "Durga Ashtami",
+    "type": "state",
+    "state_code": "MH",
+    "description": "Eighth day of Navratri festival"
+  },
+  {
+    "date": "2036-09-29",
+    "name": "Maha Navami",
+    "type": "state",
+    "state_code": "MH",
+    "description": "Ninth day of Navratri festival"
+  },
+  {
+    "date": "2036-09-30",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "MH",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2036-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "MH",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2036-10-19",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "MH",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2036-10-20",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "MH",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2036-11-03",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "MH",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2036-11-20",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "MH",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2036-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "MH",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

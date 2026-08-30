@@ -1,0 +1,163 @@
+[
+  {
+    "date": "2029-01-21",
+    "name": "Manipur Statehood Day",
+    "type": "state",
+    "state_code": "MN",
+    "description": "Celebrates the statehood of Manipur in 1972"
+  },
+  {
+    "date": "2029-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "MN",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2029-02-15",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "MN",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2029-02-15",
+    "name": "Lui-Ngai-Ni",
+    "type": "state",
+    "state_code": "MN",
+    "description": "Seed sowing festival of Naga tribes in Manipur"
+  },
+  {
+    "date": "2029-03-01",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "MN",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2029-03-01",
+    "name": "Yaoshang (Holi)",
+    "type": "state",
+    "state_code": "MN",
+    "description": "Five-day premier festival of Manipur"
+  },
+  {
+    "date": "2029-03-16",
+    "name": "Cheiraoba",
+    "type": "state",
+    "state_code": "MN",
+    "description": "Manipuri Lunar New Year festival"
+  },
+  {
+    "date": "2029-03-24",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "MN",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2029-03-30",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "MN",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2029-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "MN",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2029-04-23",
+    "name": "Khongjom Day",
+    "type": "state",
+    "state_code": "MN",
+    "description": "Commemorates the Anglo-Manipur War of 1891"
+  },
+  {
+    "date": "2029-04-25",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "MN",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2029-04-26",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "MN",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2029-07-13",
+    "name": "Kang (Rath Yatra)",
+    "type": "state",
+    "state_code": "MN",
+    "description": "Lord Jagannath chariot festival in Manipur"
+  },
+  {
+    "date": "2029-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "MN",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2029-09-01",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "MN",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2029-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "MN",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2029-10-16",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "MN",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2029-11-01",
+    "name": "Kut Festival",
+    "type": "state",
+    "state_code": "MN",
+    "description": "Autumn post-harvest festival of the Kuki-Chin-Mizo tribes"
+  },
+  {
+    "date": "2029-11-05",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "MN",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2029-11-06",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "MN",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2029-11-21",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "MN",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2029-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "MN",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

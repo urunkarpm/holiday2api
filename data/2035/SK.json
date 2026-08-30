@@ -1,0 +1,149 @@
+[
+  {
+    "date": "2035-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "SK",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2035-02-19",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "SK",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2035-03-23",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "SK",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2035-03-24",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "SK",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2035-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "SK",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2035-04-16",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "SK",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2035-04-20",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "SK",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2035-05-16",
+    "name": "Sikkim State Day",
+    "type": "state",
+    "state_code": "SK",
+    "description": "Commemorates Sikkim becoming the 22nd state of India in 1975"
+  },
+  {
+    "date": "2035-05-22",
+    "name": "Buddha Purnima / Saga Dawa",
+    "type": "state",
+    "state_code": "SK",
+    "description": "Triple blessed festival of Lord Buddha"
+  },
+  {
+    "date": "2035-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "SK",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2035-08-25",
+    "name": "Pang Lhabsol",
+    "type": "state",
+    "state_code": "SK",
+    "description": "Unique festival honoring Mount Khangchendzonga, guardian deity of Sikkim"
+  },
+  {
+    "date": "2035-08-26",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "SK",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2035-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "SK",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2035-10-09",
+    "name": "Durga Ashtami (Dasain)",
+    "type": "state",
+    "state_code": "SK",
+    "description": "Celebration of Dasain festival in Sikkim"
+  },
+  {
+    "date": "2035-10-11",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "SK",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2035-10-30",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "SK",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2035-10-31",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "SK",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2035-11-15",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "SK",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2035-12-02",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "SK",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2035-12-18",
+    "name": "Losoong / Namsoong",
+    "type": "state",
+    "state_code": "SK",
+    "description": "Sikkimese New Year festival celebrated by Bhutia and Lepcha communities"
+  },
+  {
+    "date": "2035-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "SK",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

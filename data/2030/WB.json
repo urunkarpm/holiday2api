@@ -1,0 +1,184 @@
+[
+  {
+    "date": "2030-01-23",
+    "name": "Netaji Subhas Chandra Bose Jayanti",
+    "type": "state",
+    "state_code": "WB",
+    "description": "Birth anniversary of Netaji Subhas Chandra Bose"
+  },
+  {
+    "date": "2030-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "WB",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2030-02-05",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "WB",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2030-02-08",
+    "name": "Saraswati Puja",
+    "type": "state",
+    "state_code": "WB",
+    "description": "Worship of goddess of knowledge and arts Saraswati"
+  },
+  {
+    "date": "2030-03-20",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "WB",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2030-04-12",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "WB",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2030-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "WB",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2030-04-14",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "WB",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2030-04-15",
+    "name": "Pohela Boishakh (Bengali New Year)",
+    "type": "state",
+    "state_code": "WB",
+    "description": "First day of the Bengali calendar year (Noboborsho)"
+  },
+  {
+    "date": "2030-04-16",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "WB",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2030-04-19",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "WB",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2030-05-09",
+    "name": "Rabindra Jayanti",
+    "type": "state",
+    "state_code": "WB",
+    "description": "Birth anniversary of Nobel laureate Rabindranath Tagore"
+  },
+  {
+    "date": "2030-05-13",
+    "name": "Muharram",
+    "type": "state",
+    "state_code": "WB",
+    "description": "Islamic day of mourning"
+  },
+  {
+    "date": "2030-05-17",
+    "name": "Buddha Purnima",
+    "type": "state",
+    "state_code": "WB",
+    "description": "Celebrates the birth of Lord Buddha"
+  },
+  {
+    "date": "2030-07-02",
+    "name": "Rath Yatra",
+    "type": "state",
+    "state_code": "WB",
+    "description": "Chariot festival of Lord Jagannath celebrated across Bengal"
+  },
+  {
+    "date": "2030-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "WB",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2030-08-21",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "WB",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2030-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "WB",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2030-10-04",
+    "name": "Durga Puja (Maha Ashtami)",
+    "type": "state",
+    "state_code": "WB",
+    "description": "Grand festival celebrating Goddess Durga"
+  },
+  {
+    "date": "2030-10-05",
+    "name": "Durga Puja (Maha Navami)",
+    "type": "state",
+    "state_code": "WB",
+    "description": "Ninth day of Durga Puja"
+  },
+  {
+    "date": "2030-10-06",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "WB",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2030-10-26",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "WB",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2030-10-27",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "WB",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2030-10-28",
+    "name": "Bhai Phonta",
+    "type": "state",
+    "state_code": "WB",
+    "description": "Traditional Bengali festival celebrating brother-sister bond"
+  },
+  {
+    "date": "2030-11-10",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "WB",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2030-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "WB",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

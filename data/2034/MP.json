@@ -1,0 +1,177 @@
+[
+  {
+    "date": "2034-01-14",
+    "name": "Makar Sankranti",
+    "type": "state",
+    "state_code": "MP",
+    "description": "Harvest festival celebrated across MP"
+  },
+  {
+    "date": "2034-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "MP",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2034-02-17",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "MP",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2034-03-02",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "MP",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2034-03-05",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "MP",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2034-03-20",
+    "name": "Gudi Padwa",
+    "type": "state",
+    "state_code": "MP",
+    "description": "Hindu New Year festival"
+  },
+  {
+    "date": "2034-03-28",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "MP",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2034-04-01",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "MP",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2034-04-07",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "MP",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2034-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "MP",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2034-05-03",
+    "name": "Buddha Purnima",
+    "type": "state",
+    "state_code": "MP",
+    "description": "Celebrates the birth of Lord Buddha"
+  },
+  {
+    "date": "2034-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "MP",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2034-08-29",
+    "name": "Raksha Bandhan",
+    "type": "state",
+    "state_code": "MP",
+    "description": "Festival celebrating sibling bond"
+  },
+  {
+    "date": "2034-09-06",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "MP",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2034-09-17",
+    "name": "Ganesh Chaturthi",
+    "type": "state",
+    "state_code": "MP",
+    "description": "Celebration of Lord Ganesha"
+  },
+  {
+    "date": "2034-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "MP",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2034-10-20",
+    "name": "Durga Ashtami",
+    "type": "state",
+    "state_code": "MP",
+    "description": "Eighth day of Navratri festival"
+  },
+  {
+    "date": "2034-10-21",
+    "name": "Maha Navami",
+    "type": "state",
+    "state_code": "MP",
+    "description": "Ninth day of Navratri festival"
+  },
+  {
+    "date": "2034-10-22",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "MP",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2034-11-01",
+    "name": "Madhya Pradesh Foundation Day",
+    "type": "state",
+    "state_code": "MP",
+    "description": "MP State Formation Day"
+  },
+  {
+    "date": "2034-11-10",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "MP",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2034-11-11",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "MP",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2034-11-25",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "MP",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2034-12-13",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "MP",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2034-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "MP",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

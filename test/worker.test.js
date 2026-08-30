@@ -107,7 +107,51 @@ async function runTests() {
     console.log(`✔ GET /api/holidays query filtering passed (returned ${data.length} matching holidays)`);
   }
 
-  // Test 8: Non-existent route returns 404
+  // Test 8: GET /api/holidays/2026
+  {
+    const req = new Request('http://localhost:8787/api/holidays/2026');
+    const res = await worker.fetch(req, mockEnv);
+    assert.strictEqual(res.status, 200, 'GET /api/holidays/2026 should return 200');
+    const data = await res.json();
+    assert(Array.isArray(data), 'holidays should be an array');
+    assert(data.length >= 20, 'should return at least 20 holidays for 2026');
+    console.log(`✔ GET /api/holidays/2026 passed (returned ${data.length} holidays)`);
+  }
+
+  // Test 9: GET /api/holidays/2030/DL
+  {
+    const req = new Request('http://localhost:8787/api/holidays/2030/DL');
+    const res = await worker.fetch(req, mockEnv);
+    assert.strictEqual(res.status, 200, 'GET /api/holidays/2030/DL should return 200');
+    const data = await res.json();
+    assert(Array.isArray(data), 'holidays should be an array');
+    assert(data.some(h => h.state_code === 'DL'), 'should contain DL state holidays');
+    console.log(`✔ GET /api/holidays/2030/DL passed (returned ${data.length} holidays)`);
+  }
+
+  // Test 10: GET /api/holidays/2036/TN
+  {
+    const req = new Request('http://localhost:8787/api/holidays/2036/TN');
+    const res = await worker.fetch(req, mockEnv);
+    assert.strictEqual(res.status, 200, 'GET /api/holidays/2036/TN should return 200');
+    const data = await res.json();
+    assert(Array.isArray(data), 'holidays should be an array');
+    assert(data.some(h => h.name.includes('Pongal')), 'should contain Pongal for TN');
+    console.log(`✔ GET /api/holidays/2036/TN passed (returned ${data.length} holidays)`);
+  }
+
+  // Test 11: GET /api/holidays?year=2036&state=WB&type=state
+  {
+    const req = new Request('http://localhost:8787/api/holidays?year=2036&state=WB&type=state');
+    const res = await worker.fetch(req, mockEnv);
+    assert.strictEqual(res.status, 200, 'Query params filter should return 200');
+    const data = await res.json();
+    assert(Array.isArray(data), 'holidays should be an array');
+    data.forEach(h => assert.strictEqual(h.type, 'state', 'All returned holidays should match type'));
+    console.log(`✔ GET /api/holidays?year=2036&state=WB&type=state passed (returned ${data.length} holidays)`);
+  }
+
+  // Test 12: Non-existent route returns 404
   {
     const req = new Request('http://localhost:8787/unknown/path');
     const res = await worker.fetch(req, mockEnv);

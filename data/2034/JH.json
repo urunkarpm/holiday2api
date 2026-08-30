@@ -1,0 +1,170 @@
+[
+  {
+    "date": "2034-01-24",
+    "name": "Basant Panchami",
+    "type": "state",
+    "state_code": "JH",
+    "description": "Festival celebrating the arrival of spring"
+  },
+  {
+    "date": "2034-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "JH",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2034-02-17",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "JH",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2034-03-02",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "JH",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2034-03-05",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "JH",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2034-03-20",
+    "name": "Sarhul",
+    "type": "state",
+    "state_code": "JH",
+    "description": "Major tribal festival celebrating blooming of Sal trees"
+  },
+  {
+    "date": "2034-03-28",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "JH",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2034-04-01",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "JH",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2034-04-07",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "JH",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2034-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "JH",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2034-05-03",
+    "name": "Buddha Purnima",
+    "type": "state",
+    "state_code": "JH",
+    "description": "Celebrates the birth of Lord Buddha"
+  },
+  {
+    "date": "2034-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "JH",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2034-09-06",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "JH",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2034-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "JH",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2034-10-20",
+    "name": "Durga Ashtami",
+    "type": "state",
+    "state_code": "JH",
+    "description": "Eighth day of Durga Puja"
+  },
+  {
+    "date": "2034-10-21",
+    "name": "Maha Navami",
+    "type": "state",
+    "state_code": "JH",
+    "description": "Ninth day of Durga Puja"
+  },
+  {
+    "date": "2034-10-22",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "JH",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2034-11-10",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "JH",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2034-11-11",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "JH",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2034-11-15",
+    "name": "Jharkhand Foundation Day",
+    "type": "state",
+    "state_code": "JH",
+    "description": "Commemorates state formation and birth anniversary of Bhagwan Birsa Munda"
+  },
+  {
+    "date": "2034-11-16",
+    "name": "Chhath Puja",
+    "type": "state",
+    "state_code": "JH",
+    "description": "Ancient festival honoring Sun God Surya"
+  },
+  {
+    "date": "2034-11-25",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "JH",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2034-12-13",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "JH",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2034-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "JH",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

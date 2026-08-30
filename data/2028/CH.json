@@ -1,0 +1,163 @@
+[
+  {
+    "date": "2028-01-13",
+    "name": "Lohri",
+    "type": "state",
+    "state_code": "CH",
+    "description": "Popular winter folk festival of Punjab & Chandigarh"
+  },
+  {
+    "date": "2028-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "CH",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2028-02-23",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "CH",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2028-02-27",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "CH",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2028-03-11",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "CH",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2028-03-23",
+    "name": "Shaheed Bhagat Singh Martyrdom Day",
+    "type": "state",
+    "state_code": "CH",
+    "description": "Honors the martyrdom of Bhagat Singh, Rajguru, and Sukhdev"
+  },
+  {
+    "date": "2028-04-03",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "CH",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2028-04-07",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "CH",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2028-04-13",
+    "name": "Baisakhi",
+    "type": "state",
+    "state_code": "CH",
+    "description": "Harvest festival and founding of the Khalsa"
+  },
+  {
+    "date": "2028-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "CH",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2028-04-14",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "CH",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2028-05-06",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "CH",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2028-08-05",
+    "name": "Raksha Bandhan",
+    "type": "state",
+    "state_code": "CH",
+    "description": "Festival celebrating sibling bond"
+  },
+  {
+    "date": "2028-08-13",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "CH",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2028-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "CH",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2028-09-25",
+    "name": "Durga Ashtami",
+    "type": "state",
+    "state_code": "CH",
+    "description": "Eighth day of Navratri festival"
+  },
+  {
+    "date": "2028-09-26",
+    "name": "Maha Navami",
+    "type": "state",
+    "state_code": "CH",
+    "description": "Ninth day of Navratri festival"
+  },
+  {
+    "date": "2028-09-27",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "CH",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2028-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "CH",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2028-10-17",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "CH",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2028-10-18",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "CH",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2028-11-02",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "CH",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2028-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "CH",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

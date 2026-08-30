@@ -1,0 +1,177 @@
+[
+  {
+    "date": "2032-01-14",
+    "name": "Makar Sankranti",
+    "type": "state",
+    "state_code": "KA",
+    "description": "Harvest festival celebrated across Karnataka"
+  },
+  {
+    "date": "2032-01-15",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "KA",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2032-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "KA",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2032-03-10",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "KA",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2032-03-23",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "KA",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2032-03-26",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "KA",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2032-03-27",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "KA",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2032-04-11",
+    "name": "Ugadi",
+    "type": "state",
+    "state_code": "KA",
+    "description": "Kannada New Year festival"
+  },
+  {
+    "date": "2032-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "KA",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2032-04-19",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "KA",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2032-04-21",
+    "name": "Muharram",
+    "type": "state",
+    "state_code": "KA",
+    "description": "Islamic day of mourning"
+  },
+  {
+    "date": "2032-04-23",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "KA",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2032-05-25",
+    "name": "Buddha Purnima",
+    "type": "state",
+    "state_code": "KA",
+    "description": "Celebrates the birth of Lord Buddha"
+  },
+  {
+    "date": "2032-06-21",
+    "name": "Milad un-Nabi",
+    "type": "state",
+    "state_code": "KA",
+    "description": "Birthday of Prophet Muhammad"
+  },
+  {
+    "date": "2032-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "KA",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2032-08-28",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "KA",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2032-09-08",
+    "name": "Ganesh Chaturthi",
+    "type": "state",
+    "state_code": "KA",
+    "description": "Celebration of Lord Ganesha"
+  },
+  {
+    "date": "2032-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "KA",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2032-10-13",
+    "name": "Maha Navami / Ayudha Puja",
+    "type": "state",
+    "state_code": "KA",
+    "description": "Worship of tools and knowledge"
+  },
+  {
+    "date": "2032-10-14",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "KA",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2032-11-01",
+    "name": "Karnataka Rajyotsava",
+    "type": "state",
+    "state_code": "KA",
+    "description": "Karnataka State Formation Day"
+  },
+  {
+    "date": "2032-11-02",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "KA",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2032-11-03",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "KA",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2032-11-17",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "KA",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2032-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "KA",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

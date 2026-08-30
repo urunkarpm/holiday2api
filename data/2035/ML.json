@@ -1,0 +1,156 @@
+[
+  {
+    "date": "2035-01-21",
+    "name": "Meghalaya Statehood Day",
+    "type": "state",
+    "state_code": "ML",
+    "description": "Celebrates the statehood of Meghalaya in 1972"
+  },
+  {
+    "date": "2035-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "ML",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2035-02-19",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "ML",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2035-03-23",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "ML",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2035-03-24",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "ML",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2035-03-25",
+    "name": "Easter Sunday",
+    "type": "state",
+    "state_code": "ML",
+    "description": "Christian festival celebrating the resurrection of Jesus"
+  },
+  {
+    "date": "2035-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "ML",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2035-04-16",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "ML",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2035-04-20",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "ML",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2035-07-17",
+    "name": "U Tirot Sing Day",
+    "type": "state",
+    "state_code": "ML",
+    "description": "Commemorates the heroic Khasi freedom fighter U Tirot Sing"
+  },
+  {
+    "date": "2035-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "ML",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2035-08-26",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "ML",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2035-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "ML",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2035-10-11",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "ML",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2035-10-30",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "ML",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2035-10-31",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "ML",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2035-11-15",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "ML",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2035-11-23",
+    "name": "Seng Kut Snem",
+    "type": "state",
+    "state_code": "ML",
+    "description": "Cultural festival celebrating Khasi indigenous heritage"
+  },
+  {
+    "date": "2035-12-02",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "ML",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2035-12-18",
+    "name": "U Sohra Singh Day",
+    "type": "state",
+    "state_code": "ML",
+    "description": "Commemorates Khasi patriots"
+  },
+  {
+    "date": "2035-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "ML",
+    "description": "Celebrates the birth of Jesus Christ"
+  },
+  {
+    "date": "2035-12-30",
+    "name": "U Kiang Nangbah Day",
+    "type": "state",
+    "state_code": "ML",
+    "description": "Honors Jaintia freedom fighter U Kiang Nangbah"
+  }
+]

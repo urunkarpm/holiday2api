@@ -1,0 +1,191 @@
+[
+  {
+    "date": "2035-01-15",
+    "name": "Magh Bihu",
+    "type": "state",
+    "state_code": "AS",
+    "description": "Assamese harvest festival marking the end of harvesting season"
+  },
+  {
+    "date": "2035-01-23",
+    "name": "Netaji Subhas Chandra Bose Jayanti",
+    "type": "state",
+    "state_code": "AS",
+    "description": "Birth anniversary of Netaji Subhas Chandra Bose"
+  },
+  {
+    "date": "2035-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "AS",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2035-02-19",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "AS",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2035-03-08",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "AS",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2035-03-23",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "AS",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2035-03-24",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "AS",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2035-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "AS",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2035-04-14",
+    "name": "Bohag Bihu",
+    "type": "state",
+    "state_code": "AS",
+    "description": "Assamese New Year festival (Rongali Bihu)"
+  },
+  {
+    "date": "2035-04-15",
+    "name": "Bohag Bihu (Second Day)",
+    "type": "state",
+    "state_code": "AS",
+    "description": "Celebration of Bohag Bihu"
+  },
+  {
+    "date": "2035-04-16",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "AS",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2035-04-20",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "AS",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2035-05-22",
+    "name": "Buddha Purnima",
+    "type": "state",
+    "state_code": "AS",
+    "description": "Celebrates the birth of Lord Buddha"
+  },
+  {
+    "date": "2035-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "AS",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2035-08-26",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "AS",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2035-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "AS",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2035-10-09",
+    "name": "Durga Ashtami",
+    "type": "state",
+    "state_code": "AS",
+    "description": "Eighth day of Durga Puja"
+  },
+  {
+    "date": "2035-10-10",
+    "name": "Maha Navami",
+    "type": "state",
+    "state_code": "AS",
+    "description": "Ninth day of Durga Puja"
+  },
+  {
+    "date": "2035-10-11",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "AS",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2035-10-18",
+    "name": "Kati Bihu",
+    "type": "state",
+    "state_code": "AS",
+    "description": "Assamese festival of light and prayers for good harvest"
+  },
+  {
+    "date": "2035-10-30",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "AS",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2035-10-31",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "AS",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2035-11-15",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "AS",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2035-11-24",
+    "name": "Lachit Divas",
+    "type": "state",
+    "state_code": "AS",
+    "description": "Commemorates legendary Ahom general Lachit Borphukan"
+  },
+  {
+    "date": "2035-12-02",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "AS",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2035-12-02",
+    "name": "Asom Divas",
+    "type": "state",
+    "state_code": "AS",
+    "description": "Commemorates the arrival of Sukaphaa, founder of the Ahom kingdom"
+  },
+  {
+    "date": "2035-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "AS",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]
