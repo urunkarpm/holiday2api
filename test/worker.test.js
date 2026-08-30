@@ -69,7 +69,9 @@ async function runTests() {
     assert(html.includes('<!DOCTYPE html>') && html.includes('India Holidays API'), 'Should return HTML UI');
     assert(html.includes("@font-face") && html.includes("font-family: 'Author'") && html.includes('--font-display: \'Author\''), 'Should configure Author font-family');
     assert(html.includes('themeToggleBtn') && html.includes('toggleTheme()') && html.includes('[data-theme="light"]'), 'Should include Night/Day theme toggle and CSS tokens');
-    console.log('✔ GET / (Interactive HTML UI with Author font & Night/Day toggle) passed');
+    assert(html.includes('stateSearchInput') && html.includes('filterStatePills'), 'Should include states search filter');
+    assert(html.includes('data-code="TG"') && html.includes('data-code="MH"') && html.includes('data-code="AN"'), 'Should include full state pill directory');
+    console.log('✔ GET / (Interactive HTML UI with Author font & Night/Day toggle & State Filter) passed');
   }
 
   // Test 3: GET /health

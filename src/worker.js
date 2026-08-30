@@ -878,18 +878,20 @@ function renderInteractiveHtml(env) {
       --accent-terracotta: #c2410c;
       --accent-cyan: #0284c7;
       --accent-cyan-subtle: rgba(2, 132, 199, 0.08);
+      --accent-purple: #7c3aed;
+      --accent-purple-subtle: rgba(124, 58, 237, 0.08);
       
       --font-display: 'Author', 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --font-serif: 'Newsreader', Georgia, serif;
       --font-mono: 'IBM Plex Mono', monospace;
       
-      --radius-sm: 4px;
-      --radius-md: 8px;
-      --radius-lg: 12px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
       --shadow-crisp: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.04);
       --shadow-elevated: 0 10px 30px rgba(0, 0, 0, 0.08);
       --nav-bg: rgba(255, 255, 255, 0.92);
-      --grid-dot: rgba(0, 0, 0, 0.03);
+      --grid-dot: rgba(0, 0, 0, 0.035);
     }
 
     [data-theme="dark"] {
@@ -912,11 +914,13 @@ function renderInteractiveHtml(env) {
       --accent-terracotta: #ea580c;
       --accent-cyan: #38bdf8;
       --accent-cyan-subtle: rgba(56, 189, 248, 0.12);
+      --accent-purple: #a78bfa;
+      --accent-purple-subtle: rgba(167, 139, 250, 0.12);
       
       --shadow-crisp: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.25);
       --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.45);
-      --nav-bg: rgba(14, 16, 19, 0.88);
-      --grid-dot: rgba(255, 255, 255, 0.015);
+      --nav-bg: rgba(14, 16, 19, 0.9);
+      --grid-dot: rgba(255, 255, 255, 0.02);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -940,7 +944,7 @@ function renderInteractiveHtml(env) {
     .top-nav {
       border-bottom: 1px solid var(--border-subtle);
       background: var(--nav-bg);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -953,6 +957,7 @@ function renderInteractiveHtml(env) {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
     }
     .brand {
       display: flex;
@@ -963,17 +968,18 @@ function renderInteractiveHtml(env) {
       font-weight: 700;
       font-size: 1.05rem;
       letter-spacing: -0.02em;
+      flex-shrink: 0;
     }
     .brand-flag {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       border-radius: var(--radius-sm);
       background: var(--bg-elevated);
       border: 1px solid var(--border-strong);
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
     .version-tag {
       font-family: var(--font-mono);
@@ -987,7 +993,8 @@ function renderInteractiveHtml(env) {
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.25rem;
+      gap: 1.15rem;
+      flex-wrap: wrap;
     }
     .nav-link {
       color: var(--ink-secondary);
@@ -1008,6 +1015,7 @@ function renderInteractiveHtml(env) {
       border: 1px solid rgba(16, 185, 129, 0.3);
       padding: 0.2rem 0.6rem;
       border-radius: 999px;
+      white-space: nowrap;
     }
     .ping-dot {
       width: 6px;
@@ -1015,6 +1023,11 @@ function renderInteractiveHtml(env) {
       border-radius: 50%;
       background: var(--accent-emerald);
       box-shadow: 0 0 8px var(--accent-emerald);
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
     }
     .theme-toggle {
       display: inline-flex;
@@ -1048,6 +1061,20 @@ function renderInteractiveHtml(env) {
     :root:not([data-theme="dark"]) .moon-icon { display: none; }
     :root:not([data-theme="dark"]) .sun-icon { display: inline-block; }
 
+    @media (max-width: 768px) {
+      .top-nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.75rem 1rem;
+      }
+      .nav-links {
+        width: 100%;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        gap: 0.6rem;
+      }
+    }
+
     .container {
       max-width: 1240px;
       margin: 0 auto;
@@ -1073,6 +1100,7 @@ function renderInteractiveHtml(env) {
       border: 1px solid rgba(249, 115, 22, 0.25);
       padding: 0.3rem 0.8rem;
       border-radius: var(--radius-sm);
+      font-weight: 600;
     }
     h1 {
       font-size: clamp(2.4rem, 5vw, 3.8rem);
@@ -1109,6 +1137,7 @@ function renderInteractiveHtml(env) {
       max-width: 680px;
       margin-bottom: 2rem;
       box-shadow: var(--shadow-crisp);
+      gap: 0.75rem;
     }
     .terminal-cmd {
       font-family: var(--font-mono);
@@ -1116,7 +1145,7 @@ function renderInteractiveHtml(env) {
       color: var(--accent-cyan);
       overflow-x: auto;
       white-space: nowrap;
-      padding-right: 1rem;
+      padding-right: 0.5rem;
     }
     .terminal-cmd span { color: var(--ink-muted); }
 
@@ -1144,6 +1173,7 @@ function renderInteractiveHtml(env) {
     .btn-primary:hover {
       background: #f86704;
       transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
     }
     .btn-outline {
       background: var(--bg-surface);
@@ -1153,6 +1183,7 @@ function renderInteractiveHtml(env) {
     .btn-outline:hover {
       background: var(--bg-elevated);
       border-color: var(--ink-secondary);
+      transform: translateY(-1px);
     }
     .btn-sm {
       font-size: 0.78rem;
@@ -1173,6 +1204,7 @@ function renderInteractiveHtml(env) {
       border-radius: var(--radius-md);
       overflow: hidden;
       margin: 1.5rem 0 3.5rem;
+      box-shadow: var(--shadow-crisp);
     }
     .spec-item {
       background: var(--bg-surface);
@@ -1216,6 +1248,7 @@ function renderInteractiveHtml(env) {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      color: var(--ink-primary);
     }
     .section-desc {
       font-size: 0.88rem;
@@ -1229,16 +1262,26 @@ function renderInteractiveHtml(env) {
       align-items: center;
       gap: 0.5rem;
       overflow-x: auto;
-      padding: 0.25rem 0 1.25rem;
-      scrollbar-width: none;
+      padding: 0.5rem 0 1.25rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-strong) transparent;
     }
-    .presets-bar::-webkit-scrollbar { display: none; }
+    .presets-bar::-webkit-scrollbar {
+      height: 4px;
+    }
+    .presets-bar::-webkit-scrollbar-thumb {
+      background: var(--border-strong);
+      border-radius: 4px;
+    }
     .preset-label {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.74rem;
+      font-weight: 600;
       color: var(--ink-muted);
       white-space: nowrap;
       text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-right: 0.25rem;
     }
     .preset-chip {
       background: var(--bg-surface);
@@ -1246,21 +1289,28 @@ function renderInteractiveHtml(env) {
       color: var(--ink-secondary);
       font-family: var(--font-mono);
       font-size: 0.78rem;
-      padding: 0.35rem 0.75rem;
-      border-radius: var(--radius-sm);
+      font-weight: 500;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
       cursor: pointer;
       white-space: nowrap;
       transition: all 0.15s ease;
+      box-shadow: var(--shadow-crisp);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
     }
     .preset-chip:hover {
       background: var(--bg-elevated);
       color: var(--ink-primary);
       border-color: var(--border-strong);
+      transform: translateY(-1px);
     }
     .preset-chip.active {
       background: var(--accent-saffron-subtle);
       color: var(--accent-saffron);
-      border-color: rgba(249, 115, 22, 0.4);
+      border-color: var(--accent-saffron);
+      font-weight: 600;
     }
 
     /* Interactive Workbench Layout */
@@ -1269,9 +1319,13 @@ function renderInteractiveHtml(env) {
       grid-template-columns: 420px 1fr;
       gap: 1.5rem;
       margin-bottom: 3.5rem;
+      align-items: start;
     }
     @media (max-width: 990px) {
-      .workbench { grid-template-columns: 1fr; }
+      .workbench { 
+        grid-template-columns: 1fr; 
+        gap: 1.25rem;
+      }
     }
 
     /* Panel & Controls */
@@ -1281,28 +1335,32 @@ function renderInteractiveHtml(env) {
       border-radius: var(--radius-lg);
       overflow: hidden;
       box-shadow: var(--shadow-crisp);
+      display: flex;
+      flex-direction: column;
     }
     .panel-header {
       background: var(--bg-elevated);
       border-bottom: 1px solid var(--border-subtle);
-      padding: 0.85rem 1.25rem;
+      padding: 0.95rem 1.25rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
     .panel-header-title {
       font-family: var(--font-mono);
       font-size: 0.82rem;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--ink-primary);
       display: flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 0.5rem;
     }
     .panel-body {
-      padding: 1.25rem;
+      padding: 1.35rem;
     }
 
     .form-row {
@@ -1311,68 +1369,125 @@ function renderInteractiveHtml(env) {
     .field-label {
       display: block;
       font-family: var(--font-mono);
-      font-size: 0.74rem;
+      font-size: 0.72rem;
+      font-weight: 600;
       color: var(--ink-secondary);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.4rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.45rem;
     }
     .control-select, .control-input {
       width: 100%;
       background: var(--bg);
       border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-md);
       color: var(--ink-primary);
       font-family: var(--font-mono);
       font-size: 0.85rem;
       padding: 0.65rem 0.85rem;
       outline: none;
-      transition: border-color 0.15s;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .control-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1rem;
+      padding-right: 2.25rem;
+      cursor: pointer;
     }
     .control-select:focus, .control-input:focus {
       border-color: var(--accent-saffron);
+      box-shadow: 0 0 0 3px var(--accent-saffron-subtle);
     }
     .grid-duo {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
       gap: 0.75rem;
     }
 
     .checkbox-pill {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.65rem;
       background: var(--bg);
       border: 1px solid var(--border-strong);
-      padding: 0.55rem 0.85rem;
-      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.9rem;
+      border-radius: var(--radius-md);
       font-size: 0.8rem;
       font-family: var(--font-mono);
       color: var(--ink-secondary);
       cursor: pointer;
       width: 100%;
+      transition: all 0.15s ease;
+      user-select: none;
     }
-    .checkbox-pill input { accent-color: var(--accent-saffron); }
+    .checkbox-pill:hover {
+      border-color: var(--accent-saffron);
+      color: var(--ink-primary);
+    }
+    .checkbox-pill input { 
+      accent-color: var(--accent-saffron);
+      width: 1rem;
+      height: 1rem;
+      cursor: pointer;
+    }
 
-    .url-preview-bar {
+    .url-preview-wrapper {
+      display: flex;
+      align-items: center;
       background: var(--bg);
       border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      padding: 0.6rem 0.85rem;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: border-color 0.15s;
+    }
+    .url-preview-wrapper:focus-within {
+      border-color: var(--accent-saffron);
+    }
+    .url-method-badge {
+      background: var(--bg-elevated);
+      border-right: 1px solid var(--border-strong);
+      padding: 0.65rem 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-emerald);
+      user-select: none;
+    }
+    .url-preview-bar {
+      flex: 1;
+      padding: 0.65rem 0.85rem;
       font-family: var(--font-mono);
       font-size: 0.8rem;
       color: var(--accent-cyan);
       overflow-x: auto;
       white-space: nowrap;
-      margin-top: 0.25rem;
+    }
+    .url-copy-btn {
+      border-radius: 0;
+      border: none;
+      border-left: 1px solid var(--border-strong);
+      background: transparent;
+      color: var(--ink-secondary);
+      padding: 0.65rem 0.85rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.15s;
+    }
+    .url-copy-btn:hover {
+      background: var(--bg-elevated);
+      color: var(--ink-primary);
     }
 
     /* Response Panel & Dual View Mode */
     .view-toggle-group {
-      display: flex;
+      display: inline-flex;
       background: var(--bg);
       border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-md);
       padding: 2px;
       gap: 2px;
     }
@@ -1382,59 +1497,78 @@ function renderInteractiveHtml(env) {
       color: var(--ink-secondary);
       font-family: var(--font-mono);
       font-size: 0.75rem;
-      padding: 0.25rem 0.65rem;
-      border-radius: 2px;
+      font-weight: 600;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-sm);
       cursor: pointer;
       transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
     }
     .view-toggle-btn.active {
-      background: var(--bg-subtle);
+      background: var(--bg-surface);
       color: var(--ink-primary);
-      font-weight: 600;
+      box-shadow: var(--shadow-crisp);
     }
 
     /* Visual Holiday Cards Grid */
     .visual-cards-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 0.85rem;
-      max-height: 520px;
+      gap: 0.95rem;
+      max-height: 540px;
       overflow-y: auto;
-      padding-right: 0.35rem;
+      padding: 0.25rem 0.25rem 0.5rem 0.1rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-strong) transparent;
     }
+    .visual-cards-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    .visual-cards-container::-webkit-scrollbar-thumb {
+      background: var(--border-strong);
+      border-radius: 4px;
+    }
+
     .holiday-card {
       background: var(--bg);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 0.9rem;
+      padding: 1.15rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: border-color 0.15s, transform 0.15s;
+      gap: 0.75rem;
+      transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
       position: relative;
+      box-shadow: var(--shadow-crisp);
     }
     .holiday-card:hover {
-      border-color: var(--border-strong);
-      transform: translateY(-1px);
+      border-color: var(--accent-saffron);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-elevated);
     }
     .holiday-date-strip {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.25rem;
     }
     .holiday-day-num {
-      font-size: 1.25rem;
+      font-size: 1.45rem;
       font-weight: 800;
-      color: #ffffff;
+      color: var(--ink-primary);
       font-family: var(--font-display);
+      line-height: 1;
     }
     .holiday-month-name {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 700;
       color: var(--accent-saffron);
       text-transform: uppercase;
-      font-weight: 600;
+      letter-spacing: 0.05em;
     }
     .holiday-weekday {
       font-family: var(--font-mono);
@@ -1442,25 +1576,31 @@ function renderInteractiveHtml(env) {
       color: var(--ink-muted);
     }
     .holiday-name {
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--ink-primary);
       line-height: 1.35;
-      margin-bottom: 0.65rem;
+      margin: 0.35rem 0;
+      word-break: break-word;
     }
     .holiday-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.35rem;
+      gap: 0.4rem;
+      align-items: center;
     }
     .tag-badge {
       font-family: var(--font-mono);
-      font-size: 0.68rem;
-      padding: 0.15rem 0.45rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
       border-radius: var(--radius-sm);
       background: var(--bg-subtle);
       color: var(--ink-secondary);
       border: 1px solid var(--border-subtle);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
     }
     .tag-badge.national {
       background: var(--accent-emerald-subtle);
@@ -1471,58 +1611,92 @@ function renderInteractiveHtml(env) {
       background: var(--accent-saffron-subtle);
       color: var(--accent-saffron);
       border-color: rgba(249, 115, 22, 0.3);
-       /* Long weekend specific card */
+    }
+    .tag-badge.bank {
+      background: var(--accent-cyan-subtle);
+      color: var(--accent-cyan);
+      border-color: rgba(2, 132, 199, 0.3);
+    }
+    .tag-badge.restricted, .tag-badge.optional {
+      background: var(--accent-purple-subtle);
+      color: var(--accent-purple);
+      border-color: rgba(124, 58, 237, 0.3);
+    }
+    .tag-badge.upcoming-countdown {
+      background: var(--accent-saffron-subtle);
+      color: var(--accent-saffron);
+      border-color: rgba(249, 115, 22, 0.35);
+      font-weight: 700;
+    }
+
+    /* Long weekend specific card */
     .lw-card {
       background: var(--bg);
-      border: 1px solid rgba(249, 115, 22, 0.25);
-      border-left: 3px solid var(--accent-saffron);
+      border: 1px solid var(--border-subtle);
+      border-left: 4px solid var(--accent-saffron);
       border-radius: var(--radius-md);
-      padding: 1rem;
-      margin-bottom: 0.75rem;
+      padding: 1.15rem;
+      margin-bottom: 0.85rem;
+      box-shadow: var(--shadow-crisp);
+      transition: all 0.15s ease;
+    }
+    .lw-card:hover {
+      border-color: var(--border-strong);
+      border-left-color: var(--accent-saffron);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-elevated);
     }
     .lw-title {
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--ink-primary);
       margin-bottom: 0.35rem;
     }
     .lw-meta {
       font-family: var(--font-mono);
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--accent-marigold);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
     }
     .lw-advice {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       color: var(--ink-secondary);
-      line-height: 1.45;
+      line-height: 1.5;
+      background: var(--bg-elevated);
+      padding: 0.6rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
     }
 
     /* KPI Metrics Box */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 0.75rem;
-      margin-bottom: 1rem;
+      gap: 0.85rem;
+      margin-bottom: 1.15rem;
     }
     .kpi-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 0.85rem;
+      border-radius: var(--radius-md);
+      padding: 1rem 0.85rem;
       text-align: center;
+      box-shadow: var(--shadow-crisp);
     }
     .kpi-val {
-      font-size: 1.4rem;
+      font-size: 1.55rem;
       font-weight: 800;
       font-family: var(--font-display);
-      margin-bottom: 0.15rem;
+      line-height: 1.1;
+      margin-bottom: 0.25rem;
     }
     .kpi-label {
       font-family: var(--font-mono);
       font-size: 0.7rem;
+      font-weight: 600;
       color: var(--ink-muted);
       text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     /* Meta & OpenApi Cards */
@@ -1530,16 +1704,18 @@ function renderInteractiveHtml(env) {
       background: var(--bg);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 0.95rem;
+      padding: 1.1rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 0.5rem;
+      gap: 0.65rem;
       transition: all 0.15s ease;
+      box-shadow: var(--shadow-crisp);
     }
     .meta-card:hover {
-      border-color: var(--border-strong);
+      border-color: var(--accent-saffron);
       transform: translateY(-1px);
+      box-shadow: var(--shadow-elevated);
     }
     .meta-card-header {
       display: flex;
@@ -1547,14 +1723,14 @@ function renderInteractiveHtml(env) {
       justify-content: space-between;
     }
     .meta-card-title {
-      font-size: 0.95rem;
+      font-size: 0.98rem;
       font-weight: 700;
       color: var(--ink-primary);
     }
     .meta-card-desc {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       color: var(--ink-secondary);
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     /* Raw Code Box */
@@ -1562,26 +1738,43 @@ function renderInteractiveHtml(env) {
       background: var(--bg);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 1rem;
+      padding: 1.25rem;
       font-family: var(--font-mono);
-      font-size: 0.8rem;
-      line-height: 1.5;
-      color: #cbd5e1;
-      max-height: 520px;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      color: var(--ink-primary);
+      max-height: 540px;
       overflow: auto;
       white-space: pre;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-strong) transparent;
+    }
+    .raw-code-box::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .raw-code-box::-webkit-scrollbar-thumb {
+      background: var(--border-strong);
+      border-radius: 4px;
     }
 
     /* Code Snippets Bar */
     .snippets-container {
-      margin-top: 1.25rem;
+      margin-top: 1.35rem;
       border-top: 1px solid var(--border-subtle);
-      padding-top: 1.25rem;
+      padding-top: 1.15rem;
+    }
+    .snippet-tabs-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.55rem;
+      gap: 0.5rem;
     }
     .snippet-tabs {
       display: flex;
-      gap: 0.4rem;
-      margin-bottom: 0.65rem;
+      gap: 0.35rem;
+      flex-wrap: wrap;
     }
     .snippet-tab {
       background: var(--bg-elevated);
@@ -1589,37 +1782,38 @@ function renderInteractiveHtml(env) {
       color: var(--ink-secondary);
       font-family: var(--font-mono);
       font-size: 0.75rem;
-      padding: 0.3rem 0.7rem;
+      font-weight: 600;
+      padding: 0.3rem 0.75rem;
       border-radius: var(--radius-sm);
       cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .snippet-tab:hover {
+      color: var(--ink-primary);
+      border-color: var(--border-strong);
     }
     .snippet-tab.active {
       background: var(--bg-subtle);
-      color: var(--accent-cyan);
-      border-color: var(--border-strong);
+      color: var(--accent-saffron);
+      border-color: var(--accent-saffron);
     }
     .snippet-display {
       background: var(--bg);
       border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      padding: 0.75rem 0.9rem;
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
       font-family: var(--font-mono);
       font-size: 0.78rem;
+      line-height: 1.55;
       color: var(--ink-primary);
-      position: relative;
       overflow-x: auto;
       white-space: pre;
-    }
-    .snippet-copy-btn {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
     }
 
     /* Feature Grid (Editorial Style) */
     .feature-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.5rem;
       margin: 2.5rem 0 4rem;
     }
@@ -1629,6 +1823,12 @@ function renderInteractiveHtml(env) {
       border-radius: var(--radius-lg);
       padding: 1.75rem;
       position: relative;
+      box-shadow: var(--shadow-crisp);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-strong);
     }
     .feature-num {
       font-family: var(--font-mono);
@@ -1636,13 +1836,14 @@ function renderInteractiveHtml(env) {
       color: var(--accent-saffron);
       margin-bottom: 0.75rem;
       display: block;
+      font-weight: 600;
     }
     .feature-title {
       font-size: 1.2rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       margin-bottom: 0.6rem;
-      color: #ffffff;
+      color: var(--ink-primary);
     }
     .feature-desc {
       font-size: 0.9rem;
@@ -1661,6 +1862,7 @@ function renderInteractiveHtml(env) {
       grid-template-columns: 1.2fr 1fr;
       gap: 2rem;
       align-items: center;
+      box-shadow: var(--shadow-crisp);
     }
     @media (max-width: 860px) {
       .postman-section { grid-template-columns: 1fr; }
@@ -1677,11 +1879,12 @@ function renderInteractiveHtml(env) {
       padding: 0.25rem 0.65rem;
       border-radius: var(--radius-sm);
       margin-bottom: 0.85rem;
+      font-weight: 600;
     }
     .postman-heading {
       font-size: 1.5rem;
       font-weight: 800;
-      color: #ffffff;
+      color: var(--ink-primary);
       margin-bottom: 0.65rem;
       letter-spacing: -0.02em;
     }
@@ -1715,6 +1918,10 @@ function renderInteractiveHtml(env) {
     }
 
     /* States Directory Filter */
+    .states-search-wrapper {
+      margin-bottom: 1rem;
+      max-width: 400px;
+    }
     .states-filter-bar {
       display: flex;
       gap: 0.5rem;
@@ -1735,11 +1942,13 @@ function renderInteractiveHtml(env) {
       align-items: center;
       gap: 0.35rem;
       transition: all 0.15s;
+      box-shadow: var(--shadow-crisp);
     }
     .state-pill:hover {
       background: var(--bg-elevated);
       color: var(--ink-primary);
       border-color: var(--border-strong);
+      transform: translateY(-1px);
     }
     .state-pill span {
       color: var(--accent-saffron);
@@ -1774,7 +1983,7 @@ function renderInteractiveHtml(env) {
       letter-spacing: 0.06em;
       color: var(--ink-muted);
       border-bottom: 1px solid var(--border-subtle);
-      border-right: 1px solid rgba(255, 255, 255, 0.03);
+      border-right: 1px solid var(--border-subtle);
       font-weight: 600;
       white-space: nowrap;
       position: sticky;
@@ -1787,7 +1996,7 @@ function renderInteractiveHtml(env) {
     .doc-table td {
       padding: 1.15rem 1.25rem;
       border-bottom: 1px solid var(--border-subtle);
-      border-right: 1px solid rgba(255, 255, 255, 0.03);
+      border-right: 1px solid var(--border-subtle);
       color: var(--ink-secondary);
       vertical-align: top;
       line-height: 1.55;
@@ -1801,7 +2010,7 @@ function renderInteractiveHtml(env) {
       border-bottom: none;
     }
     .doc-table tr:hover td {
-      background: rgba(255, 255, 255, 0.025);
+      background: var(--bg-elevated);
     }
     .doc-table td code {
       font-family: var(--font-mono);
@@ -1842,7 +2051,7 @@ function renderInteractiveHtml(env) {
     }
     .table-endpoint-title {
       font-weight: 700;
-      color: #ffffff;
+      color: var(--ink-primary);
       font-size: 0.92rem;
       margin-bottom: 0.25rem;
       display: block;
@@ -1872,7 +2081,7 @@ function renderInteractiveHtml(env) {
       box-sizing: border-box;
     }
     .endpoint-sample-btn:hover {
-      background: rgba(56, 189, 248, 0.22);
+      background: var(--accent-cyan);
       border-color: var(--accent-cyan);
       color: #ffffff;
       transform: translateY(-1px);
@@ -1902,10 +2111,12 @@ function renderInteractiveHtml(env) {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      pointer-events: none;
     }
     .toast.show {
       transform: translateY(0);
       opacity: 1;
+      pointer-events: auto;
     }
 
     /* Human-crafted Footer */
@@ -1930,7 +2141,7 @@ function renderInteractiveHtml(env) {
     .footer-brand {
       font-size: 1.1rem;
       font-weight: 700;
-      color: #ffffff;
+      color: var(--ink-primary);
       margin-bottom: 0.65rem;
     }
     .footer-desc {
@@ -2002,7 +2213,7 @@ function renderInteractiveHtml(env) {
     </div>
   </nav>
 
-  <div class="container">
+  <main class="container">
     
     <!-- Hero Section -->
     <header class="hero">
@@ -2030,7 +2241,7 @@ function renderInteractiveHtml(env) {
       <div style="display: flex; gap: 0.85rem; flex-wrap: wrap;">
         <a href="#workbench" class="btn btn-primary">⚡ Test Live in Workbench</a>
         <a href="#postman" class="btn btn-outline">🚀 Import to Postman</a>
-        <a href="https://github.com/urunkarpm/holiday2api" target="_blank" class="btn btn-outline">⭐ GitHub Repository</a>
+        <a href="https://github.com/urunkarpm/holiday2api" target="_blank" class="btn btn-outline" rel="noopener noreferrer">⭐ GitHub Repository</a>
       </div>
     </header>
 
@@ -2066,16 +2277,16 @@ function renderInteractiveHtml(env) {
       <!-- Quick Preset Chips -->
       <div class="presets-bar">
         <span class="preset-label">Presets:</span>
-        <button class="preset-chip active" onclick="applyPreset('tg-2026')">Telangana 2026</button>
-        <button class="preset-chip" onclick="applyPreset('mh-lw')">Maharashtra Long Weekends</button>
-        <button class="preset-chip" onclick="applyPreset('upcoming')">Upcoming 5 Holidays</button>
-        <button class="preset-chip" onclick="applyPreset('rbi-working')">Q1 RBI Working Days</button>
-        <button class="preset-chip" onclick="applyPreset('national-2026')">All-India National 2026</button>
-        <button class="preset-chip" onclick="applyPreset('ics-feed')">Apple/Google .ICS Feed</button>
-        <button class="preset-chip" onclick="applyPreset('meta-states')">36 States Directory</button>
-        <button class="preset-chip" onclick="applyPreset('meta-types')">Holiday Classifications</button>
-        <button class="preset-chip" onclick="applyPreset('openapi')">OpenAPI Spec</button>
-        <button class="preset-chip" onclick="applyPreset('health')">API Health</button>
+        <button class="preset-chip active" onclick="applyPreset('tg-2026', this)">Telangana 2026</button>
+        <button class="preset-chip" onclick="applyPreset('mh-lw', this)">Maharashtra Long Weekends</button>
+        <button class="preset-chip" onclick="applyPreset('upcoming', this)">Upcoming 5 Holidays</button>
+        <button class="preset-chip" onclick="applyPreset('rbi-working', this)">Q1 RBI Working Days</button>
+        <button class="preset-chip" onclick="applyPreset('national-2026', this)">All-India National 2026</button>
+        <button class="preset-chip" onclick="applyPreset('ics-feed', this)">Apple/Google .ICS Feed</button>
+        <button class="preset-chip" onclick="applyPreset('meta-states', this)">36 States Directory</button>
+        <button class="preset-chip" onclick="applyPreset('meta-types', this)">Holiday Classifications</button>
+        <button class="preset-chip" onclick="applyPreset('openapi', this)">OpenAPI Spec</button>
+        <button class="preset-chip" onclick="applyPreset('health', this)">API Health</button>
       </div>
 
       <!-- The Workbench Grid -->
@@ -2083,13 +2294,13 @@ function renderInteractiveHtml(env) {
         <!-- Controls Column -->
         <div class="panel">
           <div class="panel-header">
-            <span class="panel-header-title">⚙️ Request Configuration</span>
-            <span class="version-tag" id="methodBadge">GET</span>
+            <span class="panel-header-title">⚡ Query Builder</span>
+            <span class="tag-badge gazetted" id="methodBadge">GET</span>
           </div>
           <div class="panel-body">
             
             <div class="form-row">
-              <label class="field-label">Target Endpoint</label>
+              <label class="field-label" for="endpointSelect">Target Endpoint</label>
               <select id="endpointSelect" class="control-select" onchange="handleControlChange()">
                 <option value="/api/holidays/:year/:state">GET /api/holidays/:year/:state (State Holidays)</option>
                 <option value="/api/holidays/:year">GET /api/holidays/:year (National Holidays)</option>
@@ -2106,7 +2317,7 @@ function renderInteractiveHtml(env) {
 
             <div class="grid-duo form-row" id="yearStateRow">
               <div id="yearGroup">
-                <label class="field-label">Year (2024–2036)</label>
+                <label class="field-label" for="yearSelect">Year (2024–2036)</label>
                 <select id="yearSelect" class="control-select" onchange="handleControlChange()">
                   <option value="2026" selected>2026</option>
                   <option value="2025">2025</option>
@@ -2125,33 +2336,31 @@ function renderInteractiveHtml(env) {
               </div>
 
               <div id="stateGroup">
-                <label class="field-label">State / UT (36 Regions)</label>
+                <label class="field-label" for="stateSelect">State / UT (36 Regions)</label>
                 <select id="stateSelect" class="control-select" onchange="handleControlChange()">
                   <option value="TG" selected>TG — Telangana</option>
                   <option value="IN">IN — National (All India)</option>
-                  <option value="MH">MH — Maharashtra</option>
-                  <option value="KA">KA — Karnataka</option>
-                  <option value="DL">DL — Delhi NCR</option>
-                  <option value="TN">TN — Tamil Nadu</option>
-                  <option value="WB">WB — West Bengal</option>
-                  <option value="KL">KL — Kerala</option>
-                  <option value="GJ">GJ — Gujarat</option>
-                  <option value="UP">UP — Uttar Pradesh</option>
+                  <option value="AN">AN — Andaman and Nicobar Islands</option>
                   <option value="AP">AP — Andhra Pradesh</option>
                   <option value="AR">AR — Arunachal Pradesh</option>
                   <option value="AS">AS — Assam</option>
                   <option value="BR">BR — Bihar</option>
                   <option value="CH">CH — Chandigarh</option>
                   <option value="CT">CT — Chhattisgarh</option>
-                  <option value="DN">DN — Dadra & Nagar Haveli / Daman & Diu</option>
+                  <option value="DN">DN — Dadra & Nagar Haveli and Daman & Diu</option>
+                  <option value="DL">DL — Delhi NCR</option>
                   <option value="GA">GA — Goa</option>
+                  <option value="GJ">GJ — Gujarat</option>
                   <option value="HR">HR — Haryana</option>
                   <option value="HP">HP — Himachal Pradesh</option>
-                  <option value="JK">JK — Jammu and Kashmir</option>
+                  <option value="JK">JK — Jammu & Kashmir</option>
                   <option value="JH">JH — Jharkhand</option>
+                  <option value="KA">KA — Karnataka</option>
+                  <option value="KL">KL — Kerala</option>
                   <option value="LA">LA — Ladakh</option>
                   <option value="LD">LD — Lakshadweep</option>
                   <option value="MP">MP — Madhya Pradesh</option>
+                  <option value="MH">MH — Maharashtra</option>
                   <option value="MN">MN — Manipur</option>
                   <option value="ML">ML — Meghalaya</option>
                   <option value="MZ">MZ — Mizoram</option>
@@ -2161,8 +2370,11 @@ function renderInteractiveHtml(env) {
                   <option value="PB">PB — Punjab</option>
                   <option value="RJ">RJ — Rajasthan</option>
                   <option value="SK">SK — Sikkim</option>
+                  <option value="TN">TN — Tamil Nadu</option>
                   <option value="TR">TR — Tripura</option>
+                  <option value="UP">UP — Uttar Pradesh</option>
                   <option value="UT">UT — Uttarakhand</option>
+                  <option value="WB">WB — West Bengal</option>
                 </select>
               </div>
             </div>
@@ -2171,11 +2383,11 @@ function renderInteractiveHtml(env) {
             <div id="dateRangeGroup" style="display: none;" class="form-row">
               <div class="grid-duo" style="margin-bottom: 0.75rem;">
                 <div>
-                  <label class="field-label">From Date</label>
+                  <label class="field-label" for="fromDateInput">From Date</label>
                   <input type="date" id="fromDateInput" class="control-input" value="2026-03-01" onchange="handleControlChange()">
                 </div>
                 <div>
-                  <label class="field-label">To Date</label>
+                  <label class="field-label" for="toDateInput">To Date</label>
                   <input type="date" id="toDateInput" class="control-input" value="2026-03-31" onchange="handleControlChange()">
                 </div>
               </div>
@@ -2187,25 +2399,31 @@ function renderInteractiveHtml(env) {
 
             <div class="form-row">
               <label class="field-label">Calculated Request Path</label>
-              <div id="urlPreviewDisplay" class="url-preview-bar">/api/holidays/2026/TG</div>
+              <div class="url-preview-wrapper">
+                <span class="url-method-badge">GET</span>
+                <div id="urlPreviewDisplay" class="url-preview-bar">/api/holidays/2026/TG</div>
+                <button class="url-copy-btn" onclick="copySnippetText(window.location.origin + getGeneratedPath())" title="Copy Full URL" aria-label="Copy Full URL">📋</button>
+              </div>
             </div>
 
-            <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="executeWorkbenchRequest()">
+            <button class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 0.95rem; padding: 0.75rem 1.25rem;" onclick="executeWorkbenchRequest()">
               ⚡ Send API Request
             </button>
 
             <!-- Code Snippet Generator Tabs -->
             <div class="snippets-container">
-              <label class="field-label">Integration Snippet</label>
+              <div class="snippet-tabs-header">
+                <label class="field-label" style="margin-bottom: 0;">Integration Snippet</label>
+                <button class="btn btn-sm btn-outline" onclick="copyCurrentSnippet()" style="padding: 0.2rem 0.6rem; font-size: 0.72rem;">📋 Copy Code</button>
+              </div>
               <div class="snippet-tabs">
-                <button class="snippet-tab active" onclick="switchSnippetTab('curl')">cURL</button>
-                <button class="snippet-tab" onclick="switchSnippetTab('js')">JS Fetch</button>
-                <button class="snippet-tab" onclick="switchSnippetTab('python')">Python</button>
-                <button class="snippet-tab" onclick="switchSnippetTab('go')">Go</button>
+                <button class="snippet-tab active" onclick="switchSnippetTab('curl', this)">cURL</button>
+                <button class="snippet-tab" onclick="switchSnippetTab('js', this)">JS Fetch</button>
+                <button class="snippet-tab" onclick="switchSnippetTab('python', this)">Python</button>
+                <button class="snippet-tab" onclick="switchSnippetTab('go', this)">Go</button>
               </div>
               <div class="snippet-display" id="snippetDisplayArea">
                 <code id="snippetCode">curl https://holiday2api.vercel.app/api/holidays/2026/TG</code>
-                <button class="btn btn-sm btn-outline snippet-copy-btn" onclick="copyCurrentSnippet()">Copy</button>
               </div>
             </div>
 
@@ -2215,23 +2433,26 @@ function renderInteractiveHtml(env) {
         <!-- Response Viewer Column -->
         <div class="panel">
           <div class="panel-header">
-            <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
               <span class="panel-header-title">📦 Payload Inspector</span>
               <span id="responseStatusBadge" class="status-indicator">200 OK</span>
-              <span id="responseTimeBadge" style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-muted);">-- ms</span>
+              <span id="responseTimeBadge" style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-muted); background: var(--bg); padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">-- ms</span>
             </div>
 
-            <!-- View Switcher -->
-            <div class="view-toggle-group">
-              <button id="btnViewVisual" class="view-toggle-btn active" onclick="setViewMode('visual')">✦ Visual Cards</button>
-              <button id="btnViewRaw" class="view-toggle-btn" onclick="setViewMode('raw')">{ } Raw JSON</button>
+            <!-- View Switcher & Copy -->
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <div class="view-toggle-group">
+                <button id="btnViewVisual" class="view-toggle-btn active" onclick="setViewMode('visual')">✦ Visual Cards</button>
+                <button id="btnViewRaw" class="view-toggle-btn" onclick="setViewMode('raw')">{ } Raw JSON</button>
+              </div>
+              <button class="btn btn-sm btn-outline" onclick="copyCurrentPayload()" title="Copy Response Payload" aria-label="Copy Response Payload" style="padding: 0.25rem 0.55rem; font-size: 0.75rem;">📋</button>
             </div>
           </div>
           <div class="panel-body">
             
             <!-- Visual Container -->
             <div id="visualDisplayArea" class="visual-cards-container">
-              <div style="color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.85rem; padding: 2rem 0; text-align: center;">
+              <div style="color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.85rem; padding: 2.5rem 1rem; text-align: center;">
                 Loading payload preview...
               </div>
             </div>
@@ -2268,7 +2489,7 @@ function renderInteractiveHtml(env) {
       </div>
 
       <div class="postman-box">
-        <strong style="color: #ffffff; font-family: var(--font-display); font-size: 0.92rem; display: block; margin-bottom: 0.75rem;">
+        <strong style="color: var(--ink-primary); font-family: var(--font-display); font-size: 0.92rem; display: block; margin-bottom: 0.75rem;">
           3-Step Postman Import:
         </strong>
         <ol class="step-list">
@@ -2324,39 +2545,48 @@ function renderInteractiveHtml(env) {
         </div>
       </div>
 
+      <div class="states-search-wrapper">
+        <input type="text" id="stateSearchInput" class="control-input" placeholder="🔍 Search state or code (e.g. Kerala, DL, Goa)..." oninput="filterStatePills(this.value)">
+      </div>
+
       <div class="states-filter-bar" id="statesContainer">
-        <button class="state-pill" onclick="quickSelectState('TG')"><span>TG</span> Telangana</button>
-        <button class="state-pill" onclick="quickSelectState('MH')"><span>MH</span> Maharashtra</button>
-        <button class="state-pill" onclick="quickSelectState('KA')"><span>KA</span> Karnataka</button>
-        <button class="state-pill" onclick="quickSelectState('DL')"><span>DL</span> Delhi NCR</button>
-        <button class="state-pill" onclick="quickSelectState('TN')"><span>TN</span> Tamil Nadu</button>
-        <button class="state-pill" onclick="quickSelectState('WB')"><span>WB</span> West Bengal</button>
-        <button class="state-pill" onclick="quickSelectState('KL')"><span>KL</span> Kerala</button>
-        <button class="state-pill" onclick="quickSelectState('GJ')"><span>GJ</span> Gujarat</button>
-        <button class="state-pill" onclick="quickSelectState('UP')"><span>UP</span> Uttar Pradesh</button>
-        <button class="state-pill" onclick="quickSelectState('AP')"><span>AP</span> Andhra Pradesh</button>
-        <button class="state-pill" onclick="quickSelectState('AR')"><span>AR</span> Arunachal Pradesh</button>
-        <button class="state-pill" onclick="quickSelectState('AS')"><span>AS</span> Assam</button>
-        <button class="state-pill" onclick="quickSelectState('BR')"><span>BR</span> Bihar</button>
-        <button class="state-pill" onclick="quickSelectState('CH')"><span>CH</span> Chandigarh</button>
-        <button class="state-pill" onclick="quickSelectState('CT')"><span>CT</span> Chhattisgarh</button>
-        <button class="state-pill" onclick="quickSelectState('GA')"><span>GA</span> Goa</button>
-        <button class="state-pill" onclick="quickSelectState('HR')"><span>HR</span> Haryana</button>
-        <button class="state-pill" onclick="quickSelectState('HP')"><span>HP</span> Himachal Pradesh</button>
-        <button class="state-pill" onclick="quickSelectState('JK')"><span>JK</span> Jammu & Kashmir</button>
-        <button class="state-pill" onclick="quickSelectState('JH')"><span>JH</span> Jharkhand</button>
-        <button class="state-pill" onclick="quickSelectState('LA')"><span>LA</span> Ladakh</button>
-        <button class="state-pill" onclick="quickSelectState('MP')"><span>MP</span> Madhya Pradesh</button>
-        <button class="state-pill" onclick="quickSelectState('MN')"><span>MN</span> Manipur</button>
-        <button class="state-pill" onclick="quickSelectState('ML')"><span>ML</span> Meghalaya</button>
-        <button class="state-pill" onclick="quickSelectState('MZ')"><span>MZ</span> Mizoram</button>
-        <button class="state-pill" onclick="quickSelectState('NL')"><span>NL</span> Nagaland</button>
-        <button class="state-pill" onclick="quickSelectState('OR')"><span>OR</span> Odisha</button>
-        <button class="state-pill" onclick="quickSelectState('PB')"><span>PB</span> Punjab</button>
-        <button class="state-pill" onclick="quickSelectState('RJ')"><span>RJ</span> Rajasthan</button>
-        <button class="state-pill" onclick="quickSelectState('SK')"><span>SK</span> Sikkim</button>
-        <button class="state-pill" onclick="quickSelectState('TR')"><span>TR</span> Tripura</button>
-        <button class="state-pill" onclick="quickSelectState('UT')"><span>UT</span> Uttarakhand</button>
+        <button class="state-pill" data-code="TG" data-name="Telangana" onclick="quickSelectState('TG')"><span>TG</span> Telangana</button>
+        <button class="state-pill" data-code="IN" data-name="National All India" onclick="quickSelectState('IN')"><span>IN</span> National (All India)</button>
+        <button class="state-pill" data-code="MH" data-name="Maharashtra" onclick="quickSelectState('MH')"><span>MH</span> Maharashtra</button>
+        <button class="state-pill" data-code="KA" data-name="Karnataka" onclick="quickSelectState('KA')"><span>KA</span> Karnataka</button>
+        <button class="state-pill" data-code="DL" data-name="Delhi NCR" onclick="quickSelectState('DL')"><span>DL</span> Delhi NCR</button>
+        <button class="state-pill" data-code="TN" data-name="Tamil Nadu" onclick="quickSelectState('TN')"><span>TN</span> Tamil Nadu</button>
+        <button class="state-pill" data-code="WB" data-name="West Bengal" onclick="quickSelectState('WB')"><span>WB</span> West Bengal</button>
+        <button class="state-pill" data-code="KL" data-name="Kerala" onclick="quickSelectState('KL')"><span>KL</span> Kerala</button>
+        <button class="state-pill" data-code="GJ" data-name="Gujarat" onclick="quickSelectState('GJ')"><span>GJ</span> Gujarat</button>
+        <button class="state-pill" data-code="UP" data-name="Uttar Pradesh" onclick="quickSelectState('UP')"><span>UP</span> Uttar Pradesh</button>
+        <button class="state-pill" data-code="AN" data-name="Andaman and Nicobar Islands" onclick="quickSelectState('AN')"><span>AN</span> Andaman & Nicobar</button>
+        <button class="state-pill" data-code="AP" data-name="Andhra Pradesh" onclick="quickSelectState('AP')"><span>AP</span> Andhra Pradesh</button>
+        <button class="state-pill" data-code="AR" data-name="Arunachal Pradesh" onclick="quickSelectState('AR')"><span>AR</span> Arunachal Pradesh</button>
+        <button class="state-pill" data-code="AS" data-name="Assam" onclick="quickSelectState('AS')"><span>AS</span> Assam</button>
+        <button class="state-pill" data-code="BR" data-name="Bihar" onclick="quickSelectState('BR')"><span>BR</span> Bihar</button>
+        <button class="state-pill" data-code="CH" data-name="Chandigarh" onclick="quickSelectState('CH')"><span>CH</span> Chandigarh</button>
+        <button class="state-pill" data-code="CT" data-name="Chhattisgarh" onclick="quickSelectState('CT')"><span>CT</span> Chhattisgarh</button>
+        <button class="state-pill" data-code="DN" data-name="Dadra & Nagar Haveli and Daman & Diu" onclick="quickSelectState('DN')"><span>DN</span> Dadra & Nagar / Daman & Diu</button>
+        <button class="state-pill" data-code="GA" data-name="Goa" onclick="quickSelectState('GA')"><span>GA</span> Goa</button>
+        <button class="state-pill" data-code="HR" data-name="Haryana" onclick="quickSelectState('HR')"><span>HR</span> Haryana</button>
+        <button class="state-pill" data-code="HP" data-name="Himachal Pradesh" onclick="quickSelectState('HP')"><span>HP</span> Himachal Pradesh</button>
+        <button class="state-pill" data-code="JK" data-name="Jammu and Kashmir" onclick="quickSelectState('JK')"><span>JK</span> Jammu & Kashmir</button>
+        <button class="state-pill" data-code="JH" data-name="Jharkhand" onclick="quickSelectState('JH')"><span>JH</span> Jharkhand</button>
+        <button class="state-pill" data-code="LA" data-name="Ladakh" onclick="quickSelectState('LA')"><span>LA</span> Ladakh</button>
+        <button class="state-pill" data-code="LD" data-name="Lakshadweep" onclick="quickSelectState('LD')"><span>LD</span> Lakshadweep</button>
+        <button class="state-pill" data-code="MP" data-name="Madhya Pradesh" onclick="quickSelectState('MP')"><span>MP</span> Madhya Pradesh</button>
+        <button class="state-pill" data-code="MN" data-name="Manipur" onclick="quickSelectState('MN')"><span>MN</span> Manipur</button>
+        <button class="state-pill" data-code="ML" data-name="Meghalaya" onclick="quickSelectState('ML')"><span>ML</span> Meghalaya</button>
+        <button class="state-pill" data-code="MZ" data-name="Mizoram" onclick="quickSelectState('MZ')"><span>MZ</span> Mizoram</button>
+        <button class="state-pill" data-code="NL" data-name="Nagaland" onclick="quickSelectState('NL')"><span>NL</span> Nagaland</button>
+        <button class="state-pill" data-code="OR" data-name="Odisha" onclick="quickSelectState('OR')"><span>OR</span> Odisha</button>
+        <button class="state-pill" data-code="PY" data-name="Puducherry" onclick="quickSelectState('PY')"><span>PY</span> Puducherry</button>
+        <button class="state-pill" data-code="PB" data-name="Punjab" onclick="quickSelectState('PB')"><span>PB</span> Punjab</button>
+        <button class="state-pill" data-code="RJ" data-name="Rajasthan" onclick="quickSelectState('RJ')"><span>RJ</span> Rajasthan</button>
+        <button class="state-pill" data-code="SK" data-name="Sikkim" onclick="quickSelectState('SK')"><span>SK</span> Sikkim</button>
+        <button class="state-pill" data-code="TR" data-name="Tripura" onclick="quickSelectState('TR')"><span>TR</span> Tripura</button>
+        <button class="state-pill" data-code="UT" data-name="Uttarakhand" onclick="quickSelectState('UT')"><span>UT</span> Uttarakhand</button>
       </div>
     </section>
 
@@ -2561,10 +2791,10 @@ function renderInteractiveHtml(env) {
       </div>
     </section>
 
-  </div>
+  </main>
 
   <!-- Toast Notification Element -->
-  <div id="toastNotification" class="toast">
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
     <span>✓</span>
     <span id="toastMessage">Copied to clipboard</span>
   </div>
@@ -2589,7 +2819,7 @@ function renderInteractiveHtml(env) {
         <div class="footer-nav-title">Developers</div>
         <a href="/api/openapi.json" target="_blank" class="footer-link">OpenAPI 3.0 Spec</a>
         <a href="/api/meta/states" target="_blank" class="footer-link">States Metadata</a>
-        <a href="https://github.com/urunkarpm/holiday2api" target="_blank" class="footer-link">GitHub Repository</a>
+        <a href="https://github.com/urunkarpm/holiday2api" target="_blank" class="footer-link" rel="noopener noreferrer">GitHub Repository</a>
         <a href="/api/health" target="_blank" class="footer-link">System Health</a>
       </div>
     </div>
@@ -2600,6 +2830,8 @@ function renderInteractiveHtml(env) {
   </footer>
 
   <script>
+    let toastTimeout = null;
+
     function initTheme() {
       const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
       updateThemeUI(currentTheme);
@@ -2663,6 +2895,13 @@ function renderInteractiveHtml(env) {
       yearGroup.style.display = hasYear ? 'block' : 'none';
       stateGroup.style.display = hasState ? 'block' : 'none';
       yearStateRow.style.display = (hasYear || hasState) ? 'grid' : 'none';
+      if (hasYear && !hasState) {
+        yearStateRow.style.gridTemplateColumns = '1fr';
+      } else if (!hasYear && hasState) {
+        yearStateRow.style.gridTemplateColumns = '1fr';
+      } else {
+        yearStateRow.style.gridTemplateColumns = 'repeat(auto-fit, minmax(170px, 1fr))';
+      }
       dateRangeGroup.style.display = hasDateRange ? 'block' : 'none';
 
       const path = getGeneratedPath();
@@ -2690,10 +2929,15 @@ function renderInteractiveHtml(env) {
       document.getElementById('snippetCode').innerText = code;
     }
 
-    function switchSnippetTab(type) {
+    function switchSnippetTab(type, el) {
       activeSnippetType = type;
       document.querySelectorAll('.snippet-tab').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
+      if (el) {
+        el.classList.add('active');
+      } else if (typeof event !== 'undefined' && event && event.target) {
+        const targetTab = event.target.closest('.snippet-tab');
+        if (targetTab) targetTab.classList.add('active');
+      }
       updateSnippetDisplay();
     }
 
@@ -2710,6 +2954,16 @@ function renderInteractiveHtml(env) {
       }
     }
 
+    function copyCurrentPayload() {
+      if (lastFetchedData !== null) {
+        const text = lastFetchedIsIcs ? lastFetchedData : JSON.stringify(lastFetchedData, null, 2);
+        navigator.clipboard.writeText(text);
+        showToast('Copied payload to clipboard');
+      } else {
+        showToast('No payload loaded');
+      }
+    }
+
     async function executeWorkbenchRequest() {
       const path = getGeneratedPath();
       const startTime = performance.now();
@@ -2718,14 +2972,14 @@ function renderInteractiveHtml(env) {
       const statusBadge = document.getElementById('responseStatusBadge');
       const timeBadge = document.getElementById('responseTimeBadge');
 
-      visualContainer.innerHTML = '<div style="grid-column: 1/-1; color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.85rem; padding: 2rem 0; text-align: center;">Fetching data...</div>';
+      visualContainer.innerHTML = '<div style="grid-column: 1/-1; color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.85rem; padding: 3rem 1rem; text-align: center;">⚡ Fetching data from edge...</div>';
       rawContainer.innerText = 'Fetching data...';
 
       try {
         const res = await fetch(path);
         const elapsed = Math.round(performance.now() - startTime);
         timeBadge.innerText = elapsed + ' ms';
-        statusBadge.innerText = res.status + ' OK';
+        statusBadge.innerText = res.status + ' ' + (res.status === 200 ? 'OK' : res.statusText);
         statusBadge.style.color = res.ok ? 'var(--accent-emerald)' : '#ef4444';
 
         if (path.endsWith('.ics')) {
@@ -2742,7 +2996,7 @@ function renderInteractiveHtml(env) {
       } catch (err) {
         statusBadge.innerText = 'Error';
         statusBadge.style.color = '#ef4444';
-        visualContainer.innerHTML = '<div style="grid-column: 1/-1; color: #ef4444; font-family: var(--font-mono); padding: 1rem;">Failed to fetch: ' + err.message + '</div>';
+        visualContainer.innerHTML = '<div style="grid-column: 1/-1; color: #ef4444; font-family: var(--font-mono); padding: 1.5rem; background: var(--bg); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: var(--radius-md);">Failed to fetch: ' + err.message + '</div>';
         rawContainer.innerText = 'Error: ' + err.message;
       }
     }
@@ -2756,13 +3010,13 @@ function renderInteractiveHtml(env) {
         rawContainer.innerText = data;
         const currentPath = getGeneratedPath();
         const fullIcsUrl = window.location.origin + currentPath;
-        visualContainer.innerHTML = '<div style="grid-column: 1/-1; padding: 1.5rem; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">' +
-          '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem;">' +
+        visualContainer.innerHTML = '<div style="grid-column: 1/-1; padding: 1.5rem; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-crisp);">' +
+          '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.5rem;">' +
             '<span class="tag-badge gazetted">RFC 5545 Live Feed</span>' +
             '<span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-emerald);">● Synchronized</span>' +
           '</div>' +
-          '<h3 style="color: #fff; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">📅 iCalendar (.ics) Feed Generated</h3>' +
-          '<p style="color: var(--ink-secondary); font-size: 0.88rem; line-height: 1.55; margin-bottom: 1.25rem;">' +
+          '<h3 style="color: var(--ink-primary); font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">📅 iCalendar (.ics) Feed Generated</h3>' +
+          '<p style="color: var(--ink-secondary); font-size: 0.9rem; line-height: 1.55; margin-bottom: 1.35rem;">' +
             'This universal calendar subscription contains all gazetted holidays locked to Asia/Kolkata timezone. Subscribe once to get automatic updates on Apple Calendar, Google Calendar, or Outlook.' +
           '</p>' +
           '<div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">' +
@@ -2775,47 +3029,65 @@ function renderInteractiveHtml(env) {
 
       rawContainer.innerText = JSON.stringify(data, null, 2);
 
-      // 2. Arrays: Holidays or Long Weekends
-      if (Array.isArray(data)) {
-        if (data.length === 0) {
-          visualContainer.innerHTML = '<div style="grid-column: 1/-1; color: var(--ink-muted); padding: 2rem; text-align: center; font-family: var(--font-mono);">No records matched the selected query parameters.</div>';
-          return;
+      // Helper function to render a list of long weekend cards
+      function renderLongWeekendCards(lwList, totalCount, year, state) {
+        if (!Array.isArray(lwList) || lwList.length === 0) {
+          return '<div style="grid-column: 1/-1; color: var(--ink-muted); padding: 3rem 1rem; text-align: center; font-family: var(--font-mono); font-size: 0.88rem;">🔍 No long weekends detected for this selection.</div>';
         }
-
-        // Long Weekends Array
-        if (data[0] && (data[0].long_weekend_type || data[0].recommendation || data[0].total_days)) {
-          let html = '';
-          data.forEach(lw => {
-            const isBridge = (lw.long_weekend_type || '').includes('Bridge') || (lw.total_days >= 4);
-            const badgeClass = isBridge ? 'gazetted' : 'national';
-            const badgeText = lw.total_days ? lw.total_days + ' Days Off' : 'Long Weekend';
-
-            html += '<div class="lw-card" style="grid-column: 1/-1;">' +
-              '<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem;">' +
-                '<div class="lw-title">' + (lw.name || 'Long Weekend') + '</div>' +
-                '<span class="tag-badge ' + badgeClass + '">' + badgeText + '</span>' +
-              '</div>' +
-              '<div class="lw-meta">🗓️ ' + lw.start_date + ' → ' + lw.end_date + ' • ' + (lw.long_weekend_type || 'Weekend') + '</div>' +
-              '<div class="lw-advice">💡 ' + (lw.recommendation || lw.leave_required || 'No additional leave needed.') + '</div>' +
-            '</div>';
-          });
-          visualContainer.innerHTML = html;
-          return;
-        }
-
-        // Standard Holiday Array
         let html = '';
-        data.forEach(h => {
+        if (totalCount !== undefined) {
+          html += '<div style="grid-column: 1/-1; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; padding: 0 0.2rem;">' +
+            '<span style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: var(--ink-secondary); text-transform: uppercase;">' + (state ? state + ' — ' : '') + year + ' (' + totalCount + ' Long Weekends Found)</span>' +
+            '<span class="tag-badge gazetted">' + totalCount + ' Opportunities</span>' +
+          '</div>';
+        }
+        lwList.forEach(lw => {
+          const isBridge = (lw.type === 'bridge_weekend') || (lw.bridge_days_needed > 0) || (lw.total_days >= 4);
+          const badgeClass = isBridge ? 'gazetted' : 'national';
+          const badgeText = lw.total_days ? lw.total_days + ' Days Off' : 'Long Weekend';
+          const holidaysIncludedNames = Array.isArray(lw.holidays_included) ? lw.holidays_included.map(h => h.name).join(', ') : '';
+
+          html += '<div class="lw-card" style="grid-column: 1/-1;">' +
+            '<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.45rem; flex-wrap: wrap; gap: 0.5rem;">' +
+              '<div class="lw-title">' + (holidaysIncludedNames || lw.name || 'Long Weekend') + '</div>' +
+              '<span class="tag-badge ' + badgeClass + '">' + badgeText + '</span>' +
+            '</div>' +
+            '<div class="lw-meta">🗓️ ' + lw.start_date + ' → ' + lw.end_date + ' • ' + (isBridge ? 'Bridge Leave (' + lw.bridge_days_needed + ' day leave)' : 'Natural Weekend') + '</div>' +
+            '<div class="lw-advice">💡 ' + (lw.recommendation || lw.leave_required || 'No additional leave required — natural weekend.') + '</div>' +
+          '</div>';
+        });
+        return html;
+      }
+
+      // Helper function to render a list of holiday cards
+      function renderHolidayCards(holidayList) {
+        if (!Array.isArray(holidayList) || holidayList.length === 0) {
+          return '<div style="grid-column: 1/-1; color: var(--ink-muted); padding: 3rem 1rem; text-align: center; font-family: var(--font-mono); font-size: 0.88rem;">🔍 No records matched the selected query parameters.</div>';
+        }
+        let html = '';
+        holidayList.forEach(h => {
           const dateObj = new Date(h.date + 'T00:00:00+05:30');
-          const monthStr = dateObj.toLocaleDateString('en-US', { month: 'short' });
+          const monthStr = dateObj.toLocaleDateString('en-US', { month: 'short', timeZone: 'Asia/Kolkata' });
           const dayNum = dateObj.getDate();
-          const weekday = h.day || dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+          const weekday = h.day || h.day_of_week || dateObj.toLocaleDateString('en-US', { weekday: 'short', timeZone: 'Asia/Kolkata' });
 
-          const typeBadge = (h.type === 'national' || h.type === 'gazetted') ? 
-            '<span class="tag-badge gazetted">' + h.type + '</span>' : 
-            '<span class="tag-badge">' + (h.type || 'holiday') + '</span>';
+          let typeBadgeClass = 'tag-badge';
+          const typeLower = (h.type || '').toLowerCase();
+          if (typeLower === 'national') typeBadgeClass += ' national';
+          else if (typeLower === 'gazetted' || typeLower === 'public' || typeLower === 'state') typeBadgeClass += ' gazetted';
+          else if (typeLower === 'bank') typeBadgeClass += ' bank';
+          else if (typeLower === 'restricted' || typeLower === 'optional') typeBadgeClass += ' restricted';
 
-          const stateBadge = h.state_code ? '<span class="tag-badge">' + h.state_code + '</span>' : '';
+          const typeBadge = '<span class="' + typeBadgeClass + '">' + (h.type || 'holiday') + '</span>';
+          const stateBadge = h.state_code ? '<span class="tag-badge national">' + h.state_code + '</span>' : '';
+          
+          let countdownBadge = '';
+          if (h.days_until !== undefined) {
+            let countdownText = 'In ' + h.days_until + ' days';
+            if (h.days_until === 0) countdownText = '🌟 Today';
+            else if (h.days_until === 1) countdownText = '⚡ Tomorrow';
+            countdownBadge = '<span class="tag-badge upcoming-countdown">' + countdownText + '</span>';
+          }
 
           html += '<div class="holiday-card">' +
             '<div>' +
@@ -2825,21 +3097,44 @@ function renderInteractiveHtml(env) {
               '</div>' +
               '<div class="holiday-name">' + h.name + '</div>' +
             '</div>' +
-            '<div class="holiday-tags">' + typeBadge + stateBadge + '</div>' +
+            '<div class="holiday-tags">' + typeBadge + stateBadge + countdownBadge + '</div>' +
           '</div>';
         });
-        visualContainer.innerHTML = html;
+        return html;
+      }
+
+      // 2. Objects with long_weekends property: /api/long-weekends/:year/:state
+      if (typeof data === 'object' && data !== null && Array.isArray(data.long_weekends)) {
+        visualContainer.innerHTML = renderLongWeekendCards(data.long_weekends, data.total_long_weekends, data.year, data.state_code);
         return;
       }
 
-      // 3. Objects: Business Days, States Metadata, Types Metadata, OpenAPI Spec, Health Check
+      // 3. Arrays: Bare Holidays or Bare Long Weekends
+      if (Array.isArray(data)) {
+        if (data.length === 0) {
+          visualContainer.innerHTML = '<div style="grid-column: 1/-1; color: var(--ink-muted); padding: 3rem 1rem; text-align: center; font-family: var(--font-mono); font-size: 0.88rem;">🔍 No records matched the selected query parameters.</div>';
+          return;
+        }
+
+        // Check if items are long weekend objects
+        if (data[0] && (data[0].type === 'bridge_weekend' || data[0].type === 'natural_long_weekend' || data[0].recommendation || data[0].total_days)) {
+          visualContainer.innerHTML = renderLongWeekendCards(data, data.length);
+          return;
+        }
+
+        // Standard Holiday Array
+        visualContainer.innerHTML = renderHolidayCards(data);
+        return;
+      }
+
+      // 4. Other Objects: Business Days, States Metadata, Types Metadata, OpenAPI Spec, Health Check
       if (typeof data === 'object' && data !== null) {
         
         // A. Business / Working Days Object
         if (data.working_days !== undefined) {
-          let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem;">' +
-            '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">' +
-              '<h4 style="font-size: 1.1rem; color: #fff; font-weight: 700;">💼 Working Days Calculation</h4>' +
+          let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.35rem; box-shadow: var(--shadow-crisp);">' +
+            '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.15rem; flex-wrap: wrap; gap: 0.5rem;">' +
+              '<h4 style="font-size: 1.15rem; color: var(--ink-primary); font-weight: 700;">💼 Working Days Calculation</h4>' +
               '<span class="tag-badge national">' + (data.state_code || 'IN') + '</span>' +
             '</div>' +
             '<div class="kpi-grid">' +
@@ -2848,12 +3143,12 @@ function renderInteractiveHtml(env) {
               '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-marigold);">' + (data.weekend_days || 0) + '</div><div class="kpi-label">Weekend Days</div></div>' +
               '<div class="kpi-card"><div class="kpi-val" style="color: var(--ink-primary);">' + (data.total_calendar_days || 0) + '</div><div class="kpi-label">Total Span</div></div>' +
             '</div>' +
-            '<div style="font-size: 0.82rem; font-family: var(--font-mono); color: var(--ink-secondary); margin-bottom: 1rem;">' +
-              'Date Span: <strong style="color:#fff;">' + data.from + '</strong> → <strong style="color:#fff;">' + data.to + '</strong> • Rules: <strong style="color: var(--accent-saffron);">' + (data.rules || 'Standard') + '</strong>' +
+            '<div style="font-size: 0.85rem; font-family: var(--font-mono); color: var(--ink-secondary); margin-bottom: 1rem; background: var(--bg-surface); padding: 0.75rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">' +
+              'Date Span: <strong style="color: var(--ink-primary);">' + data.from + '</strong> → <strong style="color: var(--ink-primary);">' + data.to + '</strong> • Rules: <strong style="color: var(--accent-saffron);">' + (data.rules || 'Standard') + '</strong>' +
             '</div>';
 
           if (Array.isArray(data.holidays_on_weekdays) && data.holidays_on_weekdays.length > 0) {
-            html += '<div style="margin-top: 0.75rem;"><strong style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--accent-saffron); text-transform: uppercase;">Weekdays Holidays:</strong><div style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.4rem;">';
+            html += '<div style="margin-top: 1rem;"><strong style="font-size: 0.76rem; font-family: var(--font-mono); color: var(--accent-saffron); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.45rem;">Weekdays Holidays:</strong><div style="display:flex; flex-wrap:wrap; gap:0.4rem;">';
             data.holidays_on_weekdays.forEach(hw => {
               html += '<span class="tag-badge gazetted">' + hw.date + ' — ' + hw.name + ' (' + hw.day + ')</span>';
             });
@@ -2861,7 +3156,7 @@ function renderInteractiveHtml(env) {
           }
 
           if (Array.isArray(data.holidays_on_weekends) && data.holidays_on_weekends.length > 0) {
-            html += '<div style="margin-top: 0.75rem;"><strong style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--ink-muted); text-transform: uppercase;">Weekend Holidays:</strong><div style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.4rem;">';
+            html += '<div style="margin-top: 1rem;"><strong style="font-size: 0.76rem; font-family: var(--font-mono); color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.45rem;">Weekend Holidays:</strong><div style="display:flex; flex-wrap:wrap; gap:0.4rem;">';
             data.holidays_on_weekends.forEach(he => {
               html += '<span class="tag-badge">' + he.date + ' — ' + he.name + ' (' + he.day + ')</span>';
             });
@@ -2884,11 +3179,11 @@ function renderInteractiveHtml(env) {
 
             html += '<div class="meta-card">' +
               '<div class="meta-card-header">' +
-                '<span style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 800; color: var(--accent-saffron);">' + st.code + '</span>' +
+                '<span style="font-family: var(--font-mono); font-size: 1.15rem; font-weight: 800; color: var(--accent-saffron);">' + st.code + '</span>' +
                 '<span class="tag-badge ' + badgeClass + '">' + typeLabel + '</span>' +
               '</div>' +
               '<div class="meta-card-title">' + st.name + '</div>' +
-              '<button class="btn btn-sm btn-outline" style="margin-top: 0.35rem; justify-content: center;" onclick="quickSelectState(\\'' + st.code + '\\')">⚡ Query ' + st.code + '</button>' +
+              '<button class="btn btn-sm btn-outline" style="margin-top: 0.45rem; justify-content: center;" onclick="quickSelectState(\\'' + st.code + '\\')">⚡ Query ' + st.code + '</button>' +
             '</div>';
           });
           visualContainer.innerHTML = html;
@@ -2914,18 +3209,18 @@ function renderInteractiveHtml(env) {
 
         // D. Health Telemetry (/api/health)
         if (data.status && (data.uptime || data.timestamp || data.timezone)) {
-          let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem;">' +
-            '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">' +
-              '<h4 style="font-size: 1.1rem; color: #fff; font-weight: 700;">📡 API Edge Status & Health</h4>' +
+          let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.35rem; box-shadow: var(--shadow-crisp);">' +
+            '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem;">' +
+              '<h4 style="font-size: 1.15rem; color: var(--ink-primary); font-weight: 700;">📡 API Edge Status & Health</h4>' +
               '<span class="status-indicator"><span class="ping-dot"></span><span>' + (data.status.toUpperCase()) + '</span></span>' +
             '</div>' +
             '<div class="kpi-grid">' +
               '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-emerald);">' + (data.status || 'OK') + '</div><div class="kpi-label">Edge Health</div></div>' +
               '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-cyan);">' + (data.uptime || '99.99%') + '</div><div class="kpi-label">Uptime</div></div>' +
-              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-saffron); font-size: 1.1rem;">' + (data.timezone || 'Asia/Kolkata') + '</div><div class="kpi-label">Timezone</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-saffron); font-size: 1.2rem;">' + (data.timezone || 'Asia/Kolkata') + '</div><div class="kpi-label">Timezone</div></div>' +
               '<div class="kpi-card"><div class="kpi-val" style="color: var(--ink-primary);">' + (data.version || '1.0.0') + '</div><div class="kpi-label">API Version</div></div>' +
             '</div>' +
-            '<div style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--ink-muted); margin-top: 0.5rem;">Server Timestamp: ' + (data.timestamp || new Date().toISOString()) + '</div>' +
+            '<div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--ink-muted); margin-top: 0.65rem;">Server Timestamp: ' + (data.timestamp || new Date().toISOString()) + '</div>' +
           '</div>';
           visualContainer.innerHTML = html;
           return;
@@ -2933,13 +3228,13 @@ function renderInteractiveHtml(env) {
 
         // E. OpenAPI Spec (/api/openapi.json)
         if (data.openapi && data.paths) {
-          let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 0.75rem;">' +
-            '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">' +
-              '<h4 style="font-size: 1.15rem; color: #fff; font-weight: 700;">' + (data.info?.title || 'OpenAPI 3.0 Spec') + '</h4>' +
+          let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.35rem; margin-bottom: 0.75rem; box-shadow: var(--shadow-crisp);">' +
+            '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.5rem;">' +
+              '<h4 style="font-size: 1.2rem; color: var(--ink-primary); font-weight: 700;">' + (data.info?.title || 'OpenAPI 3.0 Spec') + '</h4>' +
               '<span class="tag-badge gazetted">v' + (data.info?.version || '1.0.0') + '</span>' +
             '</div>' +
-            '<p style="color: var(--ink-secondary); font-size: 0.85rem; margin-bottom: 1rem;">' + (data.info?.description || '') + '</p>' +
-            '<div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">' +
+            '<p style="color: var(--ink-secondary); font-size: 0.88rem; margin-bottom: 1.15rem; line-height: 1.5;">' + (data.info?.description || '') + '</p>' +
+            '<div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">' +
               '<a href="/api/openapi.json" target="_blank" class="btn btn-sm btn-primary">📥 Open Full Spec JSON</a>' +
               '<button class="btn btn-sm btn-outline" onclick="copyOpenApiUrl()">📋 Copy Spec URL</button>' +
             '</div>' +
@@ -2951,9 +3246,9 @@ function renderInteractiveHtml(env) {
             if (getMethod) {
               html += '<div class="meta-card" style="grid-column: 1/-1;">' +
                 '<div class="meta-card-header">' +
-                  '<div style="display: flex; align-items: center; gap: 0.5rem;">' +
-                    '<span class="method-get">GET</span>' +
-                    '<code class="endpoint-code">' + p + '</code>' +
+                  '<div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">' +
+                    '<span class="tag-badge national" style="font-weight: 700;">GET</span>' +
+                    '<code style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-cyan);">' + p + '</code>' +
                   '</div>' +
                 '</div>' +
                 '<div class="meta-card-desc">' + (getMethod.summary || '') + '</div>' +
@@ -2965,8 +3260,8 @@ function renderInteractiveHtml(env) {
         }
 
         // Generic Object fallback
-        let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem;">' +
-          '<pre style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan);">' + JSON.stringify(data, null, 2) + '</pre>' +
+        let html = '<div style="grid-column: 1/-1; background: var(--bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.35rem; box-shadow: var(--shadow-crisp);">' +
+          '<pre style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent-cyan); line-height: 1.5;">' + JSON.stringify(data, null, 2) + '</pre>' +
         '</div>';
         visualContainer.innerHTML = html;
       }
@@ -2974,14 +3269,18 @@ function renderInteractiveHtml(env) {
 
     function showToast(msg) {
       const toast = document.getElementById('toastNotification');
-      document.getElementById('toastMessage').innerText = msg;
-      toast.classList.add('show');
-      setTimeout(() => { toast.classList.remove('show'); }, 2200);
+      const msgEl = document.getElementById('toastMessage');
+      if (toast && msgEl) {
+        msgEl.innerText = msg;
+        toast.classList.add('show');
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 2200);
+      }
     }
 
     function copyHeroCurl() {
       const url = window.location.origin + '/api/holidays/2026/TG';
-      navigator.clipboard.writeText('curl ' + url);
+      navigator.clipboard.writeText('curl "' + url + '"');
       showToast('Copied cURL command');
     }
 
@@ -3002,9 +3301,14 @@ function renderInteractiveHtml(env) {
       showToast('Copied OpenAPI specification URL');
     }
 
-    function applyPreset(type) {
+    function applyPreset(type, el) {
       document.querySelectorAll('.preset-chip').forEach(c => c.classList.remove('active'));
-      event.target.classList.add('active');
+      if (el) {
+        el.classList.add('active');
+      } else if (typeof event !== 'undefined' && event && event.target) {
+        const targetChip = event.target.closest('.preset-chip');
+        if (targetChip) targetChip.classList.add('active');
+      }
 
       if (type === 'tg-2026') {
         document.getElementById('endpointSelect').value = '/api/holidays/:year/:state';
@@ -3044,12 +3348,35 @@ function renderInteractiveHtml(env) {
       executeWorkbenchRequest();
     }
 
+    function filterStatePills(query) {
+      const q = (query || '').trim().toLowerCase();
+      const pills = document.querySelectorAll('#statesContainer .state-pill');
+      pills.forEach(pill => {
+        const code = (pill.getAttribute('data-code') || '').toLowerCase();
+        const name = (pill.getAttribute('data-name') || '').toLowerCase();
+        if (!q || code.includes(q) || name.includes(q)) {
+          pill.style.display = 'inline-flex';
+        } else {
+          pill.style.display = 'none';
+        }
+      });
+    }
+
     function quickSelectState(st) {
-      document.getElementById('endpointSelect').value = '/api/holidays/:year/:state';
+      const epSelect = document.getElementById('endpointSelect');
+      const currentEp = epSelect.value;
+      if (currentEp !== '/api/holidays/:year/:state' && 
+          currentEp !== '/api/long-weekends/:year/:state' && 
+          currentEp !== '/api/calendar/:year/:state.ics' && 
+          currentEp !== '/api/holidays/upcoming' && 
+          currentEp !== '/api/business-days') {
+        epSelect.value = '/api/holidays/:year/:state';
+      }
       document.getElementById('stateSelect').value = st;
       updateFormFields();
       executeWorkbenchRequest();
-      document.getElementById('workbench').scrollIntoView({ behavior: 'smooth' });
+      const wb = document.getElementById('workbench');
+      if (wb) wb.scrollIntoView({ behavior: 'smooth' });
     }
 
     // Initialize on page ready
@@ -3070,3 +3397,4 @@ function renderInteractiveHtml(env) {
 </body>
 </html>`;
 }
+
