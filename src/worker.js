@@ -1032,12 +1032,15 @@ function renderInteractiveHtml(env) {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 28px;
-      height: 28px;
-      border-radius: var(--radius-sm);
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-strong);
-      font-size: 1rem;
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+    .brand-flag svg, .footer-flag svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 50%;
     }
     .version-tag {
       font-family: var(--font-mono);
@@ -2197,10 +2200,21 @@ function renderInteractiveHtml(env) {
       max-width: 440px;
     }
     .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       font-size: 1.1rem;
       font-weight: 700;
       color: var(--ink-primary);
       margin-bottom: 0.65rem;
+    }
+    .footer-flag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
     }
     .footer-desc {
       font-size: 0.85rem;
@@ -2249,7 +2263,7 @@ function renderInteractiveHtml(env) {
   <nav class="top-nav">
     <div class="top-nav-inner">
       <a href="/" class="brand">
-        <span class="brand-flag">🇮🇳</span>
+        <span class="brand-flag" aria-label="Indian Flag">${FAVICON_SVG}</span>
         <span>India Holidays API</span>
         <span class="version-tag">v1.0</span>
       </a>
@@ -2861,7 +2875,10 @@ function renderInteractiveHtml(env) {
   <footer>
     <div class="footer-inner">
       <div class="footer-col-main">
-        <div class="footer-brand">India Holidays API 🇮🇳</div>
+        <div class="footer-brand">
+          <span>India Holidays API</span>
+          <span class="footer-flag" aria-label="Indian Flag">${FAVICON_SVG}</span>
+        </div>
         <p class="footer-desc">
           Built as public data infrastructure for engineers, HRMS platforms, fintech apps, and calendar tools. Free forever under the MIT License with zero tracking and zero telemetry.
         </p>
