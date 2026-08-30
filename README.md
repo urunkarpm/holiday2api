@@ -28,33 +28,33 @@ A free, fast, and reliable REST API for Indian holidays (national, gazetted, sta
 ### 1. Get Holidays for a State
 ```bash
 # Telangana (TG) for 2026
-curl https://india-holidays.pages.dev/api/holidays/2026/TG
+curl https://holiday2api.vercel.app/api/holidays/2026/TG
 
 # Maharashtra (MH) for 2026
-curl https://india-holidays.pages.dev/api/holidays/2026/MH
+curl https://holiday2api.vercel.app/api/holidays/2026/MH
 ```
 
 ### 2. Find Long Weekends & Vacation Recommendations
 ```bash
 # Long weekends in Karnataka (KA) for 2026
-curl https://india-holidays.pages.dev/api/long-weekends/2026/KA
+curl https://holiday2api.vercel.app/api/long-weekends/2026/KA
 ```
 
 ### 3. Get Upcoming Holidays (from Today in IST)
 ```bash
-curl "https://india-holidays.pages.dev/api/holidays/upcoming?state=TG&limit=5"
+curl "https://holiday2api.vercel.app/api/holidays/upcoming?state=TG&limit=5"
 ```
 
 ### 4. Calculate Business / Working Days
 ```bash
 # Calculate working days in March 2026 with RBI Bank rules
-curl "https://india-holidays.pages.dev/api/business-days?from=2026-03-01&to=2026-03-31&state=MH&bank_rules=true"
+curl "https://holiday2api.vercel.app/api/business-days?from=2026-03-01&to=2026-03-31&state=MH&bank_rules=true"
 ```
 
 ### 5. Subscribe via Google / Apple Calendar (.ics)
 ```bash
 # Import or subscribe directly in calendar apps:
-https://india-holidays.pages.dev/api/calendar/2026/TG.ics
+https://holiday2api.vercel.app/api/calendar/2026/TG.ics
 ```
 
 ---

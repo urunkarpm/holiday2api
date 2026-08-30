@@ -626,7 +626,7 @@ async function serveIcsCalendar(env, request, year, stateCode, params) {
     const dtClean = h.date.replace(/-/g, '');
     const nextDay = addDays(h.date, 1).replace(/-/g, '');
     const slug = h.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    const uid = `${h.date}-${slug}-${h.state_code}@india-holidays.pages.dev`;
+    const uid = `${h.date}-${slug}-${h.state_code}@holiday2api.vercel.app`;
 
     ics.push(
       'BEGIN:VEVENT',
@@ -713,7 +713,7 @@ function getOpenApiSpec(baseUrl) {
       license: { name: 'MIT', url: 'https://opensource.org/licenses/MIT' },
     },
     servers: [
-      { url: baseUrl || 'https://india-holidays.pages.dev', description: 'Production Edge CDN' },
+      { url: baseUrl || 'https://holiday2api.vercel.app', description: 'Production Edge CDN' },
     ],
     paths: {
       '/api/holidays/{year}': {
@@ -1941,7 +1941,7 @@ function renderInteractiveHtml(env) {
                 <button class="snippet-tab" onclick="switchSnippetTab('go')">Go</button>
               </div>
               <div class="snippet-display" id="snippetDisplayArea">
-                <code id="snippetCode">curl https://india-holidays.pages.dev/api/holidays/2026/TG</code>
+                <code id="snippetCode">curl https://holiday2api.vercel.app/api/holidays/2026/TG</code>
                 <button class="btn btn-sm btn-outline snippet-copy-btn" onclick="copyCurrentSnippet()">Copy</button>
               </div>
             </div>

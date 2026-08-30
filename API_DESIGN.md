@@ -4,7 +4,7 @@
 
 The **India Holidays API** is an open, high-performance RESTful service delivering Indian holiday calendars across national, central gazetted, state-specific, bank, and restricted holiday categories for all 28 Indian States and 8 Union Territories.
 
-- **Base URL**: `https://india-holidays.pages.dev` (or custom Vercel / Cloudflare domain)
+- **Base URL**: `https://holiday2api.vercel.app` (or custom Vercel / Cloudflare / localhost domain)
 - **Timezone**: `Asia/Kolkata` (`IST` / `UTC+5:30`)
 - **Authentication**: None (open public API)
 - **Rate Limits**: None
