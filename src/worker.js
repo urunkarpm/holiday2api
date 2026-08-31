@@ -1534,6 +1534,61 @@ function renderInteractiveHtml(env) {
     }
 
     /* Interactive Workbench Layout */
+    .wb-mobile-tabs {
+      display: none;
+    }
+    @media (max-width: 989px) {
+      .wb-mobile-tabs {
+        display: flex;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius-md);
+        padding: 4px;
+        gap: 4px;
+        margin-bottom: 1.25rem;
+        box-shadow: var(--shadow-crisp);
+        width: 100%;
+      }
+      .wb-tab-btn {
+        flex: 1;
+        padding: 0.65rem 0.75rem;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        font-weight: 700;
+        border: none;
+        background: transparent;
+        color: var(--ink-secondary);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all 0.15s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
+        user-select: none;
+      }
+      .wb-tab-btn:hover {
+        color: var(--ink-primary);
+        background: var(--bg-elevated);
+      }
+      .wb-tab-btn.active {
+        background: var(--accent-saffron);
+        color: #ffffff;
+        box-shadow: 0 2px 8px rgba(234, 88, 12, 0.3);
+      }
+      .wb-count-badge {
+        font-size: 0.68rem;
+        padding: 0.1rem 0.4rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.25);
+        color: #ffffff;
+      }
+      .wb-tab-btn:not(.active) .wb-count-badge {
+        background: var(--bg-subtle);
+        color: var(--ink-secondary);
+      }
+    }
+
     .workbench {
       display: grid;
       grid-template-columns: minmax(360px, 420px) minmax(0, 1fr);
@@ -1542,10 +1597,16 @@ function renderInteractiveHtml(env) {
       align-items: start;
       width: 100%;
     }
-    @media (max-width: 990px) {
+    @media (max-width: 989px) {
       .workbench { 
-        grid-template-columns: 1fr; 
-        gap: 1.25rem;
+        display: block;
+        margin-bottom: 2.5rem;
+      }
+      .workbench .panel {
+        display: none;
+      }
+      .workbench .panel.wb-panel-active {
+        display: flex;
       }
     }
 
@@ -2042,11 +2103,43 @@ function renderInteractiveHtml(env) {
       border-radius: 4px;
     }
 
-    /* Code Snippets Bar */
-    .snippets-container {
-      margin-top: 1.35rem;
+    /* Code Snippets Drawer */
+    .snippets-drawer {
+      margin-top: 1.15rem;
       border-top: 1px solid var(--border-subtle);
-      padding-top: 1.15rem;
+      padding-top: 0.85rem;
+      width: 100%;
+    }
+    .snippets-drawer summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      user-select: none;
+      padding: 0.4rem 0;
+      outline: none;
+      list-style: none;
+    }
+    .snippets-drawer summary::-webkit-details-marker {
+      display: none;
+    }
+    .snippets-drawer summary:hover {
+      color: var(--accent-saffron);
+    }
+    .snippets-drawer-chevron {
+      font-size: 0.75rem;
+      transition: transform 0.2s ease;
+      color: var(--ink-muted);
+    }
+    .snippets-drawer[open] .snippets-drawer-chevron {
+      transform: rotate(180deg);
+    }
+    .snippets-container {
+      margin-top: 0.75rem;
       width: 100%;
     }
     .snippet-tabs-header {
@@ -2228,17 +2321,35 @@ function renderInteractiveHtml(env) {
     }
     .states-filter-bar {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.45rem;
       flex-wrap: wrap;
       margin-bottom: 1.25rem;
       width: 100%;
+      max-height: 240px;
+      overflow-y: auto;
+      padding: 0.65rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-strong) transparent;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+    }
+    @media (min-width: 768px) {
+      .states-filter-bar {
+        max-height: none;
+        border: none;
+        background: transparent;
+        padding: 0;
+        gap: 0.5rem;
+      }
     }
     .state-pill {
       font-family: var(--font-mono);
-      font-size: 0.78rem;
-      background: var(--bg-surface);
+      font-size: 0.76rem;
+      background: var(--bg);
       border: 1px solid var(--border-subtle);
-      padding: 0.35rem 0.7rem;
+      padding: 0.35rem 0.65rem;
       border-radius: var(--radius-sm);
       color: var(--ink-secondary);
       cursor: pointer;
@@ -2673,10 +2784,21 @@ function renderInteractiveHtml(env) {
         <button class="preset-chip" onclick="applyPreset('health', this)">API Health</button>
       </div>
 
+      <!-- Mobile Segmented Tab Switcher -->
+      <div class="wb-mobile-tabs">
+        <button class="wb-tab-btn active" id="btnTabControls" onclick="switchWorkbenchMobileTab('controls')">
+          <span>⚙️ Query Builder</span>
+        </button>
+        <button class="wb-tab-btn" id="btnTabResponse" onclick="switchWorkbenchMobileTab('response')">
+          <span>📦 Payload Preview</span>
+          <span class="wb-count-badge" id="wbResultCountBadge">Live</span>
+        </button>
+      </div>
+
       <!-- The Workbench Grid -->
       <div class="workbench">
         <!-- Controls Column -->
-        <div class="panel">
+        <div class="panel wb-panel-active" id="wbControlsPanel">
           <div class="panel-header">
             <span class="panel-header-title">⚡ Query Builder</span>
             <span class="tag-badge gazetted" id="methodBadge">GET</span>
@@ -2790,32 +2912,37 @@ function renderInteractiveHtml(env) {
               </div>
             </div>
 
-            <button class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 0.95rem; padding: 0.75rem 1.25rem;" onclick="executeWorkbenchRequest()">
+            <button class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 0.95rem; padding: 0.75rem 1.25rem;" onclick="executeWorkbenchRequest(true)">
               ⚡ Send API Request
             </button>
 
-            <!-- Code Snippet Generator Tabs -->
-            <div class="snippets-container">
-              <div class="snippet-tabs-header">
-                <label class="field-label" style="margin-bottom: 0;">Integration Snippet</label>
-                <button class="btn btn-sm btn-outline" onclick="copyCurrentSnippet()" style="padding: 0.2rem 0.6rem; font-size: 0.72rem;">📋 Copy Code</button>
+            <!-- Collapsible Code Snippet Generator Drawer -->
+            <details class="snippets-drawer">
+              <summary>
+                <span>💻 View Integration Code Snippets</span>
+                <span class="snippets-drawer-chevron">▼</span>
+              </summary>
+              <div class="snippets-container">
+                <div class="snippet-tabs-header">
+                  <div class="snippet-tabs">
+                    <button class="snippet-tab active" onclick="switchSnippetTab('curl', this)">cURL</button>
+                    <button class="snippet-tab" onclick="switchSnippetTab('js', this)">JS Fetch</button>
+                    <button class="snippet-tab" onclick="switchSnippetTab('python', this)">Python</button>
+                    <button class="snippet-tab" onclick="switchSnippetTab('go', this)">Go</button>
+                  </div>
+                  <button class="btn btn-sm btn-outline" onclick="copyCurrentSnippet()" style="padding: 0.2rem 0.6rem; font-size: 0.72rem;">📋 Copy</button>
+                </div>
+                <div class="snippet-display" id="snippetDisplayArea">
+                  <code id="snippetCode">curl https://holiday2api.vercel.app/api/holidays/2026/TG</code>
+                </div>
               </div>
-              <div class="snippet-tabs">
-                <button class="snippet-tab active" onclick="switchSnippetTab('curl', this)">cURL</button>
-                <button class="snippet-tab" onclick="switchSnippetTab('js', this)">JS Fetch</button>
-                <button class="snippet-tab" onclick="switchSnippetTab('python', this)">Python</button>
-                <button class="snippet-tab" onclick="switchSnippetTab('go', this)">Go</button>
-              </div>
-              <div class="snippet-display" id="snippetDisplayArea">
-                <code id="snippetCode">curl https://holiday2api.vercel.app/api/holidays/2026/TG</code>
-              </div>
-            </div>
+            </details>
 
           </div>
         </div>
 
         <!-- Response Viewer Column -->
-        <div class="panel">
+        <div class="panel" id="wbResponsePanel">
           <div class="panel-header">
             <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
               <span class="panel-header-title">📦 Payload Inspector</span>
@@ -2826,8 +2953,8 @@ function renderInteractiveHtml(env) {
             <!-- View Switcher & Copy -->
             <div style="display: flex; align-items: center; gap: 0.5rem;">
               <div class="view-toggle-group">
-                <button id="btnViewVisual" class="view-toggle-btn active" onclick="setViewMode('visual')">✦ Visual Cards</button>
-                <button id="btnViewRaw" class="view-toggle-btn" onclick="setViewMode('raw')">{ } Raw JSON</button>
+                <button id="btnViewVisual" class="view-toggle-btn active" onclick="setViewMode('visual')">✦ Visual</button>
+                <button id="btnViewRaw" class="view-toggle-btn" onclick="setViewMode('raw')">{ } JSON</button>
               </div>
               <button class="btn btn-sm btn-outline" onclick="copyCurrentPayload()" title="Copy Response Payload" aria-label="Copy Response Payload" style="padding: 0.25rem 0.55rem; font-size: 0.75rem;">📋</button>
             </div>
@@ -3351,7 +3478,28 @@ function renderInteractiveHtml(env) {
       }
     }
 
-    async function executeWorkbenchRequest() {
+    function switchWorkbenchMobileTab(tab) {
+      const panelControls = document.getElementById('wbControlsPanel');
+      const panelResponse = document.getElementById('wbResponsePanel');
+      const btnControls = document.getElementById('btnTabControls');
+      const btnResponse = document.getElementById('btnTabResponse');
+      
+      if (panelControls && panelResponse && btnControls && btnResponse) {
+        if (tab === 'controls') {
+          btnControls.classList.add('active');
+          btnResponse.classList.remove('active');
+          panelControls.classList.add('wb-panel-active');
+          panelResponse.classList.remove('wb-panel-active');
+        } else {
+          btnControls.classList.remove('active');
+          btnResponse.classList.add('active');
+          panelControls.classList.remove('wb-panel-active');
+          panelResponse.classList.add('wb-panel-active');
+        }
+      }
+    }
+
+    async function executeWorkbenchRequest(isExplicitUserSend) {
       const path = getGeneratedPath();
       const startTime = performance.now();
       const visualContainer = document.getElementById('visualDisplayArea');
@@ -3361,6 +3509,10 @@ function renderInteractiveHtml(env) {
 
       visualContainer.innerHTML = '<div style="grid-column: 1/-1; color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.85rem; padding: 3rem 1rem; text-align: center;">⚡ Fetching data from edge...</div>';
       rawContainer.innerText = 'Fetching data...';
+
+      if (isExplicitUserSend && window.innerWidth < 990) {
+        switchWorkbenchMobileTab('response');
+      }
 
       try {
         const res = await fetch(path);
@@ -3401,6 +3553,15 @@ function renderInteractiveHtml(env) {
     function renderPayloadViews(data, isIcs) {
       const visualContainer = document.getElementById('visualDisplayArea');
       const rawContainer = document.getElementById('rawDisplayArea');
+      const countBadge = document.getElementById('wbResultCountBadge');
+
+      if (countBadge) {
+        if (isIcs) countBadge.textContent = 'iCal';
+        else if (Array.isArray(data)) countBadge.textContent = data.length + ' Items';
+        else if (data && data.long_weekends) countBadge.textContent = data.long_weekends.length + ' Weekends';
+        else if (data && data.working_days !== undefined) countBadge.textContent = data.working_days + ' Days';
+        else countBadge.textContent = 'Ready';
+      }
 
       // 1. Calendar (.ICS) View
       if (isIcs) {
