@@ -71,8 +71,10 @@ async function runTests() {
     assert(html.includes('themeToggleBtn') && html.includes('toggleTheme()') && html.includes('[data-theme="light"]'), 'Should include Night/Day theme toggle and CSS tokens');
     assert(html.includes('stateSearchInput') && html.includes('filterStatePills'), 'Should include states search filter');
     assert(html.includes('data-code="TG"') && html.includes('data-code="MH"') && html.includes('data-code="AN"'), 'Should include full state pill directory');
-    assert(html.includes('<link rel="icon" type="image/svg+xml"') && html.includes('circle-clip'), 'Should include circular Indian flag SVG favicon in head');
-    console.log('✔ GET / (Interactive HTML UI with Author font & Night/Day toggle & State Filter & Circular Flag Favicon) passed');
+    assert(html.includes('overflow-x: hidden') && html.includes('min-width: 0'), 'Should contain viewport tearing prevention and flexbox min-width reset');
+    assert(html.includes('@media (max-width: 820px)') && html.includes('@media (max-width: 768px)') && html.includes('@media (max-width: 480px)'), 'Should contain responsive mobile breakpoints');
+    assert(html.includes('doc-table') && html.includes('display: block'), 'Should include responsive mobile table card transformation');
+    console.log('✔ GET / (Interactive HTML UI with Mobile Responsiveness, Author font & Night/Day toggle) passed');
   }
 
   // Test 3: GET /health
