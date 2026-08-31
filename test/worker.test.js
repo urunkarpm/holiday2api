@@ -58,7 +58,7 @@ async function runTests() {
     console.log('✔ GET / (JSON discovery) passed');
   }
 
-  // Test 2: GET / with Accept: text/html (Interactive Web UI with Author font & Theme Toggle)
+  // Test 2: GET / with Accept: text/html (Interactive Web UI with Google Sans font & Theme Toggle)
   {
     const req = new Request('http://localhost:8787/', {
       headers: { 'Accept': 'text/html,application/xhtml+xml' },
@@ -67,14 +67,16 @@ async function runTests() {
     assert.strictEqual(res.status, 200, 'GET / with text/html should return 200');
     const html = await res.text();
     assert(html.includes('<!DOCTYPE html>') && html.includes('India Holidays API'), 'Should return HTML UI');
-    assert(html.includes("@font-face") && html.includes("font-family: 'Author'") && html.includes('--font-display: \'Author\''), 'Should configure Author font-family');
-    assert(html.includes('themeToggleBtn') && html.includes('toggleTheme()') && html.includes('[data-theme="light"]'), 'Should include Night/Day theme toggle and CSS tokens');
+    assert(html.includes('Google Sans') && html.includes("--font-display: 'Google Sans'") && html.includes("--font-body: 'Google Sans'"), 'Should configure Google Sans font-family');
+    assert(html.includes('brand-logo-circle') && html.includes('circle-clip') && html.includes('stroke="#000080"'), 'Should render circular Indian Flag logo with Ashoka Chakra');
+    assert(!html.includes('header-search-btn') && !html.includes('searchModalBackdrop'), 'Should not include header search bar or search modal');
+    assert(html.includes('themeToggleBtn') && html.includes('toggleTheme()') && html.includes('[data-theme="light"]') && html.includes('[data-theme="dark"]'), 'Should include Night/Day theme toggle and CSS tokens');
     assert(html.includes('stateSearchInput') && html.includes('filterStatePills'), 'Should include states search filter');
     assert(html.includes('data-code="TG"') && html.includes('data-code="MH"') && html.includes('data-code="AN"'), 'Should include full state pill directory');
     assert(html.includes('overflow-x: hidden') && html.includes('min-width: 0'), 'Should contain viewport tearing prevention and flexbox min-width reset');
     assert(html.includes('@media (max-width: 820px)') && html.includes('@media (max-width: 768px)') && html.includes('@media (max-width: 480px)'), 'Should contain responsive mobile breakpoints');
-    assert(html.includes('doc-table') && html.includes('display: block'), 'Should include responsive mobile table card transformation');
-    console.log('✔ GET / (Interactive HTML UI with Mobile Responsiveness, Author font & Night/Day toggle) passed');
+    assert(html.includes('user-scalable=yes') && html.includes('mobile-nav-backdrop'), 'Should support resizable mobile scaling and off-canvas backdrop');
+    console.log('✔ GET / (Interactive HTML UI with Mobile Responsiveness, Google Sans & Resizable Viewport) passed');
   }
 
   // Test 3: GET /health
