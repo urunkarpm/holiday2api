@@ -2596,6 +2596,66 @@ print(f"Total US California holidays: {len(holidays)}")</div>
             Detailed guide for every available endpoint, including query parameters, code examples, and response schemas.
           </p>
 
+          <div id="ep-v2-holidays" class="endpoint-card">
+            <div class="endpoint-bar">
+              <div class="endpoint-url-group">
+                <span class="http-method get">GET</span>
+                <span class="endpoint-path">/api/v2/holidays/:country/:year/:region</span>
+              </div>
+              <button type="button" class="btn-test-action" onclick="testInWorkbench('/api/v2/holidays/:country/:year/:region', 'CA', { country: 'US' })">Test in Workbench</button>
+            </div>
+            <h2 class="docs-h2" style="margin-top:0;">Multi-Country Holidays v2</h2>
+            <p class="docs-p">
+              Returns holidays for 6 global countries (IN, US, GB, CA, AU, SG) across 110+ states and provinces for any year from 2020 through 2036.
+            </p>
+            <h4 class="docs-h3">Parameters</h4>
+            <div class="doc-table-container">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Parameter</th>
+                    <th style="width: 15%;">Location</th>
+                    <th style="width: 15%;">Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="entity-code">country</span></td>
+                    <td><span class="inline-code">path</span></td>
+                    <td>string</td>
+                    <td>2-letter ISO country code (<code class="inline-code">IN</code>, <code class="inline-code">US</code>, <code class="inline-code">GB</code>, <code class="inline-code">CA</code>, <code class="inline-code">AU</code>, <code class="inline-code">SG</code>).</td>
+                  </tr>
+                  <tr>
+                    <td><span class="entity-code">year</span></td>
+                    <td><span class="inline-code">path</span></td>
+                    <td>string</td>
+                    <td>4-digit year between <strong>2020 and 2036</strong>.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="entity-code">region</span></td>
+                    <td><span class="inline-code">path</span></td>
+                    <td>string</td>
+                    <td>State/province code (e.g. <code class="inline-code">CA</code>, <code class="inline-code">NY</code>, <code class="inline-code">SCT</code>, <code class="inline-code">ON</code>, <code class="inline-code">NSW</code>, <code class="inline-code">TG</code>).</td>
+                  </tr>
+                  <tr>
+                    <td><span class="entity-code">type</span></td>
+                    <td><span class="inline-code">query</span></td>
+                    <td>string</td>
+                    <td>Optional type filter (<code class="inline-code">national</code>, <code class="inline-code">state</code>, <code class="inline-code">public</code>, <code class="inline-code">restricted</code>).</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="code-box">
+              <div class="code-box-header">
+                <span style="font-size: 0.76rem; font-family: var(--font-mono); color: #94a3b8;">Example Request</span>
+                <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
+              </div>
+              <div class="code-content">curl https://holiday2api.vercel.app/api/v2/holidays/US/2026/CA</div>
+            </div>
+          </div>
+
           <div id="ep-holidays" class="endpoint-card">
             <div class="endpoint-bar">
               <div class="endpoint-url-group">
@@ -2865,6 +2925,40 @@ console.log(upcoming);</div>
             </div>
           </div>
 
+          <div id="ep-countries" class="endpoint-card">
+            <div class="endpoint-bar">
+              <div class="endpoint-url-group">
+                <span class="http-method get">GET</span>
+                <span class="endpoint-path">/api/meta/countries</span>
+              </div>
+              <div style="display:flex; gap:0.5rem;">
+                <button type="button" class="btn-test-action" onclick="testInWorkbench('/api/meta/countries')">Test in Workbench</button>
+                <a href="/api/meta/countries" target="_blank" class="btn-test-action" style="background:var(--bg-elevated); color:var(--ink-secondary); border-color:var(--border-subtle);">Raw JSON</a>
+              </div>
+            </div>
+            <h2 class="docs-h2" style="margin-top:0;">Supported Global Countries</h2>
+            <p class="docs-p">
+              Returns metadata list of all 6 supported countries, their ISO 2-letter codes, flags, and region counts.
+            </p>
+          </div>
+
+          <div id="ep-regions" class="endpoint-card">
+            <div class="endpoint-bar">
+              <div class="endpoint-url-group">
+                <span class="http-method get">GET</span>
+                <span class="endpoint-path">/api/meta/regions</span>
+              </div>
+              <div style="display:flex; gap:0.5rem;">
+                <button type="button" class="btn-test-action" onclick="testInWorkbench('/api/meta/regions')">Test in Workbench</button>
+                <a href="/api/meta/regions?country=US" target="_blank" class="btn-test-action" style="background:var(--bg-elevated); color:var(--ink-secondary); border-color:var(--border-subtle);">Raw JSON</a>
+              </div>
+            </div>
+            <h2 class="docs-h2" style="margin-top:0;">Sub-Regions & States List</h2>
+            <p class="docs-p">
+              Returns sub-region & state definitions for a specified country (e.g. <code class="inline-code">?country=US</code> or <code class="inline-code">?country=GB</code>).
+            </p>
+          </div>
+
           <div id="ep-states" class="endpoint-card">
             <div class="endpoint-bar">
               <div class="endpoint-url-group">
@@ -2927,14 +3021,29 @@ console.log(upcoming);</div>
 
           <div class="workbench-card" id="workbench">
             <div class="wb-controls">
+              <div class="form-group" id="countryGroup">
+                <label class="form-label" for="countrySelect">Country</label>
+                <select id="countrySelect" class="form-select" onchange="onCountrySelectChange()">
+                  <option value="IN" selected>🇮🇳 India (IN)</option>
+                  <option value="US">🇺🇸 United States (US)</option>
+                  <option value="GB">🇬🇧 United Kingdom (GB)</option>
+                  <option value="CA">🇨🇦 Canada (CA)</option>
+                  <option value="AU">🇦🇺 Australia (AU)</option>
+                  <option value="SG">🇸🇬 Singapore (SG)</option>
+                </select>
+              </div>
+
               <div class="form-group">
                 <label class="form-label" for="endpointSelect">Endpoint</label>
                 <select id="endpointSelect" class="form-select" onchange="updateFormFields()">
-                  <option value="/api/holidays/:year/:state">GET /api/holidays/:year/:state</option>
+                  <option value="/api/v2/holidays/:country/:year/:region" selected>GET /api/v2/holidays/:country/:year/:region (Multi-Country v2)</option>
+                  <option value="/api/holidays/:year/:state">GET /api/holidays/:year/:state (v1)</option>
                   <option value="/api/holidays/upcoming">GET /api/holidays/upcoming</option>
                   <option value="/api/long-weekends/:year/:state">GET /api/long-weekends/:year/:state</option>
                   <option value="/api/business-days">GET /api/business-days</option>
                   <option value="/api/calendar/:year/:state.ics">GET /api/calendar/:year/:state.ics</option>
+                  <option value="/api/meta/countries">GET /api/meta/countries</option>
+                  <option value="/api/meta/regions">GET /api/meta/regions</option>
                   <option value="/api/meta/states">GET /api/meta/states</option>
                   <option value="/api/meta/types">GET /api/meta/types</option>
                   <option value="/api/health">GET /api/health</option>
@@ -3189,7 +3298,10 @@ console.log(upcoming);</div>
     function copySnippet(btn) {
       const parent = btn.closest('.code-box');
       if (!parent) return;
-      const activeContent = parent.querySelector('.code-content[style*="display: block"], .code-content:not([style*="display: none"])');
+      let activeContent = null;
+      parent.querySelectorAll('.code-content').forEach(c => {
+        if (window.getComputedStyle(c).display !== 'none') activeContent = c;
+      });
       if (activeContent) {
         navigator.clipboard.writeText(activeContent.innerText).then(() => {
           const orig = btn.innerText;
@@ -3306,10 +3418,10 @@ console.log(upcoming);</div>
       const typeGroup = document.getElementById('typeGroup');
       const dateRangeGroup = document.getElementById('dateRangeGroup');
 
-      if (countryGroup) countryGroup.style.display = (ep.includes('/v2/') || ep.includes(':state') || ep === '/api/holidays/upcoming' || ep === '/api/business-days' ? 'flex' : 'none');
+      if (countryGroup) countryGroup.style.display = (ep.includes('/v2/') || ep.includes(':state') || ep === '/api/holidays/upcoming' || ep === '/api/business-days' || ep === '/api/meta/regions' ? 'flex' : 'none');
       if (yearGroup) yearGroup.style.display = (ep.includes(':year') ? 'flex' : 'none');
       if (stateGroup) stateGroup.style.display = (ep.includes(':state') || ep.includes(':region') || ep === '/api/holidays/upcoming' || ep === '/api/business-days' ? 'flex' : 'none');
-      if (typeGroup) typeGroup.style.display = (ep.includes('/holidays/') ? 'flex' : 'none');
+      if (typeGroup) typeGroup.style.display = (ep.includes('/holidays/') || ep.includes('/v2/') ? 'flex' : 'none');
       if (dateRangeGroup) dateRangeGroup.style.display = (ep === '/api/business-days' ? 'flex' : 'none');
     }
 
@@ -3405,6 +3517,11 @@ console.log(upcoming);</div>
       if (cSelect) {
         cSelect.value = countryCode;
         onCountrySelectChange();
+        const epSelect = document.getElementById('endpointSelect');
+        if (epSelect) {
+          epSelect.value = '/api/v2/holidays/:country/:year/:region';
+        }
+        updateFormFields();
         executeWorkbenchRequest();
       }
     }
@@ -3498,6 +3615,10 @@ console.log(upcoming);</div>
         targetUrl = '/api/business-days?from=' + encodeURIComponent(fromDate) + '&to=' + encodeURIComponent(toDate);
         if (country && country !== 'IN') targetUrl += '&country=' + country;
         if (state && state !== 'IN' && state !== country) targetUrl += '&state=' + encodeURIComponent(state);
+      } else if (epTemplate === '/api/meta/regions') {
+        targetUrl = '/api/meta/regions?country=' + country;
+      } else if (epTemplate === '/api/meta/countries' || epTemplate === '/api/meta/states' || epTemplate === '/api/meta/types' || epTemplate === '/api/health') {
+        targetUrl = epTemplate;
       }
 
       const urlBar = document.getElementById('responseUrlBar');
