@@ -2318,6 +2318,7 @@ function renderInteractiveHtml(env) {
         <div class="nav-group-title">Getting Started</div>
         <ul class="nav-list">
           <li class="nav-item"><a href="#intro" class="nav-link active" onclick="handleNavClick(this, 'intro')">Quick Start Guide</a></li>
+          <li class="nav-item"><a href="#global-countries" class="nav-link" onclick="handleNavClick(this, 'global-countries')">Global Countries (6)</a></li>
           <li class="nav-item"><a href="#cheat-sheet" class="nav-link" onclick="handleNavClick(this, 'cheat-sheet')">Common Tasks & Recipes</a></li>
           <li class="nav-item"><a href="#holiday-concepts" class="nav-link" onclick="handleNavClick(this, 'holiday-concepts')">Holiday Types Explained</a></li>
         </ul>
@@ -2326,12 +2327,15 @@ function renderInteractiveHtml(env) {
       <div class="nav-group">
         <div class="nav-group-title">Endpoints Reference</div>
         <ul class="nav-list">
+          <li class="nav-item"><a href="#ep-v2-holidays" class="nav-link" onclick="handleNavClick(this, 'ep-v2-holidays')"><span>Multi-Country v2</span> <span class="nav-badge-mini get">GET</span></a></li>
           <li class="nav-item"><a href="#ep-holidays" class="nav-link" onclick="handleNavClick(this, 'ep-holidays')"><span>Get Holidays</span> <span class="nav-badge-mini get">GET</span></a></li>
           <li class="nav-item"><a href="#ep-upcoming" class="nav-link" onclick="handleNavClick(this, 'ep-upcoming')"><span>Upcoming Holidays</span> <span class="nav-badge-mini get">GET</span></a></li>
           <li class="nav-item"><a href="#ep-weekends" class="nav-link" onclick="handleNavClick(this, 'ep-weekends')"><span>Long Weekend Finder</span> <span class="nav-badge-mini get">GET</span></a></li>
           <li class="nav-item"><a href="#ep-business" class="nav-link" onclick="handleNavClick(this, 'ep-business')"><span>Working Days Calculator</span> <span class="nav-badge-mini get">GET</span></a></li>
           <li class="nav-item"><a href="#ep-calendar" class="nav-link" onclick="handleNavClick(this, 'ep-calendar')"><span>Google/Apple iCal Feed</span> <span class="nav-badge-mini get">GET</span></a></li>
-          <li class="nav-item"><a href="#ep-states" class="nav-link" onclick="handleNavClick(this, 'ep-states')"><span>All 36 States & UTs</span> <span class="nav-badge-mini get">GET</span></a></li>
+          <li class="nav-item"><a href="#ep-countries" class="nav-link" onclick="handleNavClick(this, 'ep-countries')"><span>All Countries</span> <span class="nav-badge-mini get">GET</span></a></li>
+          <li class="nav-item"><a href="#ep-regions" class="nav-link" onclick="handleNavClick(this, 'ep-regions')"><span>Sub-Regions & States</span> <span class="nav-badge-mini get">GET</span></a></li>
+          <li class="nav-item"><a href="#ep-states" class="nav-link" onclick="handleNavClick(this, 'ep-states')"><span>Indian States & UTs</span> <span class="nav-badge-mini get">GET</span></a></li>
           <li class="nav-item"><a href="#ep-types" class="nav-link" onclick="handleNavClick(this, 'ep-types')"><span>Holiday Classifications</span> <span class="nav-badge-mini get">GET</span></a></li>
           <li class="nav-item"><a href="#ep-health" class="nav-link" onclick="handleNavClick(this, 'ep-health')"><span>Server Health</span> <span class="nav-badge-mini get">GET</span></a></li>
         </ul>
@@ -2351,32 +2355,44 @@ function renderInteractiveHtml(env) {
       <div class="docs-content">
 
         <section id="intro" class="docs-section">
-          <h1 class="docs-h1">India Holidays API</h1>
+          <h1 class="docs-h1">India & Global Holidays API</h1>
           <p class="docs-lead">
-            The simplest, fastest way to get Indian holiday calendars in your apps. Get national, state, and bank holidays, calculate working days, and find long weekend vacation plans with clean JSON.
+            High-performance, edge-rendered REST & iCal API for global public holidays, statutory leave, long weekends, and business days across <strong>6 countries</strong> (India 🇮🇳, United States 🇺🇸, United Kingdom 🇬🇧, Canada 🇨🇦, Australia 🇦🇺, Singapore 🇸🇬) and 110+ states & regions.
           </p>
 
           <div class="feature-grid">
             <div class="feature-card">
-              <span class="feature-icon">⚡</span>
-              <div class="feature-title">Zero Setup</div>
-              <div class="feature-desc">No API keys, no registration, no rate limits. Simply make a GET request and get data instantly.</div>
+              <span class="feature-icon">🌍</span>
+              <div class="feature-title">Global Horizon</div>
+              <div class="feature-desc">Full holiday datasets for 6 major countries (IN 🇮🇳, US 🇺🇸, GB 🇬🇧, CA 🇨🇦, AU 🇦🇺, SG 🇸🇬) covering 2020 through 2036.</div>
             </div>
             <div class="feature-card">
-              <span class="feature-icon">🇮🇳</span>
-              <div class="feature-title">All 36 States & UTs</div>
-              <div class="feature-desc">Complete coverage for 28 States and 8 Union Territories covering 2020 through 2036.</div>
+              <span class="feature-icon">🏛️</span>
+              <div class="feature-title">110+ Sub-Regions</div>
+              <div class="feature-desc">Complete coverage for 37 Indian States/UTs, 51 US States/DC, 4 UK Nations, 13 Canadian Provinces, and 8 Australian States.</div>
             </div>
             <div class="feature-card">
               <span class="feature-icon">🏖️</span>
               <div class="feature-title">Smart Utilities</div>
-              <div class="feature-desc">Includes automated long weekend finder, office working days calculator, and iCal calendar subscriptions.</div>
+              <div class="feature-desc">Automated long weekend finder, business days calculator, bank closure rules, and RFC 5545 iCal feeds.</div>
             </div>
+          </div>
+
+          <h2 id="global-countries" class="docs-h2" style="margin-top: 2rem;">Supported Global Countries</h2>
+          <p class="docs-p">Click any country pill below to select it and test its holiday dataset directly in the Workbench:</p>
+
+          <div class="country-pills-container" style="display:flex; flex-wrap:wrap; gap:0.6rem; margin-bottom:1.75rem;">
+            <div class="state-pill" data-code="IN" onclick="selectCountryPill('IN')" style="cursor:pointer; background:var(--accent-orange-subtle); border-color:var(--accent-orange-border); color:var(--ink-primary); font-weight:700;"><span style="font-size:1.15rem; margin-right:0.25rem;">🇮🇳</span><span>India (37 States & UTs)</span></div>
+            <div class="state-pill" data-code="US" onclick="selectCountryPill('US')" style="cursor:pointer;"><span style="font-size:1.15rem; margin-right:0.25rem;">🇺🇸</span><span>United States (51 States/DC)</span></div>
+            <div class="state-pill" data-code="GB" onclick="selectCountryPill('GB')" style="cursor:pointer;"><span style="font-size:1.15rem; margin-right:0.25rem;">🇬🇧</span><span>United Kingdom (4 Nations)</span></div>
+            <div class="state-pill" data-code="CA" onclick="selectCountryPill('CA')" style="cursor:pointer;"><span style="font-size:1.15rem; margin-right:0.25rem;">🇨🇦</span><span>Canada (13 Provinces)</span></div>
+            <div class="state-pill" data-code="AU" onclick="selectCountryPill('AU')" style="cursor:pointer;"><span style="font-size:1.15rem; margin-right:0.25rem;">🇦🇺</span><span>Australia (8 States)</span></div>
+            <div class="state-pill" data-code="SG" onclick="selectCountryPill('SG')" style="cursor:pointer;"><span style="font-size:1.15rem; margin-right:0.25rem;">🇸🇬</span><span>Singapore (National)</span></div>
           </div>
 
           <h2 class="docs-h2">30-Second Quick Start</h2>
           <p class="docs-p">
-            Copy and paste this URL into your terminal or browser to get holidays for Telangana (<code class="inline-code">TG</code>) for 2026:
+            Copy and paste this URL into your terminal or browser to fetch 2026 holidays for California, US (<code class="inline-code">US-CA</code>) or Telangana, India (<code class="inline-code">TG</code>):
           </p>
 
           <div class="code-box">
@@ -2388,20 +2404,20 @@ function renderInteractiveHtml(env) {
               </div>
               <button class="btn-copy" onclick="copySnippet(this)">Copy</button>
             </div>
-            <div id="qs-curl" class="code-content">curl https://holiday2api.vercel.app/api/holidays/2026/TG</div>
-            <div id="qs-fetch" class="code-content" style="display:none;">// In browser or Node.js 18+
-const res = await fetch('https://holiday2api.vercel.app/api/holidays/2026/TG');
+            <div id="qs-curl" class="code-content">curl https://holiday2api.vercel.app/api/v2/holidays/US/2026/CA</div>
+            <div id="qs-fetch" class="code-content" style="display:none;">// Fetch US California Holidays
+const res = await fetch('https://holiday2api.vercel.app/api/v2/holidays/US/2026/CA');
 const holidays = await res.json();
-console.log('Found holidays:', holidays.length);</div>
+console.log('Found US California holidays:', holidays.length);</div>
             <div id="qs-python" class="code-content" style="display:none;">import requests
 
-response = requests.get('https://holiday2api.vercel.app/api/holidays/2026/TG')
+response = requests.get('https://holiday2api.vercel.app/api/v2/holidays/US/2026/CA')
 holidays = response.json()
-print(f"Total holidays: {len(holidays)}")</div>
+print(f"Total US California holidays: {len(holidays)}")</div>
           </div>
 
           <p class="docs-p" style="margin-top: 1rem;">
-            Here is a sample of what the API returns:
+            Sample multi-country JSON response:
           </p>
 
           <div class="code-box">
@@ -2411,18 +2427,20 @@ print(f"Total holidays: {len(holidays)}")</div>
             </div>
             <div class="code-content">[
   {
-    "date": "2026-01-26",
-    "name": "Republic Day",
-    "type": "national",
-    "state_code": "IN",
-    "description": "Celebrates the adoption of the Constitution of India"
+    "date": "2026-07-04",
+    "name": "Independence Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "CA",
+    "description": "Commemorating the Declaration of Independence in 1776"
   },
   {
-    "date": "2026-03-19",
-    "name": "Ugadi / Gudi Padwa",
-    "type": "state",
-    "state_code": "TG",
-    "description": "Telugu and Kannada New Year celebration"
+    "date": "2026-11-26",
+    "name": "Thanksgiving Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "CA",
+    "description": "National day of giving thanks and harvest celebration"
   }
 ]</div>
           </div>
@@ -2433,50 +2451,50 @@ print(f"Total holidays: {len(holidays)}")</div>
         <section id="cheat-sheet" class="docs-section">
           <h1 class="docs-h1">Common Tasks & Recipes</h1>
           <p class="docs-lead">
-            Find the exact endpoint you need for your use case:
+            Quickly test endpoints for different countries and use cases:
           </p>
 
           <div class="recipe-grid">
             <div class="recipe-card">
-              <div class="recipe-label">📌 Get all holidays for a state</div>
+              <div class="recipe-label">🇺🇸 US California Holidays</div>
               <div class="recipe-url">
-                <a href="/api/holidays/2026/MH" target="_blank">GET /api/holidays/2026/MH</a>
-                <button type="button" class="btn-test-action" style="padding: 0.18rem 0.5rem; font-size: 0.72rem;" onclick="testInWorkbench('/api/holidays/:year/:state', 'MH')">Test</button>
+                <a href="/api/v2/holidays/US/2026/CA" target="_blank">GET /api/v2/holidays/US/2026/CA</a>
+                <button type="button" class="btn-test-action" style="padding: 0.18rem 0.5rem; font-size: 0.72rem;" onclick="testInWorkbench('/api/v2/holidays/:country/:year/:region', 'CA', { country: 'US' })">Test</button>
               </div>
             </div>
             <div class="recipe-card">
-              <div class="recipe-label">⏳ Show next upcoming holidays from today</div>
+              <div class="recipe-label">🇬🇧 UK Scotland Bank Holidays</div>
               <div class="recipe-url">
-                <a href="/api/holidays/upcoming?limit=5" target="_blank">GET /api/holidays/upcoming</a>
-                <button type="button" class="btn-test-action" style="padding: 0.18rem 0.5rem; font-size: 0.72rem;" onclick="testInWorkbench('/api/holidays/upcoming', 'IN')">Test</button>
+                <a href="/api/v2/holidays/GB/2026/SCT" target="_blank">GET /api/v2/holidays/GB/2026/SCT</a>
+                <button type="button" class="btn-test-action" style="padding: 0.18rem 0.5rem; font-size: 0.72rem;" onclick="testInWorkbench('/api/v2/holidays/:country/:year/:region', 'SCT', { country: 'GB' })">Test</button>
               </div>
             </div>
             <div class="recipe-card">
-              <div class="recipe-label">🏖️ Find long weekends for vacation planning</div>
+              <div class="recipe-label">🇸🇬 Singapore National Holidays</div>
               <div class="recipe-url">
-                <a href="/api/long-weekends/2026/KA" target="_blank">GET /api/long-weekends/2026/KA</a>
-                <button type="button" class="btn-test-action" style="padding: 0.18rem 0.5rem; font-size: 0.72rem;" onclick="testInWorkbench('/api/long-weekends/:year/:state', 'KA')">Test</button>
+                <a href="/api/v2/holidays/SG/2026" target="_blank">GET /api/v2/holidays/SG/2026</a>
+                <button type="button" class="btn-test-action" style="padding: 0.18rem 0.5rem; font-size: 0.72rem;" onclick="testInWorkbench('/api/v2/holidays/:country/:year/:region', 'SG', { country: 'SG' })">Test</button>
               </div>
             </div>
             <div class="recipe-card">
-              <div class="recipe-label">📊 Calculate working days between 2 dates</div>
+              <div class="recipe-label">🇮🇳 Indian State Holidays (Telangana)</div>
               <div class="recipe-url">
-                <a href="/api/business-days?from=2026-03-01&to=2026-03-31&state=MH" target="_blank">GET /api/business-days</a>
-                <button type="button" class="btn-test-action" style="padding: 0.18rem 0.5rem; font-size: 0.72rem;" onclick="testInWorkbench('/api/business-days', 'MH')">Test</button>
+                <a href="/api/holidays/2026/TG" target="_blank">GET /api/holidays/2026/TG</a>
+                <button type="button" class="btn-test-action" style="padding: 0.18rem 0.5rem; font-size: 0.72rem;" onclick="testInWorkbench('/api/holidays/:year/:state', 'TG')">Test</button>
               </div>
             </div>
             <div class="recipe-card">
-              <div class="recipe-label">📅 Add holidays to Google or Apple Calendar</div>
+              <div class="recipe-label">🏖️ Find Long Weekends & Vacation Bridges</div>
               <div class="recipe-url">
-                <a href="/api/calendar/2026/IN.ics" target="_blank">GET /api/calendar/2026/IN.ics</a>
-                <button type="button" class="btn-test-action" style="padding: 0.18rem 0.5rem; font-size: 0.72rem;" onclick="testInWorkbench('/api/calendar/:year/:state.ics', 'IN')">Test</button>
+                <a href="/api/long-weekends/2026/TG" target="_blank">GET /api/long-weekends/2026/TG</a>
+                <button type="button" class="btn-test-action" style="padding: 0.18rem 0.5rem; font-size: 0.72rem;" onclick="testInWorkbench('/api/long-weekends/:year/:state', 'TG')">Test</button>
               </div>
             </div>
             <div class="recipe-card">
-              <div class="recipe-label">🗺️ List all 36 supported States & UTs</div>
+              <div class="recipe-label">🗺️ List All 6 Supported Countries</div>
               <div class="recipe-url">
-                <a href="/api/meta/states" target="_blank">GET /api/meta/states</a>
-                <button type="button" class="btn-test-action" style="padding: 0.18rem 0.5rem; font-size: 0.72rem;" onclick="testInWorkbench('/api/meta/states')">Test</button>
+                <a href="/api/meta/countries" target="_blank">GET /api/meta/countries</a>
+                <button type="button" class="btn-test-action" style="padding: 0.18rem 0.5rem; font-size: 0.72rem;" onclick="testInWorkbench('/api/meta/countries')">Test</button>
               </div>
             </div>
           </div>
@@ -3237,18 +3255,123 @@ console.log(upcoming);</div>
       const epSelect = document.getElementById('endpointSelect');
       if (!epSelect) return;
       const ep = epSelect.value;
+      const countryGroup = document.getElementById('countryGroup');
       const yearGroup = document.getElementById('yearGroup');
       const stateGroup = document.getElementById('stateGroup');
       const typeGroup = document.getElementById('typeGroup');
       const dateRangeGroup = document.getElementById('dateRangeGroup');
 
+      if (countryGroup) countryGroup.style.display = (ep.includes('/v2/') || ep.includes(':state') || ep === '/api/holidays/upcoming' || ep === '/api/business-days' ? 'flex' : 'none');
       if (yearGroup) yearGroup.style.display = (ep.includes(':year') ? 'flex' : 'none');
-      if (stateGroup) stateGroup.style.display = (ep.includes(':state') || ep === '/api/holidays/upcoming' || ep === '/api/business-days' ? 'flex' : 'none');
-      if (typeGroup) typeGroup.style.display = (ep === '/api/holidays/:year/:state' ? 'flex' : 'none');
+      if (stateGroup) stateGroup.style.display = (ep.includes(':state') || ep.includes(':region') || ep === '/api/holidays/upcoming' || ep === '/api/business-days' ? 'flex' : 'none');
+      if (typeGroup) typeGroup.style.display = (ep.includes('/holidays/') ? 'flex' : 'none');
       if (dateRangeGroup) dateRangeGroup.style.display = (ep === '/api/business-days' ? 'flex' : 'none');
     }
 
+    const REGIONS_MAP = {
+      IN: [
+        { code: "IN", name: "National (All India)" },
+        { code: "AN", name: "Andaman & Nicobar" },
+        { code: "AP", name: "Andhra Pradesh" },
+        { code: "AR", name: "Arunachal Pradesh" },
+        { code: "AS", name: "Assam" },
+        { code: "BR", name: "Bihar" },
+        { code: "CH", name: "Chandigarh" },
+        { code: "CT", name: "Chhattisgarh" },
+        { code: "DN", name: "Dadra & Nagar Haveli" },
+        { code: "DL", name: "Delhi (NCT)" },
+        { code: "GA", name: "Goa" },
+        { code: "GJ", name: "Gujarat" },
+        { code: "HR", name: "Haryana" },
+        { code: "HP", name: "Himachal Pradesh" },
+        { code: "JK", name: "Jammu & Kashmir" },
+        { code: "JH", name: "Jharkhand" },
+        { code: "KA", name: "Karnataka" },
+        { code: "KL", name: "Kerala" },
+        { code: "LA", name: "Ladakh" },
+        { code: "LD", name: "Lakshadweep" },
+        { code: "MP", name: "Madhya Pradesh" },
+        { code: "MH", name: "Maharashtra" },
+        { code: "MN", name: "Manipur" },
+        { code: "ML", name: "Meghalaya" },
+        { code: "MZ", name: "Mizoram" },
+        { code: "NL", name: "Nagaland" },
+        { code: "OR", name: "Odisha" },
+        { code: "PY", name: "Puducherry" },
+        { code: "PB", name: "Punjab" },
+        { code: "RJ", name: "Rajasthan" },
+        { code: "SK", name: "Sikkim" },
+        { code: "TN", name: "Tamil Nadu" },
+        { code: "TG", name: "Telangana" },
+        { code: "TR", name: "Tripura" },
+        { code: "UP", name: "Uttar Pradesh" },
+        { code: "UT", name: "Uttarakhand" },
+        { code: "WB", name: "West Bengal" }
+      ],
+      US: [
+        { code: "US", name: "Federal (All US)" },
+        { code: "CA", name: "California" },
+        { code: "NY", name: "New York" },
+        { code: "TX", name: "Texas" },
+        { code: "FL", name: "Florida" },
+        { code: "IL", name: "Illinois" },
+        { code: "MA", name: "Massachusetts" },
+        { code: "WA", name: "Washington" },
+        { code: "PA", name: "Pennsylvania" },
+        { code: "DC", name: "District of Columbia" }
+      ],
+      GB: [
+        { code: "GB", name: "United Kingdom (National)" },
+        { code: "ENG", name: "England" },
+        { code: "WLS", name: "Wales" },
+        { code: "SCT", name: "Scotland" },
+        { code: "NIR", name: "Northern Ireland" }
+      ],
+      CA: [
+        { code: "CA", name: "Canada (Federal)" },
+        { code: "ON", name: "Ontario" },
+        { code: "QC", name: "Quebec" },
+        { code: "BC", name: "British Columbia" },
+        { code: "AB", name: "Alberta" }
+      ],
+      AU: [
+        { code: "AU", name: "Australia (Federal)" },
+        { code: "NSW", name: "New South Wales" },
+        { code: "VIC", name: "Victoria" },
+        { code: "QLD", name: "Queensland" },
+        { code: "WA", name: "Western Australia" }
+      ],
+      SG: [
+        { code: "SG", name: "Singapore (National)" }
+      ]
+    };
+
+    function onCountrySelectChange() {
+      const countrySelect = document.getElementById('countrySelect');
+      const stateSelect = document.getElementById('stateSelect');
+      if (!countrySelect || !stateSelect) return;
+      const country = countrySelect.value || 'IN';
+      const list = REGIONS_MAP[country] || REGIONS_MAP['IN'];
+      stateSelect.innerHTML = list.map(function(r) { return '<option value="' + r.code + '">' + r.name + ' (' + r.code + ')</option>'; }).join('');
+    }
+
+    function selectCountryPill(countryCode) {
+      const cSelect = document.getElementById('countrySelect');
+      if (cSelect) {
+        cSelect.value = countryCode;
+        onCountrySelectChange();
+        executeWorkbenchRequest();
+      }
+    }
+
     function testInWorkbench(endpoint, state, extra) {
+      if (extra && extra.country) {
+        const cSelect = document.getElementById('countrySelect');
+        if (cSelect) {
+          cSelect.value = extra.country;
+          onCountrySelectChange();
+        }
+      }
       const epSelect = document.getElementById('endpointSelect');
       if (epSelect && endpoint) {
         epSelect.value = endpoint;
@@ -3297,27 +3420,39 @@ console.log(upcoming);</div>
       const epSelect = document.getElementById('endpointSelect');
       if (!epSelect) return;
       const epTemplate = epSelect.value;
+      const country = (document.getElementById('countrySelect')?.value) || 'IN';
       const year = (document.getElementById('yearSelect')?.value) || '2026';
-      const state = (document.getElementById('stateSelect')?.value) || 'IN';
+      const state = (document.getElementById('stateSelect')?.value) || country;
       const type = (document.getElementById('typeSelect')?.value) || '';
       const fromDate = (document.getElementById('fromDateInput')?.value) || '2026-03-01';
       const toDate = (document.getElementById('toDateInput')?.value) || '2026-03-31';
 
       let targetUrl = epTemplate;
 
-      if (epTemplate === '/api/holidays/:year/:state') {
-        targetUrl = '/api/holidays/' + year + '/' + state;
+      if (epTemplate === '/api/v2/holidays/:country/:year/:region') {
+        targetUrl = '/api/v2/holidays/' + country + '/' + year + '/' + state;
+        if (type) targetUrl += '?type=' + encodeURIComponent(type);
+      } else if (epTemplate === '/api/holidays/:year/:state') {
+        if (country === 'IN') {
+          targetUrl = '/api/holidays/' + year + '/' + state;
+        } else {
+          targetUrl = '/api/v2/holidays/' + country + '/' + year + '/' + state;
+        }
         if (type) targetUrl += '?type=' + encodeURIComponent(type);
       } else if (epTemplate === '/api/long-weekends/:year/:state') {
         targetUrl = '/api/long-weekends/' + year + '/' + state;
+        if (country && country !== 'IN') targetUrl += '?country=' + country;
       } else if (epTemplate === '/api/calendar/:year/:state.ics') {
         targetUrl = '/api/calendar/' + year + '/' + state + '.ics';
+        if (country && country !== 'IN') targetUrl += '?country=' + country;
       } else if (epTemplate === '/api/holidays/upcoming') {
         targetUrl = '/api/holidays/upcoming?limit=10';
-        if (state && state !== 'IN') targetUrl += '&state=' + encodeURIComponent(state);
+        if (country && country !== 'IN') targetUrl += '&country=' + country;
+        if (state && state !== 'IN' && state !== country) targetUrl += '&state=' + encodeURIComponent(state);
       } else if (epTemplate === '/api/business-days') {
         targetUrl = '/api/business-days?from=' + encodeURIComponent(fromDate) + '&to=' + encodeURIComponent(toDate);
-        if (state && state !== 'IN') targetUrl += '&state=' + encodeURIComponent(state);
+        if (country && country !== 'IN') targetUrl += '&country=' + country;
+        if (state && state !== 'IN' && state !== country) targetUrl += '&state=' + encodeURIComponent(state);
       }
 
       const urlBar = document.getElementById('responseUrlBar');
