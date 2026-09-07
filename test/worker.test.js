@@ -75,8 +75,13 @@ async function runTests() {
     assert(html.includes('data-code="TG"') && html.includes('data-code="MH"') && html.includes('data-code="AN"'), 'Should include full state pill directory');
     assert(html.includes('overflow-x: hidden') && html.includes('min-width: 0'), 'Should contain viewport tearing prevention and flexbox min-width reset');
     assert(html.includes('@media (max-width: 820px)') && html.includes('@media (max-width: 768px)') && html.includes('@media (max-width: 480px)'), 'Should contain responsive mobile breakpoints');
-    assert(html.includes('user-scalable=yes') && html.includes('mobile-nav-backdrop'), 'Should support resizable mobile scaling and off-canvas backdrop');
-    console.log('✔ GET / (Interactive HTML UI with Mobile Responsiveness, Google Sans & Resizable Viewport) passed');
+    assert(html.includes('skip-link') && html.includes('Skip to main content'), 'Should include skip to main content link');
+    assert(html.includes('og:title') && html.includes('og:description') && html.includes('og:type'), 'Should include OpenGraph metadata');
+    assert(html.includes('twitter:card') && html.includes('twitter:title'), 'Should include Twitter card metadata');
+    assert(html.includes('application/ld+json') && html.includes('schema.org') && html.includes('WebAPI'), 'Should include JSON-LD WebAPI structured data');
+    assert(html.includes('aria-label="Toggle light and dark theme"') && html.includes('aria-label="Toggle navigation menu"') && html.includes('aria-label="Search state name or code"'), 'Should include accessible ARIA labels');
+    assert(html.includes('media="print" onload="this.media=\'all\'"'), 'Should include non-blocking font loading');
+    console.log('✔ GET / (Interactive HTML UI with Mobile Responsiveness, Google Sans, Accessibility & SEO) passed');
   }
 
   // Test 3: GET /health
@@ -316,7 +321,36 @@ async function runTests() {
     console.log('✔ HTTP Method restriction (405 for POST/PUT) passed');
   }
 
-  console.log('\n🎉 All 24 tests (including security hardening) passed successfully!');
+  // Test 25: GET /llms.txt (AI Agent Discovery)
+  {
+    const reqLlms = new Request('http://localhost:8787/llms.txt');
+    const resLlms = await worker.fetch(reqLlms, mockEnv);
+    assert.strictEqual(resLlms.status, 200, 'GET /llms.txt should return 200');
+    assert.strictEqual(resLlms.headers.get('Content-Type'), 'text/plain; charset=utf-8');
+    const textLlms = await resLlms.text();
+    assert(textLlms.includes('# India Holidays API') && textLlms.includes('/api/holidays/{year}/{state}'), 'llms.txt should contain API overview');
+    console.log('✔ GET /llms.txt (AI Agent Discovery) passed');
+  }
+
+  // Test 26: GET /robots.txt and GET /sitemap.xml (Technical SEO)
+  {
+    const reqRobots = new Request('http://localhost:8787/robots.txt');
+    const resRobots = await worker.fetch(reqRobots, mockEnv);
+    assert.strictEqual(resRobots.status, 200, 'GET /robots.txt should return 200');
+    assert.strictEqual(resRobots.headers.get('Content-Type'), 'text/plain; charset=utf-8');
+    const textRobots = await resRobots.text();
+    assert(textRobots.includes('User-agent: *') && textRobots.includes('Sitemap:'), 'robots.txt should contain sitemap reference');
+
+    const reqSitemap = new Request('http://localhost:8787/sitemap.xml');
+    const resSitemap = await worker.fetch(reqSitemap, mockEnv);
+    assert.strictEqual(resSitemap.status, 200, 'GET /sitemap.xml should return 200');
+    assert.strictEqual(resSitemap.headers.get('Content-Type'), 'application/xml; charset=utf-8');
+    const textSitemap = await resSitemap.text();
+    assert(textSitemap.includes('<urlset') && textSitemap.includes('<loc>'), 'sitemap.xml should contain urlset');
+    console.log('✔ GET /robots.txt and GET /sitemap.xml (Technical SEO) passed');
+  }
+
+  console.log('\n🎉 All 27 tests (including HSTS, accessibility, SEO, & AI discovery) passed successfully!');
 }
 
 runTests().catch(err => {

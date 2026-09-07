@@ -6,6 +6,7 @@ const SECURITY_HEADERS = {
   'X-Frame-Options': 'DENY',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
 };
 
 const CORS_HEADERS = {
@@ -149,6 +150,39 @@ async function handleRoute(request, env, ctx) {
       JSON.stringify(getOpenApiSpec(url.origin), null, 2),
       { headers: JSON_HEADERS }
     );
+  }
+
+  // 3b. LLMs text route for AI discovery
+  if (path === '/llms.txt') {
+    return new Response(getLlmsTxt(url.origin), {
+      headers: {
+        ...CORS_HEADERS,
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'public, max-age=86400',
+      },
+    });
+  }
+
+  // 3c. Technical SEO: /robots.txt
+  if (path === '/robots.txt') {
+    return new Response(getRobotsTxt(url.origin), {
+      headers: {
+        ...CORS_HEADERS,
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'public, max-age=86400',
+      },
+    });
+  }
+
+  // 3d. Technical SEO: /sitemap.xml
+  if (path === '/sitemap.xml') {
+    return new Response(getSitemapXml(url.origin), {
+      headers: {
+        ...CORS_HEADERS,
+        'Content-Type': 'application/xml; charset=utf-8',
+        'Cache-Control': 'public, max-age=86400',
+      },
+    });
   }
 
   // 4. Metadata: /api/meta/states
@@ -843,6 +877,77 @@ function getApiDirectory(env) {
 }
 
 /**
+ * llms.txt document for AI agents & LLM tools
+ */
+function getLlmsTxt(origin) {
+  const host = origin || 'https://holiday2api.vercel.app';
+  return `# India Holidays API
+
+> Free, fast, reliable REST API providing Indian holiday datasets across 36 States and Union Territories with long weekend planning, iCalendar feeds, and business day calculations.
+
+- Docs & Web Explorer: ${host}/
+- OpenAPI Spec: ${host}/api/openapi.json
+- Health Check: ${host}/api/health
+
+## Core Endpoints
+- GET ${host}/api/holidays/{year}/{state} - Get all holidays for a given year (2024–2036) and 2-letter state code (e.g. TG, MH, KA, DL, IN).
+- GET ${host}/api/holidays/upcoming?state={state}&limit=10 - Get upcoming holidays starting from current date in IST (Asia/Kolkata).
+- GET ${host}/api/long-weekends/{year}/{state} - Automated 3-day and 4-day bridge long weekend vacation finder.
+- GET ${host}/api/business-days?from=YYYY-MM-DD&to=YYYY-MM-DD&state={state}&bank_rules=true - Working and business days calculator.
+- GET ${host}/api/calendar/{year}/{state}.ics - RFC 5545 iCalendar feed export for Google & Apple Calendar.
+- GET ${host}/api/meta/states - List of all 36 supported States & UTs with ISO codes.
+- GET ${host}/api/meta/types - List of holiday classifications (national, state, public, restricted).
+`;
+}
+
+/**
+ * robots.txt file for search engine crawlers
+ */
+function getRobotsTxt(origin) {
+  const host = origin || 'https://holiday2api.vercel.app';
+  return `User-agent: *
+Allow: /
+
+Sitemap: ${host}/sitemap.xml
+`;
+}
+
+/**
+ * sitemap.xml file for search engine indexing
+ */
+function getSitemapXml(origin) {
+  const host = origin || 'https://holiday2api.vercel.app';
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${host}/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>${host}/api/openapi.json</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${host}/llms.txt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>${host}/api/meta/states</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>${host}/api/meta/types</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>`;
+}
+
+/**
  * OpenAPI 3.0.3 Specification
  */
 function getOpenApiSpec(baseUrl) {
@@ -865,6 +970,7 @@ function getOpenApiSpec(baseUrl) {
             { name: 'year', in: 'path', required: true, schema: { type: 'string', example: '2026' } },
             { name: 'state', in: 'query', required: false, schema: { type: 'string', example: 'TG' } },
             { name: 'type', in: 'query', required: false, schema: { type: 'string', example: 'national' } },
+            { name: 'month', in: 'query', required: false, schema: { type: 'string', example: '08' } },
             { name: 'date', in: 'query', required: false, schema: { type: 'string', example: '2026-01-26' } },
           ],
           responses: { '200': { description: 'Holiday list' } },
@@ -877,8 +983,23 @@ function getOpenApiSpec(baseUrl) {
             { name: 'year', in: 'path', required: true, schema: { type: 'string', example: '2026' } },
             { name: 'state', in: 'path', required: true, schema: { type: 'string', example: 'MH' } },
             { name: 'type', in: 'query', required: false, schema: { type: 'string' } },
+            { name: 'month', in: 'query', required: false, schema: { type: 'string' } },
+            { name: 'date', in: 'query', required: false, schema: { type: 'string' } },
           ],
           responses: { '200': { description: 'State holiday list' } },
+        },
+      },
+      '/api/holidays': {
+        get: {
+          summary: 'Dynamic holiday query filter',
+          parameters: [
+            { name: 'year', in: 'query', required: false, schema: { type: 'string', example: '2026' } },
+            { name: 'state', in: 'query', required: false, schema: { type: 'string', example: 'IN' } },
+            { name: 'type', in: 'query', required: false, schema: { type: 'string' } },
+            { name: 'month', in: 'query', required: false, schema: { type: 'string' } },
+            { name: 'date', in: 'query', required: false, schema: { type: 'string' } },
+          ],
+          responses: { '200': { description: 'Filtered holiday list' } },
         },
       },
       '/api/holidays/upcoming': {
@@ -947,6 +1068,39 @@ function renderInteractiveHtml(env) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>India Holidays API — Simple, Fast & Free Indian Holiday Documentation</title>
   <meta name="description" content="Simple, developer-friendly REST API for Indian holidays. National & 36 States/UTs, upcoming holidays, long weekend vacation finder, working days calculator, and iCal feeds. No API keys required.">
+  <link rel="canonical" href="https://holiday2api.vercel.app/">
+  
+  <!-- OpenGraph Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="India Holidays API — Free REST API for Indian Holidays">
+  <meta property="og:description" content="Free REST API for Indian holidays covering all 28 States & 8 UTs with long weekend planner, business days calculator, and iCal feeds.">
+  <meta property="og:url" content="https://holiday2api.vercel.app/">
+  <meta property="og:site_name" content="India Holidays API">
+  <meta property="og:image" content="https://holiday2api.vercel.app/favicon.svg">
+
+  <!-- Twitter Card Metadata -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="India Holidays API — Free REST API for Indian Holidays">
+  <meta name="twitter:description" content="Free REST API for Indian holidays covering all 28 States & 8 UTs. No API keys required.">
+  <meta name="twitter:image" content="https://holiday2api.vercel.app/favicon.svg">
+
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebAPI",
+    "name": "India Holidays API",
+    "description": "Free, fast, timezone-aware REST API for Indian national and state holidays with business day calculator and iCalendar support.",
+    "url": "https://holiday2api.vercel.app/",
+    "documentation": "https://holiday2api.vercel.app/",
+    "termsOfService": "https://opensource.org/licenses/MIT",
+    "provider": {
+      "@type": "Organization",
+      "name": "India Holidays API"
+    }
+  }
+  </script>
+
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,${encodeURIComponent(FAVICON_SVG)}">
   <link rel="alternate icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,${encodeURIComponent(FAVICON_SVG)}">
@@ -961,7 +1115,8 @@ function renderInteractiveHtml(env) {
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,6..1200,400..800;1,6..1200,400..800&family=Google+Sans+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,6..1200,400..800;1,6..1200,400..800&family=Google+Sans+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,6..1200,400..800;1,6..1200,400..800&family=Google+Sans+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"></noscript>
   <style>
     :root, [data-theme="light"] {
       --bg: #ffffff;
@@ -1094,6 +1249,24 @@ function renderInteractiveHtml(env) {
     }
     ::-webkit-scrollbar-thumb:hover {
       background: var(--ink-muted);
+    }
+
+    /* Skip Link for Accessibility */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: var(--accent-orange);
+      color: #ffffff !important;
+      padding: 0.5rem 1rem;
+      z-index: 1000;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      transition: top 0.15s ease;
+      box-shadow: var(--shadow-md);
+    }
+    .skip-link:focus {
+      top: 1rem;
     }
 
     /* Links */
@@ -2049,12 +2222,13 @@ function renderInteractiveHtml(env) {
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <div id="mobileNavBackdrop" class="mobile-nav-backdrop" onclick="toggleMobileNav(false)"></div>
 
   <header class="docs-header">
     <div class="header-left">
-      <button class="btn-icon mobile-nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle navigation">
+      <button class="btn-icon mobile-nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle navigation menu">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
       <a href="/" class="brand-link" aria-label="India Holidays API Home">
@@ -2067,7 +2241,7 @@ function renderInteractiveHtml(env) {
 
     <div class="header-right">
       <span class="free-pill">100% Free • No API Key</span>
-      <button id="themeToggleBtn" class="btn-icon" onclick="toggleTheme()" aria-label="Toggle dark/light theme" title="Toggle dark/light mode">
+      <button id="themeToggleBtn" class="btn-icon" onclick="toggleTheme()" aria-label="Toggle light and dark theme" title="Toggle dark/light mode">
         <svg id="themeIconSun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         <svg id="themeIconMoon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       </button>
@@ -2113,7 +2287,7 @@ function renderInteractiveHtml(env) {
       </div>
     </aside>
 
-    <main class="docs-main">
+    <main id="main-content" class="docs-main">
       <div class="docs-content">
 
         <section id="intro" class="docs-section">
@@ -2668,7 +2842,7 @@ console.log(upcoming);</div>
                   <option value="BR">Bihar (BR)</option>
                   <option value="CH">Chandigarh (CH)</option>
                   <option value="CT">Chhattisgarh (CT)</option>
-                  <option value="DH">Dadra & Nagar Haveli (DH)</option>
+                  <option value="DN">Dadra & Nagar Haveli and Daman & Diu (DN)</option>
                   <option value="DL">Delhi (DL)</option>
                   <option value="GA">Goa (GA)</option>
                   <option value="GJ">Gujarat (GJ)</option>
@@ -2756,7 +2930,7 @@ console.log(upcoming);</div>
           </p>
 
           <div class="states-filter-bar">
-            <input type="text" id="stateSearchInput" class="form-input" placeholder="Search state name or code (e.g. Maharashtra, TG, Delhi)..." oninput="filterStatePills(this.value)" style="width: 100%; max-width: 420px;">
+            <input type="text" id="stateSearchInput" class="form-input" placeholder="Search state name or code (e.g. Maharashtra, TG, Delhi)..." aria-label="Search state name or code" oninput="filterStatePills(this.value)" style="width: 100%; max-width: 420px;">
           </div>
 
           <div class="states-pills-container" id="statesContainer">
@@ -2768,7 +2942,7 @@ console.log(upcoming);</div>
             <div class="state-pill" data-code="BR" data-name="Bihar" onclick="quickSelectState('BR')"><span class="state-code">BR</span><span>Bihar</span></div>
             <div class="state-pill" data-code="CH" data-name="Chandigarh" onclick="quickSelectState('CH')"><span class="state-code">CH</span><span>Chandigarh</span></div>
             <div class="state-pill" data-code="CT" data-name="Chhattisgarh" onclick="quickSelectState('CT')"><span class="state-code">CT</span><span>Chhattisgarh</span></div>
-            <div class="state-pill" data-code="DH" data-name="Dadra and Nagar Haveli" onclick="quickSelectState('DH')"><span class="state-code">DH</span><span>Dadra & Nagar Haveli</span></div>
+            <div class="state-pill" data-code="DN" data-name="Dadra and Nagar Haveli and Daman and Diu" onclick="quickSelectState('DN')"><span class="state-code">DN</span><span>Dadra & Nagar Haveli (DN)</span></div>
             <div class="state-pill" data-code="DL" data-name="Delhi" onclick="quickSelectState('DL')"><span class="state-code">DL</span><span>Delhi (NCT)</span></div>
             <div class="state-pill" data-code="GA" data-name="Goa" onclick="quickSelectState('GA')"><span class="state-code">GA</span><span>Goa</span></div>
             <div class="state-pill" data-code="GJ" data-name="Gujarat" onclick="quickSelectState('GJ')"><span class="state-code">GJ</span><span>Gujarat</span></div>
