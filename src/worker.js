@@ -1393,7 +1393,7 @@ function renderInteractiveHtml(env) {
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      box-shadow: 0 2px 10px rgba(234, 88, 12, 0.25);
+      box-shadow: none;
       flex-shrink: 0;
       overflow: hidden;
       border: 2px solid var(--accent-orange-border);
