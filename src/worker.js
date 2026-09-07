@@ -858,7 +858,7 @@ function getApiDirectory(env) {
     version: env?.API_VERSION || '1.0.0',
     description: 'Free, fast, timezone-aware REST API for Indian holidays (National & all 36 States/UTs)',
     timezone: env?.TIMEZONE || 'Asia/Kolkata',
-    supported_years: '2024–2036',
+    supported_years: '2020–2036',
     endpoints: {
       'GET /api/holidays/:year': 'Get all holidays for a year',
       'GET /api/holidays/:year/:state': 'Get holidays for a specific state',
@@ -2305,7 +2305,7 @@ function renderInteractiveHtml(env) {
             <div class="feature-card">
               <span class="feature-icon">🇮🇳</span>
               <div class="feature-title">All 36 States & UTs</div>
-              <div class="feature-desc">Complete coverage for 28 States and 8 Union Territories covering 2024 through 2036.</div>
+              <div class="feature-desc">Complete coverage for 28 States and 8 Union Territories covering 2020 through 2036.</div>
             </div>
             <div class="feature-card">
               <span class="feature-icon">🏖️</span>
@@ -2821,6 +2821,10 @@ console.log(upcoming);</div>
               <div class="form-group" id="yearGroup">
                 <label class="form-label" for="yearSelect">Year</label>
                 <select id="yearSelect" class="form-select">
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
                   <option value="2024">2024</option>
                   <option value="2025">2025</option>
                   <option value="2026" selected>2026</option>
@@ -2912,10 +2916,19 @@ console.log(upcoming);</div>
 
               <div class="code-box" style="margin-top: 0.75rem;">
                 <div class="code-box-header">
-                  <span style="font-size: 0.76rem; font-family: var(--font-mono); color: #94a3b8;">Response Body (JSON)</span>
+                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <span style="font-size: 0.76rem; font-family: var(--font-mono); color: #94a3b8;">Response Body</span>
+                    <div class="view-mode-toggle">
+                      <button id="btnViewTree" type="button" class="view-mode-btn active" onclick="switchJsonViewMode('tree')">Tree View</button>
+                      <button id="btnViewRaw" type="button" class="view-mode-btn" onclick="switchJsonViewMode('raw')">Raw JSON</button>
+                    </div>
+                  </div>
                   <button class="btn-copy" onclick="copyResponseJson(this)">Copy JSON</button>
                 </div>
-                <div id="responseJsonContent" class="code-content" style="max-height: 420px; overflow-y: auto;">Loading data...</div>
+                <div id="responseJsonContent" class="code-content" style="max-height: 440px; overflow-y: auto;">
+                  <div id="responseJsonTree" class="json-tree-container">Loading data...</div>
+                  <pre id="responseJsonRaw" style="display:none; margin:0; white-space:pre-wrap; word-break:break-all; font-family:inherit;"></pre>
+                </div>
               </div>
             </div>
           </div>
@@ -3064,13 +3077,79 @@ console.log(upcoming);</div>
     }
 
     function copyResponseJson(btn) {
-      const content = document.getElementById('responseJsonContent');
-      if (content) {
-        navigator.clipboard.writeText(content.innerText).then(() => {
+      const rawEl = document.getElementById('responseJsonRaw');
+      const textToCopy = rawEl ? rawEl.innerText : '';
+      if (textToCopy) {
+        navigator.clipboard.writeText(textToCopy).then(() => {
           const orig = btn.innerText;
           btn.innerText = 'Copied!';
           setTimeout(() => btn.innerText = orig, 1800);
         });
+      }
+    }
+
+    function buildJsonTreeHtml(val) {
+      if (val === null) return '<span class="json-null">null</span>';
+      if (typeof val === 'boolean') return '<span class="json-boolean">' + val + '</span>';
+      if (typeof val === 'number') return '<span class="json-number">' + val + '</span>';
+      if (typeof val === 'string') return '<span class="json-string">"' + escapeHtml(val) + '"</span>';
+
+      if (Array.isArray(val)) {
+        if (val.length === 0) return '<span class="json-punctuation">[]</span>';
+        let html = '<span class="json-toggler" onclick="toggleJsonNode(this)">▼ Array[' + val.length + ']</span>';
+        html += '<div class="json-node">';
+        for (let i = 0; i < val.length; i++) {
+          html += '<div><span class="json-punctuation">[' + i + ']</span>: ' + buildJsonTreeHtml(val[i]) + (i < val.length - 1 ? '<span class="json-punctuation">,</span>' : '') + '</div>';
+        }
+        html += '</div>';
+        return html;
+      }
+
+      if (typeof val === 'object') {
+        const keys = Object.keys(val);
+        if (keys.length === 0) return '<span class="json-punctuation">{}</span>';
+        let html = '<span class="json-toggler" onclick="toggleJsonNode(this)">▼ Object{' + keys.length + '}</span>';
+        html += '<div class="json-node">';
+        for (let i = 0; i < keys.length; i++) {
+          const k = keys[i];
+          html += '<div><span class="json-key">"' + escapeHtml(k) + '"</span><span class="json-punctuation">: </span>' + buildJsonTreeHtml(val[k]) + (i < keys.length - 1 ? '<span class="json-punctuation">,</span>' : '') + '</div>';
+        }
+        html += '</div>';
+        return html;
+      }
+
+      return escapeHtml(String(val));
+    }
+
+    function toggleJsonNode(togglerEl) {
+      const nextNode = togglerEl.nextElementSibling;
+      if (!nextNode) return;
+      if (nextNode.style.display === 'none') {
+        nextNode.style.display = 'block';
+        togglerEl.innerText = togglerEl.innerText.replace('▶', '▼');
+      } else {
+        nextNode.style.display = 'none';
+        togglerEl.innerText = togglerEl.innerText.replace('▼', '▶');
+      }
+    }
+
+    function switchJsonViewMode(mode) {
+      const btnTree = document.getElementById('btnViewTree');
+      const btnRaw = document.getElementById('btnViewRaw');
+      const treeContainer = document.getElementById('responseJsonTree');
+      const rawContainer = document.getElementById('responseJsonRaw');
+
+      if (btnTree) btnTree.classList.toggle('active', mode === 'tree');
+      if (btnRaw) btnRaw.classList.toggle('active', mode === 'raw');
+
+      if (treeContainer && rawContainer) {
+        if (mode === 'tree') {
+          treeContainer.style.display = 'block';
+          rawContainer.style.display = 'none';
+        } else {
+          treeContainer.style.display = 'none';
+          rawContainer.style.display = 'block';
+        }
       }
     }
 
@@ -3186,10 +3265,12 @@ console.log(upcoming);</div>
 
       const statusBadge = document.getElementById('responseStatusBadge');
       const timeBadge = document.getElementById('responseTimeBadge');
-      const jsonContent = document.getElementById('responseJsonContent');
+      const treeEl = document.getElementById('responseJsonTree');
+      const rawEl = document.getElementById('responseJsonRaw');
       const visualContainer = document.getElementById('visualResultsContainer');
 
-      if (jsonContent) jsonContent.innerText = 'Fetching holiday data...';
+      if (treeEl) treeEl.innerText = 'Fetching holiday data...';
+      if (rawEl) rawEl.innerText = 'Fetching holiday data...';
 
       const startTime = performance.now();
       try {
@@ -3205,13 +3286,16 @@ console.log(upcoming);</div>
 
         if (targetUrl.endsWith('.ics')) {
           const text = await res.text();
-          if (jsonContent) jsonContent.innerText = text;
+          if (treeEl) treeEl.innerText = text;
+          if (rawEl) rawEl.innerText = text;
           if (visualContainer) visualContainer.innerHTML = '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-cyan); font-size:1.1rem;">RFC 5545 iCal Feed</div><div class="kpi-label">Ready for Calendar Sync</div></div>';
           return;
         }
 
         const data = await res.json();
-        if (jsonContent) jsonContent.innerText = JSON.stringify(data, null, 2);
+        const jsonString = JSON.stringify(data, null, 2);
+        if (treeEl) treeEl.innerHTML = buildJsonTreeHtml(data);
+        if (rawEl) rawEl.innerText = jsonString;
 
         if (visualContainer) {
           let visualHtml = '';
@@ -3232,7 +3316,8 @@ console.log(upcoming);</div>
         }
       } catch (err) {
         if (statusBadge) statusBadge.innerText = 'Error';
-        if (jsonContent) jsonContent.innerText = 'Network error: ' + err.message;
+        if (treeEl) treeEl.innerText = 'Network error: ' + err.message;
+        if (rawEl) rawEl.innerText = 'Network error: ' + err.message;
       }
     }
 

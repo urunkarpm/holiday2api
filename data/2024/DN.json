@@ -1,0 +1,156 @@
+[
+  {
+    "date": "2024-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "DN",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2024-03-08",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "DN",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2024-03-25",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "DN",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2024-03-29",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "DN",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2024-04-11",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "DN",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2024-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "DN",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2024-04-17",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "DN",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2024-04-21",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "DN",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2024-06-17",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "DN",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2024-08-02",
+    "name": "Dadra & Nagar Haveli Liberation Day",
+    "type": "state",
+    "state_code": "DN",
+    "description": "Commemorates the liberation from Portuguese rule"
+  },
+  {
+    "date": "2024-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "DN",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2024-08-15",
+    "name": "Parsi New Year",
+    "type": "state",
+    "state_code": "DN",
+    "description": "Zoroastrian New Year"
+  },
+  {
+    "date": "2024-08-19",
+    "name": "Raksha Bandhan",
+    "type": "state",
+    "state_code": "DN",
+    "description": "Festival celebrating sibling bond"
+  },
+  {
+    "date": "2024-08-26",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "DN",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2024-09-07",
+    "name": "Ganesh Chaturthi",
+    "type": "state",
+    "state_code": "DN",
+    "description": "Festival honoring Lord Ganesha"
+  },
+  {
+    "date": "2024-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "DN",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2024-10-12",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "DN",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2024-10-31",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "DN",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2024-11-02",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "DN",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2024-11-15",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "DN",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2024-12-19",
+    "name": "Daman & Diu Liberation Day",
+    "type": "state",
+    "state_code": "DN",
+    "description": "Celebrates liberation of Daman and Diu"
+  },
+  {
+    "date": "2024-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "DN",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

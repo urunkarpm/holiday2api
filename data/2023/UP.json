@@ -1,0 +1,177 @@
+[
+  {
+    "date": "2023-01-15",
+    "name": "Makar Sankranti / Khichdi",
+    "type": "state",
+    "state_code": "UP",
+    "description": "Harvest festival celebrated across Uttar Pradesh"
+  },
+  {
+    "date": "2023-01-24",
+    "name": "Uttar Pradesh Day",
+    "type": "state",
+    "state_code": "UP",
+    "description": "Commemorates the naming of Uttar Pradesh in 1950"
+  },
+  {
+    "date": "2023-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "UP",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2023-02-18",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "UP",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2023-03-08",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "UP",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2023-03-30",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "UP",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2023-04-04",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "UP",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2023-04-07",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "UP",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2023-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "UP",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2023-04-22",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "UP",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2023-05-05",
+    "name": "Buddha Purnima",
+    "type": "state",
+    "state_code": "UP",
+    "description": "Celebrates the birth of Lord Buddha"
+  },
+  {
+    "date": "2023-06-29",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "UP",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2023-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "UP",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2023-08-30",
+    "name": "Raksha Bandhan",
+    "type": "state",
+    "state_code": "UP",
+    "description": "Festival celebrating sibling bond"
+  },
+  {
+    "date": "2023-09-06",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "UP",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2023-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "UP",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2023-10-22",
+    "name": "Durga Ashtami",
+    "type": "state",
+    "state_code": "UP",
+    "description": "Eighth day of Navratri festival"
+  },
+  {
+    "date": "2023-10-23",
+    "name": "Maha Navami",
+    "type": "state",
+    "state_code": "UP",
+    "description": "Ninth day of Navratri festival"
+  },
+  {
+    "date": "2023-10-24",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "UP",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2023-11-12",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "UP",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2023-11-13",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "UP",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2023-11-14",
+    "name": "Bhai Dooj",
+    "type": "state",
+    "state_code": "UP",
+    "description": "Festival celebrating sibling bond"
+  },
+  {
+    "date": "2023-11-19",
+    "name": "Chhath Puja",
+    "type": "state",
+    "state_code": "UP",
+    "description": "Ancient festival honoring Sun God Surya"
+  },
+  {
+    "date": "2023-11-27",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "UP",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2023-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "UP",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]
