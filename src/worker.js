@@ -2427,12 +2427,12 @@ function renderInteractiveHtml(env) {
           <p class="docs-p">Click any country pill below to select it and test its holiday dataset directly in the Workbench:</p>
 
           <div class="country-pills-container" style="display:flex; flex-wrap:wrap; gap:0.6rem; margin-bottom:1.75rem;">
-            <div class="state-pill" data-code="IN" onclick="selectCountryPill('IN')" style="cursor:pointer; background:var(--accent-orange-subtle); border-color:var(--accent-orange-border); color:var(--ink-primary); font-weight:700;"><span style="font-size:1.15rem; margin-right:0.25rem;">🇮🇳</span><span>India (37 States & UTs)</span></div>
-            <div class="state-pill" data-code="US" onclick="selectCountryPill('US')" style="cursor:pointer;"><span style="font-size:1.15rem; margin-right:0.25rem;">🇺🇸</span><span>United States (51 States/DC)</span></div>
-            <div class="state-pill" data-code="GB" onclick="selectCountryPill('GB')" style="cursor:pointer;"><span style="font-size:1.15rem; margin-right:0.25rem;">🇬🇧</span><span>United Kingdom (4 Nations)</span></div>
-            <div class="state-pill" data-code="CA" onclick="selectCountryPill('CA')" style="cursor:pointer;"><span style="font-size:1.15rem; margin-right:0.25rem;">🇨🇦</span><span>Canada (13 Provinces)</span></div>
-            <div class="state-pill" data-code="AU" onclick="selectCountryPill('AU')" style="cursor:pointer;"><span style="font-size:1.15rem; margin-right:0.25rem;">🇦🇺</span><span>Australia (8 States)</span></div>
-            <div class="state-pill" data-code="SG" onclick="selectCountryPill('SG')" style="cursor:pointer;"><span style="font-size:1.15rem; margin-right:0.25rem;">🇸🇬</span><span>Singapore (National)</span></div>
+            <div class="state-pill" data-code="IN" onclick="selectCountryPill('IN')" style="cursor:pointer; background:var(--accent-orange-subtle); border-color:var(--accent-orange-border); color:var(--ink-primary); font-weight:700;"><span style="display:inline-block; width:18px; height:18px; border-radius:50%; overflow:hidden; margin-right:0.35rem; vertical-align:middle;">${FLAG_SVGS.IN}</span><span>India (37 States & UTs)</span></div>
+            <div class="state-pill" data-code="US" onclick="selectCountryPill('US')" style="cursor:pointer;"><span style="display:inline-block; width:18px; height:18px; border-radius:50%; overflow:hidden; margin-right:0.35rem; vertical-align:middle;">${FLAG_SVGS.US}</span><span>United States (51 States/DC)</span></div>
+            <div class="state-pill" data-code="GB" onclick="selectCountryPill('GB')" style="cursor:pointer;"><span style="display:inline-block; width:18px; height:18px; border-radius:50%; overflow:hidden; margin-right:0.35rem; vertical-align:middle;">${FLAG_SVGS.GB}</span><span>United Kingdom (4 Nations)</span></div>
+            <div class="state-pill" data-code="CA" onclick="selectCountryPill('CA')" style="cursor:pointer;"><span style="display:inline-block; width:18px; height:18px; border-radius:50%; overflow:hidden; margin-right:0.35rem; vertical-align:middle;">${FLAG_SVGS.CA}</span><span>Canada (13 Provinces)</span></div>
+            <div class="state-pill" data-code="AU" onclick="selectCountryPill('AU')" style="cursor:pointer;"><span style="display:inline-block; width:18px; height:18px; border-radius:50%; overflow:hidden; margin-right:0.35rem; vertical-align:middle;">${FLAG_SVGS.AU}</span><span>Australia (8 States)</span></div>
+            <div class="state-pill" data-code="SG" onclick="selectCountryPill('SG')" style="cursor:pointer;"><span style="display:inline-block; width:18px; height:18px; border-radius:50%; overflow:hidden; margin-right:0.35rem; vertical-align:middle;">${FLAG_SVGS.SG}</span><span>Singapore (National)</span></div>
           </div>
 
           <h2 class="docs-h2">30-Second Quick Start</h2>
@@ -3503,11 +3503,29 @@ console.log(upcoming);</div>
       ]
     };
 
+    function syncCountryPillActiveState(countryCode) {
+      const pills = document.querySelectorAll('.country-pills-container .state-pill');
+      pills.forEach(pill => {
+        if (pill.getAttribute('data-code') === countryCode) {
+          pill.style.background = 'var(--accent-orange-subtle)';
+          pill.style.borderColor = 'var(--accent-orange-border)';
+          pill.style.color = 'var(--ink-primary)';
+          pill.style.fontWeight = '700';
+        } else {
+          pill.style.background = '';
+          pill.style.borderColor = '';
+          pill.style.color = '';
+          pill.style.fontWeight = '';
+        }
+      });
+    }
+
     function onCountrySelectChange() {
       const countrySelect = document.getElementById('countrySelect');
       const stateSelect = document.getElementById('stateSelect');
       if (!countrySelect || !stateSelect) return;
       const country = countrySelect.value || 'IN';
+      syncCountryPillActiveState(country);
       const list = REGIONS_MAP[country] || REGIONS_MAP['IN'];
       stateSelect.innerHTML = list.map(function(r) { return '<option value="' + r.code + '">' + r.name + ' (' + r.code + ')</option>'; }).join('');
     }
@@ -3523,6 +3541,21 @@ console.log(upcoming);</div>
         }
         updateFormFields();
         executeWorkbenchRequest();
+      }
+
+      const wbSection = document.getElementById('workbench-section');
+      if (wbSection) {
+        wbSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const card = document.getElementById('workbench');
+        if (card) {
+          card.style.transition = 'box-shadow 0.3s ease, transform 0.3s ease';
+          card.style.boxShadow = '0 0 0 4px rgba(234, 88, 12, 0.45)';
+          card.style.transform = 'translateY(-2px)';
+          setTimeout(() => {
+            card.style.boxShadow = '';
+            card.style.transform = '';
+          }, 1200);
+        }
       }
     }
 
