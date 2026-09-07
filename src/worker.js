@@ -1376,20 +1376,43 @@ function renderInteractiveHtml(env) {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 2px 10px rgba(234, 88, 12, 0.25);
       flex-shrink: 0;
       overflow: hidden;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      background: #ffffff;
+      border: 2px solid var(--accent-orange-border);
+      background: var(--bg-surface);
+      position: relative;
     }
 
-    .brand-logo-circle svg {
+    .flag-rotator {
+      position: relative;
       width: 100%;
       height: 100%;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .flag-slide {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.65) rotate(-20deg);
+      transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1), transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .flag-slide.active {
+      opacity: 1;
+      transform: scale(1.15) rotate(0deg);
     }
 
     .brand-text {
@@ -2292,11 +2315,19 @@ function renderInteractiveHtml(env) {
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
       <a href="/" class="brand-link" aria-label="India Holidays API Home">
-        <span class="brand-logo-circle">
-          ${FAVICON_SVG}
+        <span class="brand-logo-circle" title="Global Horizon — Supporting IN, US, GB, CA, AU, SG">
+          <span class="flag-rotator">
+            <span class="flag-slide active" data-country="IN">🇮🇳</span>
+            <span class="flag-slide" data-country="US">🇺🇸</span>
+            <span class="flag-slide" data-country="GB">🇬🇧</span>
+            <span class="flag-slide" data-country="CA">🇨🇦</span>
+            <span class="flag-slide" data-country="AU">🇦🇺</span>
+            <span class="flag-slide" data-country="SG">🇸🇬</span>
+          </span>
         </span>
-        <span class="brand-text">India Holidays API</span>
+        <span class="brand-text">Holiday2API <span class="badge-global" style="font-size: 0.68rem; font-weight: 700; padding: 0.12rem 0.45rem; background: var(--accent-orange-subtle); color: var(--accent-orange); border: 1px solid var(--accent-orange-border); border-radius: 99px; margin-left: 0.25rem;">GLOBAL</span></span>
       </a>
+      <span style="display:none;">${FAVICON_SVG}</span>
     </div>
 
     <div class="header-right">
@@ -3530,14 +3561,21 @@ console.log(upcoming);</div>
       testInWorkbench('/api/holidays/:year/:state', code);
     }
 
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+    function initFlagRotator() {
+      const slides = document.querySelectorAll('.flag-slide');
+      if (!slides || slides.length === 0) return;
+      let currentIndex = 0;
+      setInterval(() => {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+      }, 1600);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
       initScrollSpy();
+      initFlagRotator();
       updateFormFields();
       executeWorkbenchRequest();
     });
