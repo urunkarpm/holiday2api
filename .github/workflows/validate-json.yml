@@ -52,8 +52,8 @@ jobs:
           import sys
           from datetime import datetime
           
-          required_fields = ['date', 'name', 'type', 'state_code', 'description']
-          valid_types = ['national', 'public', 'state', 'bank', 'regional', 'optional']
+          required_base_fields = ['date', 'name', 'type', 'description']
+          valid_types = ['national', 'public', 'state', 'bank', 'regional', 'optional', 'restricted', 'observance']
           
           errors = []
           
@@ -68,10 +68,14 @@ jobs:
                           # Check if it's a list (holidays) or dict (meta)
                           if isinstance(data, list):
                               for i, holiday in enumerate(data):
-                                  for field in required_fields:
+                                  for field in required_base_fields:
                                       if field not in holiday:
                                           errors.append(f"{filepath}[{i}]: Missing required field '{field}'")
                                   
+                                  # Must have either state_code, region_code, or country_code
+                                  if 'state_code' not in holiday and 'region_code' not in holiday and 'country_code' not in holiday:
+                                      errors.append(f"{filepath}[{i}]: Missing region identifier (state_code/region_code/country_code)")
+
                                   # Validate date format
                                   if 'date' in holiday:
                                       try:
@@ -83,10 +87,11 @@ jobs:
                                   if 'type' in holiday and holiday['type'] not in valid_types:
                                       errors.append(f"{filepath}[{i}]: Invalid type '{holiday['type']}'. Must be one of {valid_types}")
                                   
-                                  # Validate state_code format
-                                  if 'state_code' in holiday:
-                                      if not (holiday['state_code'] == 'IN' or len(holiday['state_code']) == 2):
-                                          errors.append(f"{filepath}[{i}]: Invalid state_code '{holiday['state_code']}'")
+                                  # Validate state_code or region_code format
+                                  region_id = holiday.get('state_code') or holiday.get('region_code')
+                                  if region_id:
+                                      if not (isinstance(region_id, str) and 2 <= len(region_id) <= 5):
+                                          errors.append(f"{filepath}[{i}]: Invalid region_id '{region_id}'")
                           
                           elif isinstance(data, dict):
                               # Meta files - basic validation
@@ -94,6 +99,14 @@ jobs:
                                   for state in data['states']:
                                       if 'code' not in state or 'name' not in state:
                                           errors.append(f"{filepath}: State missing 'code' or 'name'")
+                              elif 'countries' in data:
+                                  for c in data['countries']:
+                                      if 'code' not in c or 'name' not in c:
+                                          errors.append(f"{filepath}: Country missing 'code' or 'name'")
+                              elif 'regions' in data:
+                                  for r in data['regions']:
+                                      if 'code' not in r or 'name' not in r:
+                                          errors.append(f"{filepath}: Region missing 'code' or 'name'")
                               elif 'types' in data:
                                   for htype in data['types']:
                                       if 'id' not in htype or 'name' not in htype:
