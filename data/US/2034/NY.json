@@ -1,0 +1,98 @@
+[
+  {
+    "date": "2034-01-01",
+    "name": "New Year's Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "NY",
+    "description": "First day of the year in the Gregorian calendar"
+  },
+  {
+    "date": "2034-01-16",
+    "name": "Martin Luther King Jr. Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "NY",
+    "description": "Honors civil rights leader Dr. Martin Luther King Jr."
+  },
+  {
+    "date": "2034-02-20",
+    "name": "Washington's Birthday (Presidents' Day)",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "NY",
+    "description": "Honors George Washington and all U.S. presidents"
+  },
+  {
+    "date": "2034-04-07",
+    "name": "Good Friday",
+    "type": "observance",
+    "country_code": "US",
+    "region_code": "NY",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2034-05-29",
+    "name": "Memorial Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "NY",
+    "description": "Honors U.S. military personnel who died in service"
+  },
+  {
+    "date": "2034-06-19",
+    "name": "Juneteenth National Independence Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "NY",
+    "description": "Commemorating the end of slavery in the United States"
+  },
+  {
+    "date": "2034-07-04",
+    "name": "Independence Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "NY",
+    "description": "Commemorating the Declaration of Independence in 1776"
+  },
+  {
+    "date": "2034-09-04",
+    "name": "Labor Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "NY",
+    "description": "Honors the American labor movement and contributions of workers"
+  },
+  {
+    "date": "2034-10-09",
+    "name": "Columbus Day / Indigenous Peoples' Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "NY",
+    "description": "Honors Christopher Columbus and Indigenous peoples"
+  },
+  {
+    "date": "2034-11-11",
+    "name": "Veterans Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "NY",
+    "description": "Honors military veterans who served in the U.S. Armed Forces"
+  },
+  {
+    "date": "2034-11-23",
+    "name": "Thanksgiving Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "NY",
+    "description": "National day of giving thanks and harvest celebration"
+  },
+  {
+    "date": "2034-12-25",
+    "name": "Christmas Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "NY",
+    "description": "Celebration of the birth of Jesus Christ"
+  }
+]

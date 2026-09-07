@@ -1,0 +1,90 @@
+[
+  {
+    "date": "2027-01-01",
+    "name": "New Year's Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "QC",
+    "description": "First day of the year"
+  },
+  {
+    "date": "2027-03-26",
+    "name": "Good Friday",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "QC",
+    "description": "Christian holiday commemorating the crucifixion"
+  },
+  {
+    "date": "2027-05-24",
+    "name": "Victoria Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "QC",
+    "description": "Honors Queen Victoria's birthday"
+  },
+  {
+    "date": "2027-06-24",
+    "name": "La Fête Nationale / St. Jean Baptiste Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "QC",
+    "description": "National holiday of Quebec"
+  },
+  {
+    "date": "2027-07-01",
+    "name": "Canada Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "QC",
+    "description": "National day celebrating the confederation of Canada"
+  },
+  {
+    "date": "2027-09-06",
+    "name": "Labour Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "QC",
+    "description": "Honors workers and the labor movement"
+  },
+  {
+    "date": "2027-09-30",
+    "name": "National Day for Truth and Reconciliation",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "QC",
+    "description": "Honors survivors of residential schools"
+  },
+  {
+    "date": "2027-10-11",
+    "name": "Thanksgiving",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "QC",
+    "description": "Canadian holiday of blessing for the harvest"
+  },
+  {
+    "date": "2027-11-11",
+    "name": "Remembrance Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "QC",
+    "description": "Honors military personnel who died in duty"
+  },
+  {
+    "date": "2027-12-25",
+    "name": "Christmas Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "QC",
+    "description": "Celebration of the birth of Jesus Christ"
+  },
+  {
+    "date": "2027-12-26",
+    "name": "Boxing Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "QC",
+    "description": "Statutory holiday following Christmas"
+  }
+]

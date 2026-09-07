@@ -1,0 +1,149 @@
+[
+  {
+    "date": "2036-01-01",
+    "name": "New Year's Day",
+    "type": "state",
+    "state_code": "MZ",
+    "description": "Celebration of the New Year"
+  },
+  {
+    "date": "2036-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "MZ",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2036-02-08",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "MZ",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2036-02-20",
+    "name": "Statehood Day",
+    "type": "state",
+    "state_code": "MZ",
+    "description": "Celebrates the statehood of Mizoram in 1987"
+  },
+  {
+    "date": "2036-03-01",
+    "name": "Chapchar Kut",
+    "type": "state",
+    "state_code": "MZ",
+    "description": "Major spring festival of the Mizo people"
+  },
+  {
+    "date": "2036-03-12",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "MZ",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2036-04-05",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "MZ",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2036-04-09",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "MZ",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2036-04-11",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "MZ",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2036-04-13",
+    "name": "Easter Sunday",
+    "type": "state",
+    "state_code": "MZ",
+    "description": "Christian festival celebrating the resurrection of Jesus"
+  },
+  {
+    "date": "2036-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "MZ",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2036-06-30",
+    "name": "Remna Ni (Peace Day)",
+    "type": "state",
+    "state_code": "MZ",
+    "description": "Commemorates the historic 1986 Mizo Peace Accord"
+  },
+  {
+    "date": "2036-08-14",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "MZ",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2036-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "MZ",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2036-09-30",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "MZ",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2036-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "MZ",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2036-10-19",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "MZ",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2036-10-20",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "MZ",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2036-11-03",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "MZ",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2036-11-20",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "MZ",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2036-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "MZ",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

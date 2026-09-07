@@ -1,0 +1,66 @@
+[
+  {
+    "date": "2025-01-01",
+    "name": "New Year's Day",
+    "type": "public",
+    "country_code": "SG",
+    "region_code": "SG",
+    "description": "First day of the year"
+  },
+  {
+    "date": "2025-01-29",
+    "name": "Chinese New Year (Day 1)",
+    "type": "public",
+    "country_code": "SG",
+    "region_code": "SG",
+    "description": "Lunar New Year celebration"
+  },
+  {
+    "date": "2025-01-30",
+    "name": "Chinese New Year (Day 2)",
+    "type": "public",
+    "country_code": "SG",
+    "region_code": "SG",
+    "description": "Second day of Lunar New Year"
+  },
+  {
+    "date": "2025-04-18",
+    "name": "Good Friday",
+    "type": "public",
+    "country_code": "SG",
+    "region_code": "SG",
+    "description": "Christian holiday commemorating the crucifixion"
+  },
+  {
+    "date": "2025-05-01",
+    "name": "Labour Day",
+    "type": "public",
+    "country_code": "SG",
+    "region_code": "SG",
+    "description": "Honors workers and May Day"
+  },
+  {
+    "date": "2025-05-12",
+    "name": "Vesak Day",
+    "type": "public",
+    "country_code": "SG",
+    "region_code": "SG",
+    "description": "Commemorating the birth, enlightenment, and death of Buddha"
+  },
+  {
+    "date": "2025-08-09",
+    "name": "National Day",
+    "type": "public",
+    "country_code": "SG",
+    "region_code": "SG",
+    "description": "Commemorating Singapore's independence in 1965"
+  },
+  {
+    "date": "2025-12-25",
+    "name": "Christmas Day",
+    "type": "public",
+    "country_code": "SG",
+    "region_code": "SG",
+    "description": "Celebration of the birth of Jesus Christ"
+  }
+]

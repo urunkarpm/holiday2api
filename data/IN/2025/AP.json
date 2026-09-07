@@ -1,0 +1,163 @@
+[
+  {
+    "date": "2025-01-14",
+    "name": "Bhogi / Sankranti",
+    "type": "state",
+    "state_code": "AP",
+    "description": "Traditional four-day harvest festival in Andhra Pradesh"
+  },
+  {
+    "date": "2025-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "AP",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2025-02-26",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "AP",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2025-03-14",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "AP",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2025-03-30",
+    "name": "Ugadi",
+    "type": "state",
+    "state_code": "AP",
+    "description": "Telugu New Year's Day"
+  },
+  {
+    "date": "2025-03-31",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "AP",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2025-04-06",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "AP",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2025-04-10",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "AP",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2025-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "AP",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2025-04-18",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "AP",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2025-06-07",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "AP",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2025-07-06",
+    "name": "Muharram",
+    "type": "state",
+    "state_code": "AP",
+    "description": "Islamic month of remembrance"
+  },
+  {
+    "date": "2025-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "AP",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2025-08-16",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "AP",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2025-08-27",
+    "name": "Vinayaka Chavithi",
+    "type": "state",
+    "state_code": "AP",
+    "description": "Hindu festival celebrating Lord Ganesha"
+  },
+  {
+    "date": "2025-09-05",
+    "name": "Milad un-Nabi",
+    "type": "state",
+    "state_code": "AP",
+    "description": "Birthday of Prophet Muhammad"
+  },
+  {
+    "date": "2025-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "AP",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2025-10-02",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "AP",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2025-10-20",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "AP",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2025-10-22",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "AP",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2025-11-01",
+    "name": "Andhra Pradesh Formation Day",
+    "type": "state",
+    "state_code": "AP",
+    "description": "Commemorates the formation of Andhra Pradesh state"
+  },
+  {
+    "date": "2025-11-05",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "AP",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2025-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "AP",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

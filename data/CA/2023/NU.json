@@ -1,0 +1,82 @@
+[
+  {
+    "date": "2023-01-01",
+    "name": "New Year's Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "NU",
+    "description": "First day of the year"
+  },
+  {
+    "date": "2023-04-07",
+    "name": "Good Friday",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "NU",
+    "description": "Christian holiday commemorating the crucifixion"
+  },
+  {
+    "date": "2023-05-22",
+    "name": "Victoria Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "NU",
+    "description": "Honors Queen Victoria's birthday"
+  },
+  {
+    "date": "2023-07-01",
+    "name": "Canada Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "NU",
+    "description": "National day celebrating the confederation of Canada"
+  },
+  {
+    "date": "2023-09-04",
+    "name": "Labour Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "NU",
+    "description": "Honors workers and the labor movement"
+  },
+  {
+    "date": "2023-09-30",
+    "name": "National Day for Truth and Reconciliation",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "NU",
+    "description": "Honors survivors of residential schools"
+  },
+  {
+    "date": "2023-10-09",
+    "name": "Thanksgiving",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "NU",
+    "description": "Canadian holiday of blessing for the harvest"
+  },
+  {
+    "date": "2023-11-11",
+    "name": "Remembrance Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "NU",
+    "description": "Honors military personnel who died in duty"
+  },
+  {
+    "date": "2023-12-25",
+    "name": "Christmas Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "NU",
+    "description": "Celebration of the birth of Jesus Christ"
+  },
+  {
+    "date": "2023-12-26",
+    "name": "Boxing Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "NU",
+    "description": "Statutory holiday following Christmas"
+  }
+]

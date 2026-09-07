@@ -1,0 +1,66 @@
+[
+  {
+    "date": "2026-01-01",
+    "name": "New Year's Day",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "GB",
+    "description": "Public holiday celebrating New Year's Day"
+  },
+  {
+    "date": "2026-04-03",
+    "name": "Good Friday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "GB",
+    "description": "Christian holiday commemorating the crucifixion"
+  },
+  {
+    "date": "2026-04-06",
+    "name": "Easter Monday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "GB",
+    "description": "Bank holiday following Easter Sunday"
+  },
+  {
+    "date": "2026-05-04",
+    "name": "Early May Bank Holiday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "GB",
+    "description": "Spring public bank holiday"
+  },
+  {
+    "date": "2026-05-25",
+    "name": "Spring Bank Holiday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "GB",
+    "description": "Late spring public bank holiday"
+  },
+  {
+    "date": "2026-08-31",
+    "name": "Summer Bank Holiday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "GB",
+    "description": "Late summer public bank holiday"
+  },
+  {
+    "date": "2026-12-25",
+    "name": "Christmas Day",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "GB",
+    "description": "Celebration of the birth of Jesus Christ"
+  },
+  {
+    "date": "2026-12-26",
+    "name": "Boxing Day",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "GB",
+    "description": "Traditional bank holiday following Christmas Day"
+  }
+]

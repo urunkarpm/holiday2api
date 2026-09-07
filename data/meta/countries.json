@@ -1,0 +1,61 @@
+{
+  "countries": [
+    {
+      "code": "IN",
+      "name": "India",
+      "flag": "🇮🇳",
+      "currency": "INR",
+      "timezone": "Asia/Kolkata",
+      "regions_count": 37,
+      "supported_years": "2020–2036"
+    },
+    {
+      "code": "US",
+      "name": "United States",
+      "flag": "🇺🇸",
+      "currency": "USD",
+      "timezone": "America/New_York",
+      "regions_count": 51,
+      "supported_years": "2020–2036"
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "flag": "🇬🇧",
+      "currency": "GBP",
+      "timezone": "Europe/London",
+      "regions_count": 4,
+      "supported_years": "2020–2036"
+    },
+    {
+      "code": "CA",
+      "name": "Canada",
+      "flag": "🇨🇦",
+      "currency": "CAD",
+      "timezone": "America/Toronto",
+      "regions_count": 13,
+      "supported_years": "2020–2036"
+    },
+    {
+      "code": "AU",
+      "name": "Australia",
+      "flag": "🇦🇺",
+      "currency": "AUD",
+      "timezone": "Australia/Sydney",
+      "regions_count": 8,
+      "supported_years": "2020–2036"
+    },
+    {
+      "code": "SG",
+      "name": "Singapore",
+      "flag": "🇸🇬",
+      "currency": "SGD",
+      "timezone": "Asia/Singapore",
+      "regions_count": 1,
+      "supported_years": "2020–2036"
+    }
+  ],
+  "total_countries": 6,
+  "supported_years": "2020–2036",
+  "last_updated": "2026-09-07T00:00:00Z"
+}

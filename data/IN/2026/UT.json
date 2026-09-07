@@ -1,0 +1,163 @@
+[
+  {
+    "date": "2026-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "UT",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2026-02-15",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "UT",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2026-03-04",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "UT",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2026-03-14",
+    "name": "Phool Dei",
+    "type": "state",
+    "state_code": "UT",
+    "description": "Traditional harvest and spring festival celebrated by children"
+  },
+  {
+    "date": "2026-03-21",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "UT",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2026-03-26",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "UT",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2026-03-31",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "UT",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2026-04-03",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "UT",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2026-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "UT",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2026-05-27",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "UT",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2026-07-16",
+    "name": "Harela",
+    "type": "state",
+    "state_code": "UT",
+    "description": "Folk festival celebrating the onset of the monsoon and green harvest"
+  },
+  {
+    "date": "2026-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "UT",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2026-08-28",
+    "name": "Raksha Bandhan",
+    "type": "state",
+    "state_code": "UT",
+    "description": "Festival celebrating sibling bond"
+  },
+  {
+    "date": "2026-09-04",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "UT",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2026-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "UT",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2026-10-18",
+    "name": "Durga Ashtami",
+    "type": "state",
+    "state_code": "UT",
+    "description": "Eighth day of Navratri festival"
+  },
+  {
+    "date": "2026-10-19",
+    "name": "Maha Navami",
+    "type": "state",
+    "state_code": "UT",
+    "description": "Ninth day of Navratri festival"
+  },
+  {
+    "date": "2026-10-20",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "UT",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2026-11-08",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "UT",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2026-11-09",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "UT",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2026-11-09",
+    "name": "Uttarakhand Foundation Day",
+    "type": "state",
+    "state_code": "UT",
+    "description": "Commemorates the creation of Uttarakhand state in 2000"
+  },
+  {
+    "date": "2026-11-24",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "UT",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2026-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "UT",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

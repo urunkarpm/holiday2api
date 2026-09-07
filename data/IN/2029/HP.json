@@ -1,0 +1,163 @@
+[
+  {
+    "date": "2029-01-25",
+    "name": "Statehood Day",
+    "type": "state",
+    "state_code": "HP",
+    "description": "Celebrates the grant of statehood to Himachal Pradesh in 1971"
+  },
+  {
+    "date": "2029-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "HP",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2029-02-11",
+    "name": "Maha Shivaratri (Mandi Shivaratri)",
+    "type": "state",
+    "state_code": "HP",
+    "description": "International Mandi Shivaratri fair and festival"
+  },
+  {
+    "date": "2029-02-15",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "HP",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2029-03-01",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "HP",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2029-03-24",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "HP",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2029-03-30",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "HP",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2029-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "HP",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2029-04-15",
+    "name": "Himachal Day",
+    "type": "state",
+    "state_code": "HP",
+    "description": "Commemorates the creation of Himachal Pradesh in 1948"
+  },
+  {
+    "date": "2029-04-25",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "HP",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2029-04-26",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "HP",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2029-05-27",
+    "name": "Buddha Purnima",
+    "type": "state",
+    "state_code": "HP",
+    "description": "Celebrates the birth of Lord Buddha"
+  },
+  {
+    "date": "2029-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "HP",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2029-08-24",
+    "name": "Raksha Bandhan",
+    "type": "state",
+    "state_code": "HP",
+    "description": "Festival celebrating sibling bond"
+  },
+  {
+    "date": "2029-09-01",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "HP",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2029-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "HP",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2029-10-14",
+    "name": "Durga Ashtami",
+    "type": "state",
+    "state_code": "HP",
+    "description": "Eighth day of Navratri festival"
+  },
+  {
+    "date": "2029-10-16",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "HP",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2029-10-26",
+    "name": "Karwa Chauth",
+    "type": "state",
+    "state_code": "HP",
+    "description": "Traditional festival observed by married women"
+  },
+  {
+    "date": "2029-11-05",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "HP",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2029-11-06",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "HP",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2029-11-21",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "HP",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2029-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "HP",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

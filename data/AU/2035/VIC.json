@@ -1,0 +1,90 @@
+[
+  {
+    "date": "2035-01-01",
+    "name": "New Year's Day",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "VIC",
+    "description": "First day of the year"
+  },
+  {
+    "date": "2035-01-26",
+    "name": "Australia Day",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "VIC",
+    "description": "Official national day of Australia"
+  },
+  {
+    "date": "2035-03-23",
+    "name": "Good Friday",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "VIC",
+    "description": "Christian holiday commemorating the crucifixion"
+  },
+  {
+    "date": "2035-03-24",
+    "name": "Easter Saturday",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "VIC",
+    "description": "Day between Good Friday and Easter Sunday"
+  },
+  {
+    "date": "2035-03-26",
+    "name": "Easter Monday",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "VIC",
+    "description": "Public holiday following Easter Sunday"
+  },
+  {
+    "date": "2035-04-25",
+    "name": "ANZAC Day",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "VIC",
+    "description": "Honors Australians who served and died in war"
+  },
+  {
+    "date": "2035-06-11",
+    "name": "King's Birthday",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "VIC",
+    "description": "Official birthday of the Monarch"
+  },
+  {
+    "date": "2035-10-01",
+    "name": "Labour Day",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "VIC",
+    "description": "Honors the 8-hour working day movement"
+  },
+  {
+    "date": "2035-11-06",
+    "name": "Melbourne Cup Day",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "VIC",
+    "description": "Famous horse racing public holiday in Victoria"
+  },
+  {
+    "date": "2035-12-25",
+    "name": "Christmas Day",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "VIC",
+    "description": "Celebration of the birth of Jesus Christ"
+  },
+  {
+    "date": "2035-12-26",
+    "name": "Boxing Day / Proclamation Day",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "VIC",
+    "description": "Public holiday following Christmas"
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "date": "2033-01-01",
+    "name": "New Year's Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "MB",
+    "description": "First day of the year"
+  },
+  {
+    "date": "2033-02-21",
+    "name": "Family Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "MB",
+    "description": "Provincial holiday celebrating family bonds"
+  },
+  {
+    "date": "2033-04-15",
+    "name": "Good Friday",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "MB",
+    "description": "Christian holiday commemorating the crucifixion"
+  },
+  {
+    "date": "2033-05-23",
+    "name": "Victoria Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "MB",
+    "description": "Honors Queen Victoria's birthday"
+  },
+  {
+    "date": "2033-07-01",
+    "name": "Canada Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "MB",
+    "description": "National day celebrating the confederation of Canada"
+  },
+  {
+    "date": "2033-08-01",
+    "name": "Civic Holiday",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "MB",
+    "description": "Provincial summer holiday"
+  },
+  {
+    "date": "2033-09-05",
+    "name": "Labour Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "MB",
+    "description": "Honors workers and the labor movement"
+  },
+  {
+    "date": "2033-09-30",
+    "name": "National Day for Truth and Reconciliation",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "MB",
+    "description": "Honors survivors of residential schools"
+  },
+  {
+    "date": "2033-10-10",
+    "name": "Thanksgiving",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "MB",
+    "description": "Canadian holiday of blessing for the harvest"
+  },
+  {
+    "date": "2033-11-11",
+    "name": "Remembrance Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "MB",
+    "description": "Honors military personnel who died in duty"
+  },
+  {
+    "date": "2033-12-25",
+    "name": "Christmas Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "MB",
+    "description": "Celebration of the birth of Jesus Christ"
+  },
+  {
+    "date": "2033-12-26",
+    "name": "Boxing Day",
+    "type": "public",
+    "country_code": "CA",
+    "region_code": "MB",
+    "description": "Statutory holiday following Christmas"
+  }
+]

@@ -1,0 +1,163 @@
+[
+  {
+    "date": "2034-01-21",
+    "name": "Tripura Statehood Day",
+    "type": "state",
+    "state_code": "TR",
+    "description": "Commemorates the attainment of statehood by Tripura in 1972"
+  },
+  {
+    "date": "2034-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "TR",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2034-03-02",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "TR",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2034-03-05",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "TR",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2034-03-28",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "TR",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2034-04-01",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "TR",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2034-04-07",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "TR",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2034-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "TR",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2034-04-20",
+    "name": "Garia Puja",
+    "type": "state",
+    "state_code": "TR",
+    "description": "Traditional tribal festival honoring deity Baba Garia for prosperity"
+  },
+  {
+    "date": "2034-05-03",
+    "name": "Buddha Purnima",
+    "type": "state",
+    "state_code": "TR",
+    "description": "Celebrates the birth of Lord Buddha"
+  },
+  {
+    "date": "2034-07-10",
+    "name": "Kharchi Puja",
+    "type": "state",
+    "state_code": "TR",
+    "description": "Royal centuries-old festival honoring the Fourteen Gods of Tripura"
+  },
+  {
+    "date": "2034-07-24",
+    "name": "Ker Puja",
+    "type": "state",
+    "state_code": "TR",
+    "description": "Ancient ritual to protect the kingdom and citizens from calamity"
+  },
+  {
+    "date": "2034-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "TR",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2034-09-06",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "TR",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2034-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "TR",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2034-10-20",
+    "name": "Durga Ashtami",
+    "type": "state",
+    "state_code": "TR",
+    "description": "Eighth day of Durga Puja"
+  },
+  {
+    "date": "2034-10-21",
+    "name": "Maha Navami",
+    "type": "state",
+    "state_code": "TR",
+    "description": "Ninth day of Durga Puja"
+  },
+  {
+    "date": "2034-10-22",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "TR",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2034-11-10",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "TR",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2034-11-11",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "TR",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2034-11-25",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "TR",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2034-12-13",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "TR",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2034-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "TR",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

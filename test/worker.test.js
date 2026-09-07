@@ -350,7 +350,38 @@ async function runTests() {
     console.log('✔ GET /robots.txt and GET /sitemap.xml (Technical SEO) passed');
   }
 
-  console.log('\n🎉 All 27 tests (including HSTS, accessibility, SEO, & AI discovery) passed successfully!');
+  // Test 27: GET /api/meta/countries (Multi-country metadata)
+  {
+    const reqCountries = new Request('http://localhost:8787/api/meta/countries');
+    const resCountries = await worker.fetch(reqCountries, mockEnv);
+    assert.strictEqual(resCountries.status, 200, 'GET /api/meta/countries should return 200');
+    const dataCountries = await resCountries.json();
+    assert(Array.isArray(dataCountries.countries), 'countries should be an array');
+    assert.strictEqual(dataCountries.total_countries, 6, 'Should support 6 countries');
+    console.log(`✔ GET /api/meta/countries passed (${dataCountries.total_countries} countries supported: IN, US, GB, CA, AU, SG)`);
+  }
+
+  // Test 28: GET /api/v2/holidays/US/2026/CA (US California holidays)
+  {
+    const reqUs = new Request('http://localhost:8787/api/v2/holidays/US/2026/CA');
+    const resUs = await worker.fetch(reqUs, mockEnv);
+    assert.strictEqual(resUs.status, 200, 'GET /api/v2/holidays/US/2026/CA should return 200');
+    const dataUs = await resUs.json();
+    assert(Array.isArray(dataUs) && dataUs.some(h => h.name.includes("Thanksgiving")), 'Should return US Thanksgiving holiday');
+    console.log(`✔ GET /api/v2/holidays/US/2026/CA passed (returned ${dataUs.length} holidays)`);
+  }
+
+  // Test 29: GET /api/v2/holidays/GB/2026/SCT (Scotland UK holidays)
+  {
+    const reqGb = new Request('http://localhost:8787/api/v2/holidays/GB/2026/SCT');
+    const resGb = await worker.fetch(reqGb, mockEnv);
+    assert.strictEqual(resGb.status, 200, 'GET /api/v2/holidays/GB/2026/SCT should return 200');
+    const dataGb = await resGb.json();
+    assert(Array.isArray(dataGb) && dataGb.some(h => h.name.includes("Andrew")), 'Should return St Andrew\'s Day for Scotland');
+    console.log(`✔ GET /api/v2/holidays/GB/2026/SCT passed (returned ${dataGb.length} holidays)`);
+  }
+
+  console.log('\n🎉 All 29 tests (including multi-country, HSTS, accessibility, SEO, & AI discovery) passed successfully!');
 }
 
 runTests().catch(err => {

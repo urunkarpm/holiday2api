@@ -1,0 +1,82 @@
+[
+  {
+    "date": "2036-01-01",
+    "name": "New Year's Day",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "WA",
+    "description": "First day of the year"
+  },
+  {
+    "date": "2036-01-26",
+    "name": "Australia Day",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "WA",
+    "description": "Official national day of Australia"
+  },
+  {
+    "date": "2036-04-11",
+    "name": "Good Friday",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "WA",
+    "description": "Christian holiday commemorating the crucifixion"
+  },
+  {
+    "date": "2036-04-12",
+    "name": "Easter Saturday",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "WA",
+    "description": "Day between Good Friday and Easter Sunday"
+  },
+  {
+    "date": "2036-04-14",
+    "name": "Easter Monday",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "WA",
+    "description": "Public holiday following Easter Sunday"
+  },
+  {
+    "date": "2036-04-25",
+    "name": "ANZAC Day",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "WA",
+    "description": "Honors Australians who served and died in war"
+  },
+  {
+    "date": "2036-06-09",
+    "name": "King's Birthday",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "WA",
+    "description": "Official birthday of the Monarch"
+  },
+  {
+    "date": "2036-10-06",
+    "name": "Labour Day",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "WA",
+    "description": "Honors the 8-hour working day movement"
+  },
+  {
+    "date": "2036-12-25",
+    "name": "Christmas Day",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "WA",
+    "description": "Celebration of the birth of Jesus Christ"
+  },
+  {
+    "date": "2036-12-26",
+    "name": "Boxing Day / Proclamation Day",
+    "type": "public",
+    "country_code": "AU",
+    "region_code": "WA",
+    "description": "Public holiday following Christmas"
+  }
+]

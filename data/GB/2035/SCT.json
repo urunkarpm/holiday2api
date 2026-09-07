@@ -1,0 +1,74 @@
+[
+  {
+    "date": "2035-01-01",
+    "name": "New Year's Day",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "SCT",
+    "description": "Public holiday celebrating New Year's Day"
+  },
+  {
+    "date": "2035-01-02",
+    "name": "2nd January Bank Holiday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "SCT",
+    "description": "Public bank holiday in Scotland"
+  },
+  {
+    "date": "2035-03-23",
+    "name": "Good Friday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "SCT",
+    "description": "Christian holiday commemorating the crucifixion"
+  },
+  {
+    "date": "2035-05-07",
+    "name": "Early May Bank Holiday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "SCT",
+    "description": "Spring public bank holiday"
+  },
+  {
+    "date": "2035-05-28",
+    "name": "Spring Bank Holiday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "SCT",
+    "description": "Late spring public bank holiday"
+  },
+  {
+    "date": "2035-08-06",
+    "name": "Summer Bank Holiday (Scotland)",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "SCT",
+    "description": "August bank holiday in Scotland"
+  },
+  {
+    "date": "2035-11-30",
+    "name": "St Andrew's Day",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "SCT",
+    "description": "Official national day of Scotland"
+  },
+  {
+    "date": "2035-12-25",
+    "name": "Christmas Day",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "SCT",
+    "description": "Celebration of the birth of Jesus Christ"
+  },
+  {
+    "date": "2035-12-26",
+    "name": "Boxing Day",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "SCT",
+    "description": "Traditional bank holiday following Christmas Day"
+  }
+]

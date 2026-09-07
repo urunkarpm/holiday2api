@@ -1263,6 +1263,222 @@ def get_state_holidays_for_year(year, state_code):
     unique_holidays.sort(key=lambda x: x["date"])
     return unique_holidays
 
+import datetime
+
+def get_easter_date(year):
+    a = year % 19
+    b = year // 100
+    c = year % 100
+    d = b // 4
+    e = b % 4
+    f = (b + 8) // 25
+    g = (b - f + 1) // 3
+    h = (19 * a + b - d - g + 15) % 30
+    i = c // 4
+    k = c % 4
+    l = (32 + 2 * e + 2 * i - h - k) % 7
+    m = (a + 11 * h + 22 * l) // 451
+    month = (h + l - 7 * m + 114) // 31
+    day = ((h + l - 7 * m + 114) % 31) + 1
+    return datetime.date(year, month, day)
+
+def get_nth_weekday(year, month, weekday, n):
+    if n > 0:
+        d = datetime.date(year, month, 1)
+        while d.weekday() != weekday:
+            d += datetime.timedelta(days=1)
+        d += datetime.timedelta(weeks=n-1)
+        return d
+    else:
+        if month == 12:
+            next_m = datetime.date(year + 1, 1, 1)
+        else:
+            next_m = datetime.date(year, month + 1, 1)
+        d = next_m - datetime.timedelta(days=1)
+        while d.weekday() != weekday:
+            d -= datetime.timedelta(days=1)
+        return d
+
+def fmt_date(d):
+    return d.strftime("%Y-%m-%d")
+
+def get_us_holidays(year, region_code="US"):
+    easter = get_easter_date(year)
+    good_friday = easter - datetime.timedelta(days=2)
+    
+    mlk = get_nth_weekday(year, 1, 0, 3)
+    presidents = get_nth_weekday(year, 2, 0, 3)
+    memorial = get_nth_weekday(year, 5, 0, -1)
+    labor = get_nth_weekday(year, 9, 0, 1)
+    columbus = get_nth_weekday(year, 10, 0, 2)
+    thanksgiving = get_nth_weekday(year, 11, 3, 4)
+    black_friday = thanksgiving + datetime.timedelta(days=1)
+    
+    hols = [
+        {"date": f"{year}-01-01", "name": "New Year's Day", "type": "public", "country_code": "US", "region_code": region_code, "description": "First day of the year in the Gregorian calendar"},
+        {"date": fmt_date(mlk), "name": "Martin Luther King Jr. Day", "type": "public", "country_code": "US", "region_code": region_code, "description": "Honors civil rights leader Dr. Martin Luther King Jr."},
+        {"date": fmt_date(presidents), "name": "Washington's Birthday (Presidents' Day)", "type": "public", "country_code": "US", "region_code": region_code, "description": "Honors George Washington and all U.S. presidents"},
+        {"date": fmt_date(good_friday), "name": "Good Friday", "type": "observance", "country_code": "US", "region_code": region_code, "description": "Christian holiday commemorating the crucifixion of Jesus"},
+        {"date": fmt_date(memorial), "name": "Memorial Day", "type": "public", "country_code": "US", "region_code": region_code, "description": "Honors U.S. military personnel who died in service"},
+        {"date": f"{year}-06-19", "name": "Juneteenth National Independence Day", "type": "public", "country_code": "US", "region_code": region_code, "description": "Commemorating the end of slavery in the United States"},
+        {"date": f"{year}-07-04", "name": "Independence Day", "type": "public", "country_code": "US", "region_code": region_code, "description": "Commemorating the Declaration of Independence in 1776"},
+        {"date": fmt_date(labor), "name": "Labor Day", "type": "public", "country_code": "US", "region_code": region_code, "description": "Honors the American labor movement and contributions of workers"},
+        {"date": fmt_date(columbus), "name": "Columbus Day / Indigenous Peoples' Day", "type": "public", "country_code": "US", "region_code": region_code, "description": "Honors Christopher Columbus and Indigenous peoples"},
+        {"date": f"{year}-11-11", "name": "Veterans Day", "type": "public", "country_code": "US", "region_code": region_code, "description": "Honors military veterans who served in the U.S. Armed Forces"},
+        {"date": fmt_date(thanksgiving), "name": "Thanksgiving Day", "type": "public", "country_code": "US", "region_code": region_code, "description": "National day of giving thanks and harvest celebration"},
+        {"date": f"{year}-12-25", "name": "Christmas Day", "type": "public", "country_code": "US", "region_code": region_code, "description": "Celebration of the birth of Jesus Christ"}
+    ]
+    
+    if region_code == "CA":
+        hols.append({"date": f"{year}-03-31", "name": "Cesar Chavez Day", "type": "public", "country_code": "US", "region_code": "CA", "description": "Honors farm labor leader Cesar Chavez"})
+        hols.append({"date": fmt_date(black_friday), "name": "Day After Thanksgiving", "type": "public", "country_code": "US", "region_code": "CA", "description": "Official state holiday in California"})
+    elif region_code == "MA":
+        patriots = get_nth_weekday(year, 4, 0, 3)
+        hols.append({"date": fmt_date(patriots), "name": "Patriots' Day", "type": "public", "country_code": "US", "region_code": "MA", "description": "Commemorates battles of Lexington and Concord"})
+        
+    hols.sort(key=lambda x: x["date"])
+    return hols
+
+def get_gb_holidays(year, region_code="GB"):
+    easter = get_easter_date(year)
+    good_friday = easter - datetime.timedelta(days=2)
+    easter_monday = easter + datetime.timedelta(days=1)
+    
+    early_may = get_nth_weekday(year, 5, 0, 1)
+    spring_bank = get_nth_weekday(year, 5, 0, -1)
+    summer_bank_eng = get_nth_weekday(year, 8, 0, -1)
+    summer_bank_sct = get_nth_weekday(year, 8, 0, 1)
+    
+    hols = [
+        {"date": f"{year}-01-01", "name": "New Year's Day", "type": "public", "country_code": "GB", "region_code": region_code, "description": "Public holiday celebrating New Year's Day"},
+        {"date": fmt_date(good_friday), "name": "Good Friday", "type": "public", "country_code": "GB", "region_code": region_code, "description": "Christian holiday commemorating the crucifixion"},
+        {"date": fmt_date(early_may), "name": "Early May Bank Holiday", "type": "public", "country_code": "GB", "region_code": region_code, "description": "Spring public bank holiday"},
+        {"date": fmt_date(spring_bank), "name": "Spring Bank Holiday", "type": "public", "country_code": "GB", "region_code": region_code, "description": "Late spring public bank holiday"},
+        {"date": f"{year}-12-25", "name": "Christmas Day", "type": "public", "country_code": "GB", "region_code": region_code, "description": "Celebration of the birth of Jesus Christ"},
+        {"date": f"{year}-12-26", "name": "Boxing Day", "type": "public", "country_code": "GB", "region_code": region_code, "description": "Traditional bank holiday following Christmas Day"}
+    ]
+    
+    if region_code in ["GB", "ENG", "WLS", "NIR"]:
+        hols.append({"date": fmt_date(easter_monday), "name": "Easter Monday", "type": "public", "country_code": "GB", "region_code": region_code, "description": "Bank holiday following Easter Sunday"})
+        hols.append({"date": fmt_date(summer_bank_eng), "name": "Summer Bank Holiday", "type": "public", "country_code": "GB", "region_code": region_code, "description": "Late summer public bank holiday"})
+        
+    if region_code == "SCT":
+        hols.append({"date": f"{year}-01-02", "name": "2nd January Bank Holiday", "type": "public", "country_code": "GB", "region_code": "SCT", "description": "Public bank holiday in Scotland"})
+        hols.append({"date": fmt_date(summer_bank_sct), "name": "Summer Bank Holiday (Scotland)", "type": "public", "country_code": "GB", "region_code": "SCT", "description": "August bank holiday in Scotland"})
+        hols.append({"date": f"{year}-11-30", "name": "St Andrew's Day", "type": "public", "country_code": "GB", "region_code": "SCT", "description": "Official national day of Scotland"})
+    elif region_code == "NIR":
+        hols.append({"date": f"{year}-03-17", "name": "St Patrick's Day", "type": "public", "country_code": "GB", "region_code": "NIR", "description": "Feast of St Patrick in Northern Ireland"})
+        hols.append({"date": f"{year}-07-12", "name": "Battle of the Boyne (Orangemen's Day)", "type": "public", "country_code": "GB", "region_code": "NIR", "description": "Commemorates the Battle of the Boyne in 1690"})
+
+    hols.sort(key=lambda x: x["date"])
+    return hols
+
+def get_ca_holidays(year, region_code="CA"):
+    easter = get_easter_date(year)
+    good_friday = easter - datetime.timedelta(days=2)
+    
+    v_date = datetime.date(year, 5, 24)
+    while v_date.weekday() != 0:
+        v_date -= datetime.timedelta(days=1)
+        
+    family_day = get_nth_weekday(year, 2, 0, 3)
+    civic_holiday = get_nth_weekday(year, 8, 0, 1)
+    labour_day = get_nth_weekday(year, 9, 0, 1)
+    thanksgiving = get_nth_weekday(year, 10, 0, 2)
+    
+    hols = [
+        {"date": f"{year}-01-01", "name": "New Year's Day", "type": "public", "country_code": "CA", "region_code": region_code, "description": "First day of the year"},
+        {"date": fmt_date(good_friday), "name": "Good Friday", "type": "public", "country_code": "CA", "region_code": region_code, "description": "Christian holiday commemorating the crucifixion"},
+        {"date": fmt_date(v_date), "name": "Victoria Day", "type": "public", "country_code": "CA", "region_code": region_code, "description": "Honors Queen Victoria's birthday"},
+        {"date": f"{year}-07-01", "name": "Canada Day", "type": "public", "country_code": "CA", "region_code": region_code, "description": "National day celebrating the confederation of Canada"},
+        {"date": fmt_date(labour_day), "name": "Labour Day", "type": "public", "country_code": "CA", "region_code": region_code, "description": "Honors workers and the labor movement"},
+        {"date": f"{year}-09-30", "name": "National Day for Truth and Reconciliation", "type": "public", "country_code": "CA", "region_code": region_code, "description": "Honors survivors of residential schools"},
+        {"date": fmt_date(thanksgiving), "name": "Thanksgiving", "type": "public", "country_code": "CA", "region_code": region_code, "description": "Canadian holiday of blessing for the harvest"},
+        {"date": f"{year}-11-11", "name": "Remembrance Day", "type": "public", "country_code": "CA", "region_code": region_code, "description": "Honors military personnel who died in duty"},
+        {"date": f"{year}-12-25", "name": "Christmas Day", "type": "public", "country_code": "CA", "region_code": region_code, "description": "Celebration of the birth of Jesus Christ"},
+        {"date": f"{year}-12-26", "name": "Boxing Day", "type": "public", "country_code": "CA", "region_code": region_code, "description": "Statutory holiday following Christmas"}
+    ]
+    
+    if region_code in ["ON", "AB", "BC", "SK", "MB"]:
+        hols.append({"date": fmt_date(family_day), "name": "Family Day", "type": "public", "country_code": "CA", "region_code": region_code, "description": "Provincial holiday celebrating family bonds"})
+    if region_code in ["ON", "BC", "AB", "MB"]:
+        hols.append({"date": fmt_date(civic_holiday), "name": "Civic Holiday", "type": "public", "country_code": "CA", "region_code": region_code, "description": "Provincial summer holiday"})
+    if region_code == "QC":
+        hols.append({"date": f"{year}-06-24", "name": "La Fête Nationale / St. Jean Baptiste Day", "type": "public", "country_code": "CA", "region_code": "QC", "description": "National holiday of Quebec"})
+
+    hols.sort(key=lambda x: x["date"])
+    return hols
+
+def get_au_holidays(year, region_code="AU"):
+    easter = get_easter_date(year)
+    good_friday = easter - datetime.timedelta(days=2)
+    easter_sat = easter - datetime.timedelta(days=1)
+    easter_monday = easter + datetime.timedelta(days=1)
+    
+    kings_bday_jun = get_nth_weekday(year, 6, 0, 2)
+    labour_day_oct = get_nth_weekday(year, 10, 0, 1)
+    melbourne_cup = get_nth_weekday(year, 11, 1, 1)
+    
+    hols = [
+        {"date": f"{year}-01-01", "name": "New Year's Day", "type": "public", "country_code": "AU", "region_code": region_code, "description": "First day of the year"},
+        {"date": f"{year}-01-26", "name": "Australia Day", "type": "public", "country_code": "AU", "region_code": region_code, "description": "Official national day of Australia"},
+        {"date": fmt_date(good_friday), "name": "Good Friday", "type": "public", "country_code": "AU", "region_code": region_code, "description": "Christian holiday commemorating the crucifixion"},
+        {"date": fmt_date(easter_sat), "name": "Easter Saturday", "type": "public", "country_code": "AU", "region_code": region_code, "description": "Day between Good Friday and Easter Sunday"},
+        {"date": fmt_date(easter_monday), "name": "Easter Monday", "type": "public", "country_code": "AU", "region_code": region_code, "description": "Public holiday following Easter Sunday"},
+        {"date": f"{year}-04-25", "name": "ANZAC Day", "type": "public", "country_code": "AU", "region_code": region_code, "description": "Honors Australians who served and died in war"},
+        {"date": fmt_date(kings_bday_jun), "name": "King's Birthday", "type": "public", "country_code": "AU", "region_code": region_code, "description": "Official birthday of the Monarch"},
+        {"date": fmt_date(labour_day_oct), "name": "Labour Day", "type": "public", "country_code": "AU", "region_code": region_code, "description": "Honors the 8-hour working day movement"},
+        {"date": f"{year}-12-25", "name": "Christmas Day", "type": "public", "country_code": "AU", "region_code": region_code, "description": "Celebration of the birth of Jesus Christ"},
+        {"date": f"{year}-12-26", "name": "Boxing Day / Proclamation Day", "type": "public", "country_code": "AU", "region_code": region_code, "description": "Public holiday following Christmas"}
+    ]
+    
+    if region_code == "VIC":
+        hols.append({"date": fmt_date(melbourne_cup), "name": "Melbourne Cup Day", "type": "public", "country_code": "AU", "region_code": "VIC", "description": "Famous horse racing public holiday in Victoria"})
+
+    hols.sort(key=lambda x: x["date"])
+    return hols
+
+def get_sg_holidays(year):
+    easter = get_easter_date(year)
+    good_friday = easter - datetime.timedelta(days=2)
+    
+    cny_dates = {
+        2020: "2020-01-25", 2021: "2021-02-12", 2022: "2022-02-01", 2023: "2023-01-22",
+        2024: "2024-02-10", 2025: "2025-01-29", 2026: "2026-02-17", 2027: "2027-02-06",
+        2028: "2028-01-26", 2029: "2029-02-13", 2030: "2030-02-03", 2031: "2031-01-23",
+        2032: "2032-02-11", 2033: "2033-01-31", 2034: "2034-02-19", 2035: "2035-02-08", 2036: "2036-01-28"
+    }
+    vesak_dates = {
+        2020: "2020-05-07", 2021: "2021-05-26", 2022: "2022-05-15", 2023: "2023-06-02",
+        2024: "2024-05-22", 2025: "2025-05-12", 2026: "2026-05-31", 2027: "2027-05-20",
+        2028: "2028-05-09", 2029: "2029-05-27", 2030: "2030-05-16", 2031: "2031-05-06",
+        2032: "2032-05-24", 2033: "2033-05-13", 2034: "2034-05-31", 2035: "2035-05-20", 2036: "2036-05-09"
+    }
+    
+    cny = cny_dates.get(year, f"{year}-02-01")
+    cny_dt = datetime.datetime.strptime(cny, "%Y-%m-%d").date()
+    cny_day2 = fmt_date(cny_dt + datetime.timedelta(days=1))
+    vesak = vesak_dates.get(year, f"{year}-05-15")
+    
+    hols = [
+        {"date": f"{year}-01-01", "name": "New Year's Day", "type": "public", "country_code": "SG", "region_code": "SG", "description": "First day of the year"},
+        {"date": cny, "name": "Chinese New Year (Day 1)", "type": "public", "country_code": "SG", "region_code": "SG", "description": "Lunar New Year celebration"},
+        {"date": cny_day2, "name": "Chinese New Year (Day 2)", "type": "public", "country_code": "SG", "region_code": "SG", "description": "Second day of Lunar New Year"},
+        {"date": fmt_date(good_friday), "name": "Good Friday", "type": "public", "country_code": "SG", "region_code": "SG", "description": "Christian holiday commemorating the crucifixion"},
+        {"date": f"{year}-05-01", "name": "Labour Day", "type": "public", "country_code": "SG", "region_code": "SG", "description": "Honors workers and May Day"},
+        {"date": vesak, "name": "Vesak Day", "type": "public", "country_code": "SG", "region_code": "SG", "description": "Commemorating the birth, enlightenment, and death of Buddha"},
+        {"date": f"{year}-08-09", "name": "National Day", "type": "public", "country_code": "SG", "region_code": "SG", "description": "Commemorating Singapore's independence in 1965"},
+        {"date": f"{year}-12-25", "name": "Christmas Day", "type": "public", "country_code": "SG", "region_code": "SG", "description": "Celebration of the birth of Jesus Christ"}
+    ]
+    hols.sort(key=lambda x: x["date"])
+    return hols
+
+def save_json(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+
 def main():
     base_dir = Path(__file__).resolve().parent.parent / "data"
     print(f"Generating holidays into base directory: {base_dir}")
@@ -1270,33 +1486,71 @@ def main():
     total_files = 0
     total_entries = 0
     
+    us_states = ["US", "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "DC"]
+    gb_regions = ["GB", "ENG", "WLS", "SCT", "NIR"]
+    ca_provinces = ["CA", "ON", "QC", "BC", "AB", "MB", "SK", "NS", "NB", "NL", "PE", "NT", "YT", "NU"]
+    au_states = ["AU", "NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"]
+
     for year in range(2020, 2037):
         year_dir = base_dir / str(year)
         year_dir.mkdir(parents=True, exist_ok=True)
         
-        # 1. National holidays
+        # 1. India (Legacy data/<year>/<st>.json and data/IN/<year>/<st>.json)
         national_holidays = get_national_holidays_for_year(year)
-        nat_path = year_dir / "national.json"
-        with open(nat_path, "w", encoding="utf-8") as f:
-            json.dump(national_holidays, f, indent=2, ensure_ascii=False)
-            f.write("\n")
-        total_files += 1
-        total_entries += len(national_holidays)
+        save_json(year_dir / "national.json", national_holidays)
+        save_json(base_dir / "IN" / str(year) / "national.json", national_holidays)
+        total_files += 2
+        total_entries += len(national_holidays) * 2
         
-        # 2. State-specific holidays
         for st in STATES:
             st_code = st["code"]
             st_holidays = get_state_holidays_for_year(year, st_code)
-            st_path = year_dir / f"{st_code}.json"
-            with open(st_path, "w", encoding="utf-8") as f:
-                json.dump(st_holidays, f, indent=2, ensure_ascii=False)
-                f.write("\n")
-            total_files += 1
-            total_entries += len(st_holidays)
+            save_json(year_dir / f"{st_code}.json", st_holidays)
+            save_json(base_dir / "IN" / str(year) / f"{st_code}.json", st_holidays)
+            total_files += 2
+            total_entries += len(st_holidays) * 2
             
-        print(f"[OK] Generated Year {year}: national + {len(STATES)} states/UTs ({len(national_holidays)} national holidays)")
+        # 2. United States
+        for st_code in us_states:
+            filename = "national.json" if st_code == "US" else f"{st_code}.json"
+            hols = get_us_holidays(year, st_code)
+            save_json(base_dir / "US" / str(year) / filename, hols)
+            total_files += 1
+            total_entries += len(hols)
 
-    print(f"\nSuccessfully created {total_files} holiday data files ({total_entries} total holiday entries) for 2020-2036!")
+        # 3. United Kingdom
+        for r_code in gb_regions:
+            filename = "national.json" if r_code == "GB" else f"{r_code}.json"
+            hols = get_gb_holidays(year, r_code)
+            save_json(base_dir / "GB" / str(year) / filename, hols)
+            total_files += 1
+            total_entries += len(hols)
+
+        # 4. Canada
+        for p_code in ca_provinces:
+            filename = "national.json" if p_code == "CA" else f"{p_code}.json"
+            hols = get_ca_holidays(year, p_code)
+            save_json(base_dir / "CA" / str(year) / filename, hols)
+            total_files += 1
+            total_entries += len(hols)
+
+        # 5. Australia
+        for a_code in au_states:
+            filename = "national.json" if a_code == "AU" else f"{a_code}.json"
+            hols = get_au_holidays(year, a_code)
+            save_json(base_dir / "AU" / str(year) / filename, hols)
+            total_files += 1
+            total_entries += len(hols)
+
+        # 6. Singapore
+        sg_hols = get_sg_holidays(year)
+        save_json(base_dir / "SG" / str(year) / "national.json", sg_hols)
+        total_files += 1
+        total_entries += len(sg_hols)
+
+        print(f"[OK] Generated Year {year} multi-country datasets (IN, US, GB, CA, AU, SG)")
+
+    print(f"\nSuccessfully created {total_files} global holiday data files ({total_entries} total holiday entries) for 2020-2036!")
 
 if __name__ == "__main__":
     main()

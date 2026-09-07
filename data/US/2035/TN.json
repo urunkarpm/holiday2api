@@ -1,0 +1,98 @@
+[
+  {
+    "date": "2035-01-01",
+    "name": "New Year's Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "TN",
+    "description": "First day of the year in the Gregorian calendar"
+  },
+  {
+    "date": "2035-01-15",
+    "name": "Martin Luther King Jr. Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "TN",
+    "description": "Honors civil rights leader Dr. Martin Luther King Jr."
+  },
+  {
+    "date": "2035-02-19",
+    "name": "Washington's Birthday (Presidents' Day)",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "TN",
+    "description": "Honors George Washington and all U.S. presidents"
+  },
+  {
+    "date": "2035-03-23",
+    "name": "Good Friday",
+    "type": "observance",
+    "country_code": "US",
+    "region_code": "TN",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2035-05-28",
+    "name": "Memorial Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "TN",
+    "description": "Honors U.S. military personnel who died in service"
+  },
+  {
+    "date": "2035-06-19",
+    "name": "Juneteenth National Independence Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "TN",
+    "description": "Commemorating the end of slavery in the United States"
+  },
+  {
+    "date": "2035-07-04",
+    "name": "Independence Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "TN",
+    "description": "Commemorating the Declaration of Independence in 1776"
+  },
+  {
+    "date": "2035-09-03",
+    "name": "Labor Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "TN",
+    "description": "Honors the American labor movement and contributions of workers"
+  },
+  {
+    "date": "2035-10-08",
+    "name": "Columbus Day / Indigenous Peoples' Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "TN",
+    "description": "Honors Christopher Columbus and Indigenous peoples"
+  },
+  {
+    "date": "2035-11-11",
+    "name": "Veterans Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "TN",
+    "description": "Honors military veterans who served in the U.S. Armed Forces"
+  },
+  {
+    "date": "2035-11-22",
+    "name": "Thanksgiving Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "TN",
+    "description": "National day of giving thanks and harvest celebration"
+  },
+  {
+    "date": "2035-12-25",
+    "name": "Christmas Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "TN",
+    "description": "Celebration of the birth of Jesus Christ"
+  }
+]

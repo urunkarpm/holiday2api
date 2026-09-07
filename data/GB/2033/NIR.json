@@ -1,0 +1,82 @@
+[
+  {
+    "date": "2033-01-01",
+    "name": "New Year's Day",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "NIR",
+    "description": "Public holiday celebrating New Year's Day"
+  },
+  {
+    "date": "2033-03-17",
+    "name": "St Patrick's Day",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "NIR",
+    "description": "Feast of St Patrick in Northern Ireland"
+  },
+  {
+    "date": "2033-04-15",
+    "name": "Good Friday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "NIR",
+    "description": "Christian holiday commemorating the crucifixion"
+  },
+  {
+    "date": "2033-04-18",
+    "name": "Easter Monday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "NIR",
+    "description": "Bank holiday following Easter Sunday"
+  },
+  {
+    "date": "2033-05-02",
+    "name": "Early May Bank Holiday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "NIR",
+    "description": "Spring public bank holiday"
+  },
+  {
+    "date": "2033-05-30",
+    "name": "Spring Bank Holiday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "NIR",
+    "description": "Late spring public bank holiday"
+  },
+  {
+    "date": "2033-07-12",
+    "name": "Battle of the Boyne (Orangemen's Day)",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "NIR",
+    "description": "Commemorates the Battle of the Boyne in 1690"
+  },
+  {
+    "date": "2033-08-29",
+    "name": "Summer Bank Holiday",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "NIR",
+    "description": "Late summer public bank holiday"
+  },
+  {
+    "date": "2033-12-25",
+    "name": "Christmas Day",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "NIR",
+    "description": "Celebration of the birth of Jesus Christ"
+  },
+  {
+    "date": "2033-12-26",
+    "name": "Boxing Day",
+    "type": "public",
+    "country_code": "GB",
+    "region_code": "NIR",
+    "description": "Traditional bank holiday following Christmas Day"
+  }
+]

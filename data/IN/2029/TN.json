@@ -1,0 +1,184 @@
+[
+  {
+    "date": "2029-01-14",
+    "name": "Pongal",
+    "type": "state",
+    "state_code": "TN",
+    "description": "Traditional Tamil harvest festival celebrating the Sun God"
+  },
+  {
+    "date": "2029-01-15",
+    "name": "Thai Pongal",
+    "type": "state",
+    "state_code": "TN",
+    "description": "Second day of the Pongal festival"
+  },
+  {
+    "date": "2029-01-16",
+    "name": "Maatu Pongal / Thiruvalluvar Day",
+    "type": "state",
+    "state_code": "TN",
+    "description": "Day dedicated to honoring cattle and saint Thiruvalluvar"
+  },
+  {
+    "date": "2029-01-17",
+    "name": "Kaanum Pongal / Uzhavar Thirunal",
+    "type": "state",
+    "state_code": "TN",
+    "description": "Day for family gatherings and honoring farmers"
+  },
+  {
+    "date": "2029-01-26",
+    "name": "Republic Day",
+    "type": "national",
+    "state_code": "TN",
+    "description": "Celebrates the adoption of the Constitution of India"
+  },
+  {
+    "date": "2029-02-11",
+    "name": "Maha Shivaratri",
+    "type": "state",
+    "state_code": "TN",
+    "description": "Hindu festival dedicated to Lord Shiva"
+  },
+  {
+    "date": "2029-02-15",
+    "name": "Eid ul-Fitr",
+    "type": "public",
+    "state_code": "TN",
+    "description": "Muslim festival marking the end of Ramadan"
+  },
+  {
+    "date": "2029-03-01",
+    "name": "Holi",
+    "type": "public",
+    "state_code": "TN",
+    "description": "Festival of colors celebrating the arrival of spring"
+  },
+  {
+    "date": "2029-03-24",
+    "name": "Ram Navami",
+    "type": "public",
+    "state_code": "TN",
+    "description": "Celebrates the birth of Lord Rama"
+  },
+  {
+    "date": "2029-03-30",
+    "name": "Good Friday",
+    "type": "public",
+    "state_code": "TN",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2029-04-14",
+    "name": "Dr. Ambedkar Jayanti",
+    "type": "state",
+    "state_code": "TN",
+    "description": "Birth anniversary of Dr. B.R. Ambedkar, architect of the Constitution"
+  },
+  {
+    "date": "2029-04-14",
+    "name": "Tamil New Year (Puthandu)",
+    "type": "state",
+    "state_code": "TN",
+    "description": "First day of the traditional Tamil calendar year"
+  },
+  {
+    "date": "2029-04-25",
+    "name": "Eid ul-Adha",
+    "type": "public",
+    "state_code": "TN",
+    "description": "Muslim festival of sacrifice"
+  },
+  {
+    "date": "2029-04-26",
+    "name": "Mahavir Jayanti",
+    "type": "public",
+    "state_code": "TN",
+    "description": "Birth anniversary of Lord Mahavira"
+  },
+  {
+    "date": "2029-05-24",
+    "name": "Muharram",
+    "type": "state",
+    "state_code": "TN",
+    "description": "Islamic day of mourning"
+  },
+  {
+    "date": "2029-07-25",
+    "name": "Milad un-Nabi",
+    "type": "state",
+    "state_code": "TN",
+    "description": "Birthday of Prophet Muhammad"
+  },
+  {
+    "date": "2029-08-15",
+    "name": "Independence Day",
+    "type": "national",
+    "state_code": "TN",
+    "description": "Marks India's independence from British rule in 1947"
+  },
+  {
+    "date": "2029-09-01",
+    "name": "Janmashtami",
+    "type": "public",
+    "state_code": "TN",
+    "description": "Celebrates the birth of Lord Krishna"
+  },
+  {
+    "date": "2029-09-12",
+    "name": "Vinayakar Chathurthi",
+    "type": "state",
+    "state_code": "TN",
+    "description": "Hindu festival celebrating Lord Ganesha"
+  },
+  {
+    "date": "2029-10-02",
+    "name": "Gandhi Jayanti",
+    "type": "national",
+    "state_code": "TN",
+    "description": "Birthday of Mahatma Gandhi, Father of the Nation"
+  },
+  {
+    "date": "2029-10-15",
+    "name": "Ayudha Pooja",
+    "type": "state",
+    "state_code": "TN",
+    "description": "Worship of tools, instruments, and books"
+  },
+  {
+    "date": "2029-10-16",
+    "name": "Vijayadashami",
+    "type": "public",
+    "state_code": "TN",
+    "description": "Celebrates victory of good over evil (Dussehra)"
+  },
+  {
+    "date": "2029-11-05",
+    "name": "Diwali",
+    "type": "public",
+    "state_code": "TN",
+    "description": "Festival of lights celebrating the return of Lord Rama"
+  },
+  {
+    "date": "2029-11-06",
+    "name": "Govardhan Puja",
+    "type": "public",
+    "state_code": "TN",
+    "description": "Day after Diwali / Post-Diwali celebrations"
+  },
+  {
+    "date": "2029-11-21",
+    "name": "Guru Nanak Jayanti",
+    "type": "public",
+    "state_code": "TN",
+    "description": "Birth anniversary of Guru Nanak Dev Ji"
+  },
+  {
+    "date": "2029-12-25",
+    "name": "Christmas",
+    "type": "public",
+    "state_code": "TN",
+    "description": "Celebrates the birth of Jesus Christ"
+  }
+]

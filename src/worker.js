@@ -185,7 +185,17 @@ async function handleRoute(request, env, ctx) {
     });
   }
 
-  // 4. Metadata: /api/meta/states
+  // 4. Metadata: /api/meta/countries
+  if (path === '/api/meta/countries' || path === '/api/meta/countries.json' || path === '/meta/countries.json') {
+    return await serveFile(env, request, 'meta/countries.json');
+  }
+
+  // 4b. Metadata: /api/meta/regions
+  if (path === '/api/meta/regions' || path === '/api/meta/regions.json' || path === '/meta/regions.json') {
+    return await serveFile(env, request, 'meta/regions.json');
+  }
+
+  // 4c. Metadata: /api/meta/states
   if (path === '/api/meta/states' || path === '/api/meta/states.json' || path === '/meta/states.json') {
     return await serveFile(env, request, 'meta/states.json');
   }
@@ -206,7 +216,7 @@ async function handleRoute(request, env, ctx) {
   }
 
   // 8. Long Weekend Finder: /api/long-weekends/:year or /api/long-weekends/:year/:state
-  const longWeekendMatch = path.match(/^\/api\/long-weekends\/(\d{4})(?:\/([A-Za-z]{2}))?(?:\.json)?$/);
+  const longWeekendMatch = path.match(/^\/api\/long-weekends\/(\d{4})(?:\/([A-Za-z0-9_-]+))?(?:\.json)?$/);
   if (longWeekendMatch) {
     const year = longWeekendMatch[1];
     const stateCode = (longWeekendMatch[2] || url.searchParams.get('state') || '').toUpperCase();
@@ -214,29 +224,47 @@ async function handleRoute(request, env, ctx) {
   }
 
   // 9. iCalendar (.ics) Subscriptions: /api/calendar/:year/:state.ics or /api/holidays/:year.ics or /api/holidays/:year/:state.ics
-  const icsCalendarMatch = path.match(/^\/api\/(?:calendar|holidays)\/(\d{4})(?:\/([A-Za-z]{2}))?\.ics$/);
+  const icsCalendarMatch = path.match(/^\/api\/(?:calendar|holidays)\/(\d{4})(?:\/([A-Za-z0-9_-]+))?\.ics$/);
   if (icsCalendarMatch) {
     const year = icsCalendarMatch[1];
     const stateCode = (icsCalendarMatch[2] || 'IN').toUpperCase();
     return await serveIcsCalendar(env, request, year, stateCode, url.searchParams);
   }
 
-  // 10. Route: /api/holidays/:year (e.g. /api/holidays/2026)
+  // 10. Multi-country v2 route: /api/v2/holidays/:country/:year/:region?
+  const v2Match = path.match(/^\/api\/v2\/holidays\/([A-Za-z]{2})\/(\d{4})(?:\/([A-Za-z0-9_-]+))?(?:\.json)?$/);
+  if (v2Match) {
+    const countryCode = v2Match[1].toUpperCase();
+    const year = v2Match[2];
+    const regionCode = (v2Match[3] || countryCode).toUpperCase();
+    return await serveCountryHolidays(env, request, countryCode, year, regionCode, url.searchParams);
+  }
+
+  // 11. Multi-country v1 route: /api/holidays/:country/:year/:region? (if 1st param is IN|US|GB|CA|AU|SG)
+  const countryPathMatch = path.match(/^\/api\/holidays\/(IN|US|GB|CA|AU|SG)\/(\d{4})(?:\/([A-Za-z0-9_-]+))?(?:\.json)?$/i);
+  if (countryPathMatch) {
+    const countryCode = countryPathMatch[1].toUpperCase();
+    const year = countryPathMatch[2];
+    const regionCode = (countryPathMatch[3] || countryCode).toUpperCase();
+    return await serveCountryHolidays(env, request, countryCode, year, regionCode, url.searchParams);
+  }
+
+  // 12. Route: /api/holidays/:year (e.g. /api/holidays/2026)
   const yearMatch = path.match(/^\/api\/holidays\/(\d{4})(?:\.json)?$/);
   if (yearMatch) {
     const year = yearMatch[1];
     return await serveYearHolidays(env, request, year, url.searchParams);
   }
 
-  // 11. Route: /api/holidays/:year/:state (e.g. /api/holidays/2026/TG)
-  const stateMatch = path.match(/^\/api\/holidays\/(\d{4})\/([A-Za-z]{2})(?:\.json)?$/);
+  // 13. Route: /api/holidays/:year/:state (e.g. /api/holidays/2026/TG)
+  const stateMatch = path.match(/^\/api\/holidays\/(\d{4})\/([A-Za-z0-9_-]+)(?:\.json)?$/);
   if (stateMatch) {
     const year = stateMatch[1];
     const stateCode = stateMatch[2].toUpperCase();
     return await serveStateHolidays(env, request, year, stateCode, url.searchParams);
   }
 
-  // 12. Route: /api/holidays with query params (e.g., ?year=2026&state=MH)
+  // 14. Route: /api/holidays with query params (e.g., ?year=2026&state=MH&country=US)
   if (path === '/api/holidays' || path === '/api/holidays.json') {
     return await serveQueryHolidays(env, request, url.searchParams);
   }
@@ -375,14 +403,25 @@ async function serveFont(env, request, pathname) {
 }
 
 /**
- * Helper: Load and merge national + state holidays for a given year
+ * Helper: Load and merge national + state holidays for a given year and country
  */
-async function getMergedHolidaysForYearState(env, request, year, stateCode) {
-  const nationalData = await loadJson(env, request, `${year}/national.json`);
+async function getMergedHolidaysForYearState(env, request, year, stateCode, countryCode = 'IN') {
+  countryCode = (countryCode || 'IN').toUpperCase();
+  stateCode = (stateCode || countryCode).toUpperCase();
+
+  // Try country folder first (e.g. US/2026/national.json, IN/2026/national.json), fallback to legacy 2026/national.json
+  let nationalData = await loadJson(env, request, `${countryCode}/${year}/national.json`);
+  if (!nationalData && countryCode === 'IN') {
+    nationalData = await loadJson(env, request, `${year}/national.json`);
+  }
+
   let holidays = Array.isArray(nationalData) ? [...nationalData] : [];
 
-  if (stateCode && stateCode !== 'IN') {
-    const stateData = await loadJson(env, request, `${year}/${stateCode}.json`);
+  if (stateCode && stateCode !== 'IN' && stateCode !== countryCode && stateCode !== 'NATIONAL') {
+    let stateData = await loadJson(env, request, `${countryCode}/${year}/${stateCode}.json`);
+    if (!stateData && countryCode === 'IN') {
+      stateData = await loadJson(env, request, `${year}/${stateCode}.json`);
+    }
     if (Array.isArray(stateData)) {
       holidays = [...holidays, ...stateData];
     }
@@ -392,7 +431,7 @@ async function getMergedHolidaysForYearState(env, request, year, stateCode) {
   const seen = new Set();
   const unique = [];
   for (const h of holidays) {
-    const key = `${h.date}_${h.name}_${h.state_code}`;
+    const key = `${h.date}_${h.name}_${h.state_code || h.region_code || ''}`;
     if (!seen.has(key)) {
       seen.add(key);
       unique.push(h);
@@ -403,11 +442,29 @@ async function getMergedHolidaysForYearState(env, request, year, stateCode) {
 }
 
 /**
+ * Serve holidays for a specific country, year, and region
+ */
+async function serveCountryHolidays(env, request, countryCode, year, regionCode, params) {
+  const holidays = await getMergedHolidaysForYearState(env, request, year, regionCode, countryCode);
+
+  if (!holidays || holidays.length === 0) {
+    return new Response(
+      JSON.stringify({ error: `No holiday data found for ${countryCode}/${year}/${regionCode}` }),
+      { status: 404, headers: JSON_HEADERS }
+    );
+  }
+
+  const filtered = filterHolidays(holidays, params);
+  return new Response(JSON.stringify(filtered, null, 2), { headers: JSON_HEADERS });
+}
+
+/**
  * Serve holidays for a year (with optional state query)
  */
 async function serveYearHolidays(env, request, year, params) {
-  const stateCode = (params.get('state') || '').toUpperCase();
-  const holidays = await getMergedHolidaysForYearState(env, request, year, stateCode);
+  const countryCode = (params.get('country') || 'IN').toUpperCase();
+  const stateCode = (params.get('state') || params.get('region') || '').toUpperCase();
+  const holidays = await getMergedHolidaysForYearState(env, request, year, stateCode, countryCode);
 
   if (holidays.length === 0) {
     return new Response(
@@ -424,7 +481,8 @@ async function serveYearHolidays(env, request, year, params) {
  * Serve holidays for a specific year and state
  */
 async function serveStateHolidays(env, request, year, stateCode, params) {
-  const holidays = await getMergedHolidaysForYearState(env, request, year, stateCode);
+  const countryCode = (params.get('country') || 'IN').toUpperCase();
+  const holidays = await getMergedHolidaysForYearState(env, request, year, stateCode, countryCode);
 
   if (holidays.length === 0) {
     return new Response(
@@ -443,9 +501,10 @@ async function serveStateHolidays(env, request, year, stateCode, params) {
 async function serveQueryHolidays(env, request, params) {
   const currentYear = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric' }).format(new Date());
   const year = params.get('year') || currentYear;
-  const stateCode = (params.get('state') || 'IN').toUpperCase();
+  const countryCode = (params.get('country') || 'IN').toUpperCase();
+  const stateCode = (params.get('state') || params.get('region') || countryCode).toUpperCase();
 
-  const holidays = await getMergedHolidaysForYearState(env, request, year, stateCode);
+  const holidays = await getMergedHolidaysForYearState(env, request, year, stateCode, countryCode);
   const filtered = filterHolidays(holidays, params);
 
   return new Response(JSON.stringify(filtered, null, 2), { headers: JSON_HEADERS });
@@ -485,11 +544,12 @@ function filterHolidays(holidays, params) {
 async function serveUpcomingHolidays(env, request, params) {
   const todayIst = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date());
   const fromDate = params.get('date') || todayIst;
-  const stateCode = (params.get('state') || 'IN').toUpperCase();
+  const countryCode = (params.get('country') || 'IN').toUpperCase();
+  const stateCode = (params.get('state') || params.get('region') || countryCode).toUpperCase();
   const limit = Math.min(Math.max(parseInt(params.get('limit') || '10', 10), 1), 50);
 
   const currentYear = parseInt(fromDate.slice(0, 4), 10);
-  let allHolidays = await getMergedHolidaysForYearState(env, request, currentYear.toString(), stateCode);
+  let allHolidays = await getMergedHolidaysForYearState(env, request, currentYear.toString(), stateCode, countryCode);
 
   // If near year-end, fetch next year's holidays too
   const nextYearHolidays = await getMergedHolidaysForYearState(env, request, (currentYear + 1).toString(), stateCode);

@@ -1,0 +1,98 @@
+[
+  {
+    "date": "2033-01-01",
+    "name": "New Year's Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "MN",
+    "description": "First day of the year in the Gregorian calendar"
+  },
+  {
+    "date": "2033-01-17",
+    "name": "Martin Luther King Jr. Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "MN",
+    "description": "Honors civil rights leader Dr. Martin Luther King Jr."
+  },
+  {
+    "date": "2033-02-21",
+    "name": "Washington's Birthday (Presidents' Day)",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "MN",
+    "description": "Honors George Washington and all U.S. presidents"
+  },
+  {
+    "date": "2033-04-15",
+    "name": "Good Friday",
+    "type": "observance",
+    "country_code": "US",
+    "region_code": "MN",
+    "description": "Christian holiday commemorating the crucifixion of Jesus"
+  },
+  {
+    "date": "2033-05-30",
+    "name": "Memorial Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "MN",
+    "description": "Honors U.S. military personnel who died in service"
+  },
+  {
+    "date": "2033-06-19",
+    "name": "Juneteenth National Independence Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "MN",
+    "description": "Commemorating the end of slavery in the United States"
+  },
+  {
+    "date": "2033-07-04",
+    "name": "Independence Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "MN",
+    "description": "Commemorating the Declaration of Independence in 1776"
+  },
+  {
+    "date": "2033-09-05",
+    "name": "Labor Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "MN",
+    "description": "Honors the American labor movement and contributions of workers"
+  },
+  {
+    "date": "2033-10-10",
+    "name": "Columbus Day / Indigenous Peoples' Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "MN",
+    "description": "Honors Christopher Columbus and Indigenous peoples"
+  },
+  {
+    "date": "2033-11-11",
+    "name": "Veterans Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "MN",
+    "description": "Honors military veterans who served in the U.S. Armed Forces"
+  },
+  {
+    "date": "2033-11-24",
+    "name": "Thanksgiving Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "MN",
+    "description": "National day of giving thanks and harvest celebration"
+  },
+  {
+    "date": "2033-12-25",
+    "name": "Christmas Day",
+    "type": "public",
+    "country_code": "US",
+    "region_code": "MN",
+    "description": "Celebration of the birth of Jesus Christ"
+  }
+]
