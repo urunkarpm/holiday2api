@@ -3696,14 +3696,28 @@ console.log(upcoming);</div>
       testInWorkbench('/api/holidays/:year/:state', code);
     }
 
+    function updateFaviconFromSlide(slideEl) {
+      if (!slideEl) return;
+      const svgText = slideEl.innerHTML;
+      if (!svgText || !svgText.includes('<svg')) return;
+      const dataUrl = 'data:image/svg+xml;utf8,' + encodeURIComponent(svgText);
+      const links = document.querySelectorAll('link[rel*="icon"]');
+      links.forEach(link => {
+        link.href = dataUrl;
+      });
+    }
+
     function initFlagRotator() {
       const slides = document.querySelectorAll('.flag-slide');
       if (!slides || slides.length === 0) return;
       let currentIndex = 0;
+      updateFaviconFromSlide(slides[currentIndex]);
       setInterval(() => {
         slides[currentIndex].classList.remove('active');
         currentIndex = (currentIndex + 1) % slides.length;
-        slides[currentIndex].classList.add('active');
+        const activeSlide = slides[currentIndex];
+        activeSlide.classList.add('active');
+        updateFaviconFromSlide(activeSlide);
       }, 1600);
     }
 
