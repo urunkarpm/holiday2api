@@ -69,6 +69,20 @@ const FAVICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 12
   </g>
 </svg>`;
 
+const FLAG_SVGS = {
+  IN: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%"><defs><clipPath id="flag-clip-in"><circle cx="64" cy="64" r="64"/></clipPath></defs><g clip-path="url(#flag-clip-in)"><rect width="128" height="42.667" fill="#FF9933"/><rect y="42.667" width="128" height="42.666" fill="#FFFFFF"/><rect y="85.333" width="128" height="42.667" fill="#138808"/><g transform="translate(64 64)"><circle r="15.5" fill="none" stroke="#000080" stroke-width="2.2"/><circle r="3.2" fill="#000080"/><g stroke="#000080" stroke-width="1.1" stroke-linecap="round"><line y1="-3.2" y2="-14.5"/><line y1="-3.2" y2="-14.5" transform="rotate(15)"/><line y1="-3.2" y2="-14.5" transform="rotate(30)"/><line y1="-3.2" y2="-14.5" transform="rotate(45)"/><line y1="-3.2" y2="-14.5" transform="rotate(60)"/><line y1="-3.2" y2="-14.5" transform="rotate(75)"/><line y1="-3.2" y2="-14.5" transform="rotate(90)"/><line y1="-3.2" y2="-14.5" transform="rotate(105)"/><line y1="-3.2" y2="-14.5" transform="rotate(120)"/><line y1="-3.2" y2="-14.5" transform="rotate(135)"/><line y1="-3.2" y2="-14.5" transform="rotate(150)"/><line y1="-3.2" y2="-14.5" transform="rotate(165)"/><line y1="-3.2" y2="-14.5" transform="rotate(180)"/><line y1="-3.2" y2="-14.5" transform="rotate(195)"/><line y1="-3.2" y2="-14.5" transform="rotate(210)"/><line y1="-3.2" y2="-14.5" transform="rotate(225)"/><line y1="-3.2" y2="-14.5" transform="rotate(240)"/><line y1="-3.2" y2="-14.5" transform="rotate(255)"/><line y1="-3.2" y2="-14.5" transform="rotate(270)"/><line y1="-3.2" y2="-14.5" transform="rotate(285)"/><line y1="-3.2" y2="-14.5" transform="rotate(300)"/><line y1="-3.2" y2="-14.5" transform="rotate(315)"/><line y1="-3.2" y2="-14.5" transform="rotate(330)"/><line y1="-3.2" y2="-14.5" transform="rotate(345)"/></g></g></g></svg>`,
+
+  US: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%"><defs><clipPath id="flag-clip-us"><circle cx="64" cy="64" r="64"/></clipPath></defs><g clip-path="url(#flag-clip-us)"><rect width="128" height="128" fill="#B22234"/><path d="M0,9.8h128M0,29.5h128M0,49.2h128M0,68.9h128M0,88.6h128M0,108.3h128" stroke="#FFFFFF" stroke-width="9.8"/><rect width="55" height="68.9" fill="#3C3B6E"/><g fill="#FFFFFF"><circle cx="12" cy="12" r="3.5"/><circle cx="27.5" cy="12" r="3.5"/><circle cx="43" cy="12" r="3.5"/><circle cx="19.7" cy="23.5" r="3.5"/><circle cx="35.2" cy="23.5" r="3.5"/><circle cx="12" cy="35" r="3.5"/><circle cx="27.5" cy="35" r="3.5"/><circle cx="43" cy="35" r="3.5"/><circle cx="19.7" cy="46.5" r="3.5"/><circle cx="35.2" cy="46.5" r="3.5"/><circle cx="12" cy="58" r="3.5"/><circle cx="27.5" cy="58" r="3.5"/><circle cx="43" cy="58" r="3.5"/></g></g></svg>`,
+
+  GB: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%"><defs><clipPath id="flag-clip-gb"><circle cx="64" cy="64" r="64"/></clipPath></defs><g clip-path="url(#flag-clip-gb)"><rect width="128" height="128" fill="#012169"/><path d="M0,0 L128,128 M128,0 L0,128" stroke="#FFFFFF" stroke-width="20"/><path d="M0,0 L128,128 M128,0 L0,128" stroke="#C8102E" stroke-width="12"/><path d="M64,0 V128 M0,64 H128" stroke="#FFFFFF" stroke-width="32"/><path d="M64,0 V128 M0,64 H128" stroke="#C8102E" stroke-width="19.2"/></g></svg>`,
+
+  CA: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%"><defs><clipPath id="flag-clip-ca"><circle cx="64" cy="64" r="64"/></clipPath></defs><g clip-path="url(#flag-clip-ca)"><rect width="128" height="128" fill="#FF0000"/><rect x="32" width="64" height="128" fill="#FFFFFF"/><path d="M64,24 L69,45 L78,40 L72,55 L88,58 L76,68 L82,88 L64,78 L46,88 L52,68 L40,58 L56,55 L50,40 L59,45 Z M62,78 L62,100 L66,100 L66,78 Z" fill="#FF0000"/></g></svg>`,
+
+  AU: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%"><defs><clipPath id="flag-clip-au"><circle cx="64" cy="64" r="64"/></clipPath></defs><g clip-path="url(#flag-clip-au)"><rect width="128" height="128" fill="#000085"/><g transform="scale(0.5)"><rect width="128" height="128" fill="#012169"/><path d="M0,0 L128,128 M128,0 L0,128" stroke="#FFFFFF" stroke-width="20"/><path d="M0,0 L128,128 M128,0 L0,128" stroke="#C8102E" stroke-width="12"/><path d="M64,0 V128 M0,64 H128" stroke="#FFFFFF" stroke-width="32"/><path d="M64,0 V128 M0,64 H128" stroke="#C8102E" stroke-width="19.2"/></g><g fill="#FFFFFF"><polygon points="32,75 34,83 42,83 36,88 38,96 32,91 26,96 28,88 22,83 30,83" transform="scale(1.1) translate(-3, 8)"/><polygon points="96,25 97.5,30 102,30 98.5,33 100,38 96,35 92,38 93.5,33 90,30 94.5,30"/><polygon points="108,48 109.5,53 114,53 110.5,56 112,61 108,58 104,61 105.5,56 102,53 106.5,53"/><polygon points="96,72 97.5,77 102,77 98.5,80 100,85 96,82 92,85 93.5,80 90,77 94.5,77"/><polygon points="80,92 81.5,97 86,97 82.5,100 84,105 80,102 76,105 77.5,100 74,97 78.5,97"/><polygon points="86,55 87,58 90,58 87.5,60 88.5,63 86,61 83.5,63 84.5,60 82,58 85,58"/></g></g></svg>`,
+
+  SG: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%"><defs><clipPath id="flag-clip-sg"><circle cx="64" cy="64" r="64"/></clipPath></defs><g clip-path="url(#flag-clip-sg)"><rect width="128" height="64" fill="#ED2939"/><rect y="64" width="128" height="64" fill="#FFFFFF"/><g transform="translate(12, 10)"><path d="M28,8 A18,18 0 1,0 28,40 A22,22 0 1,1 28,8 Z" fill="#FFFFFF"/><g fill="#FFFFFF"><polygon points="32,14 33,17 36,17 33.5,19 34.5,22 32,20 29.5,22 30.5,19 28,17 31,17"/><polygon points="40,20 41,23 44,23 41.5,25 42.5,28 40,26 37.5,28 38.5,25 36,23 39,23"/><polygon points="37,30 38,33 41,33 38.5,35 39.5,38 37,36 34.5,38 35.5,35 33,33 36,33"/><polygon points="27,30 28,33 31,33 28.5,35 29.5,38 27,36 24.5,38 25.5,35 23,33 26,33"/><polygon points="24,20 25,23 28,23 25.5,25 26.5,28 24,26 21.5,28 22.5,25 20,23 23,23"/></g></g></g></svg>`
+};
+
 export default {
   async fetch(request, env, ctx) {
     const isHead = request.method === 'HEAD';
@@ -1412,7 +1426,7 @@ function renderInteractiveHtml(env) {
 
     .flag-slide.active {
       opacity: 1;
-      transform: scale(1.15) rotate(0deg);
+      transform: scale(1.05) rotate(0deg);
     }
 
     .brand-text {
@@ -2317,12 +2331,12 @@ function renderInteractiveHtml(env) {
       <a href="/" class="brand-link" aria-label="India Holidays API Home">
         <span class="brand-logo-circle" title="Global Horizon — Supporting IN, US, GB, CA, AU, SG">
           <span class="flag-rotator">
-            <span class="flag-slide active" data-country="IN">🇮🇳</span>
-            <span class="flag-slide" data-country="US">🇺🇸</span>
-            <span class="flag-slide" data-country="GB">🇬🇧</span>
-            <span class="flag-slide" data-country="CA">🇨🇦</span>
-            <span class="flag-slide" data-country="AU">🇦🇺</span>
-            <span class="flag-slide" data-country="SG">🇸🇬</span>
+            <span class="flag-slide active" data-country="IN" aria-label="India Flag">${FLAG_SVGS.IN}</span>
+            <span class="flag-slide" data-country="US" aria-label="United States Flag">${FLAG_SVGS.US}</span>
+            <span class="flag-slide" data-country="GB" aria-label="United Kingdom Flag">${FLAG_SVGS.GB}</span>
+            <span class="flag-slide" data-country="CA" aria-label="Canada Flag">${FLAG_SVGS.CA}</span>
+            <span class="flag-slide" data-country="AU" aria-label="Australia Flag">${FLAG_SVGS.AU}</span>
+            <span class="flag-slide" data-country="SG" aria-label="Singapore Flag">${FLAG_SVGS.SG}</span>
           </span>
         </span>
         <span class="brand-text">Holiday2API <span class="badge-global" style="font-size: 0.68rem; font-weight: 700; padding: 0.12rem 0.45rem; background: var(--accent-orange-subtle); color: var(--accent-orange); border: 1px solid var(--accent-orange-border); border-radius: 99px; margin-left: 0.25rem;">GLOBAL</span></span>
