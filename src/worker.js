@@ -2390,7 +2390,7 @@ function renderInteractiveHtml(env) {
         <div class="nav-group-title">Developer Tools</div>
         <ul class="nav-list">
           <li class="nav-item"><a href="#workbench-section" class="nav-link" onclick="handleNavClick(this, 'workbench-section')">Live API Workbench</a></li>
-          <li class="nav-item"><a href="#states-directory" class="nav-link" onclick="handleNavClick(this, 'states-directory')">State Code Directory</a></li>
+          <li class="nav-item"><a href="#states-directory" class="nav-link" onclick="handleNavClick(this, 'states-directory')">State & Region Directory</a></li>
           <li class="nav-item"><a href="#postman-openapi" class="nav-link" onclick="handleNavClick(this, 'postman-openapi')">Postman & OpenAPI 3.0</a></li>
         </ul>
       </div>
@@ -3169,53 +3169,67 @@ console.log(upcoming);</div>
         <div class="section-divider"></div>
 
         <section id="states-directory" class="docs-section">
-          <h1 class="docs-h1">State & UT Code Directory</h1>
+          <h1 class="docs-h1">State & Region Directory</h1>
           <p class="docs-lead">
-            Click any State or Union Territory below to immediately test its holiday calendar:
+            Select a country and click any state, province, or region below to test its holiday calendar in the Live API Workbench:
           </p>
 
-          <div class="states-filter-bar">
-            <input type="text" id="stateSearchInput" class="form-input" placeholder="Search state name or code (e.g. Maharashtra, TG, Delhi)..." aria-label="Search state name or code" oninput="filterStatePills(this.value)" style="width: 100%; max-width: 420px;">
+          <div class="states-filter-bar" style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-end; margin-bottom: 1.25rem;">
+            <div style="flex: 1; min-width: 200px; max-width: 280px;">
+              <label for="directoryCountrySelect" class="form-label" style="margin-bottom: 0.35rem; font-weight: 600; display: block; font-size: 0.82rem; color: var(--ink-secondary);">Select Country</label>
+              <select id="directoryCountrySelect" class="form-select" onchange="renderDirectoryStatePills(this.value)">
+                <option value="IN" selected>🇮🇳 India (IN)</option>
+                <option value="US">🇺🇸 United States (US)</option>
+                <option value="GB">🇬🇧 United Kingdom (GB)</option>
+                <option value="CA">🇨🇦 Canada (CA)</option>
+                <option value="AU">🇦🇺 Australia (AU)</option>
+                <option value="SG">🇸🇬 Singapore (SG)</option>
+              </select>
+            </div>
+            <div style="flex: 2; min-width: 240px; max-width: 420px;">
+              <label for="stateSearchInput" class="form-label" style="margin-bottom: 0.35rem; font-weight: 600; display: block; font-size: 0.82rem; color: var(--ink-secondary);">Search Region / Code</label>
+              <input type="text" id="stateSearchInput" class="form-input" placeholder="Search state or region name or code (e.g. Maharashtra, CA, London)..." aria-label="Search state name or code" oninput="filterStatePills(this.value)" style="width: 100%;">
+            </div>
           </div>
 
           <div class="states-pills-container" id="statesContainer">
-            <div class="state-pill" data-code="IN" data-name="National Pan-India" onclick="quickSelectState('IN')"><span class="state-code">IN</span><span>National (All-India)</span></div>
-            <div class="state-pill" data-code="AN" data-name="Andaman and Nicobar" onclick="quickSelectState('AN')"><span class="state-code">AN</span><span>Andaman & Nicobar</span></div>
-            <div class="state-pill" data-code="AP" data-name="Andhra Pradesh" onclick="quickSelectState('AP')"><span class="state-code">AP</span><span>Andhra Pradesh</span></div>
-            <div class="state-pill" data-code="AR" data-name="Arunachal Pradesh" onclick="quickSelectState('AR')"><span class="state-code">AR</span><span>Arunachal Pradesh</span></div>
-            <div class="state-pill" data-code="AS" data-name="Assam" onclick="quickSelectState('AS')"><span class="state-code">AS</span><span>Assam</span></div>
-            <div class="state-pill" data-code="BR" data-name="Bihar" onclick="quickSelectState('BR')"><span class="state-code">BR</span><span>Bihar</span></div>
-            <div class="state-pill" data-code="CH" data-name="Chandigarh" onclick="quickSelectState('CH')"><span class="state-code">CH</span><span>Chandigarh</span></div>
-            <div class="state-pill" data-code="CT" data-name="Chhattisgarh" onclick="quickSelectState('CT')"><span class="state-code">CT</span><span>Chhattisgarh</span></div>
-            <div class="state-pill" data-code="DN" data-name="Dadra and Nagar Haveli and Daman and Diu" onclick="quickSelectState('DN')"><span class="state-code">DN</span><span>Dadra & Nagar Haveli (DN)</span></div>
-            <div class="state-pill" data-code="DL" data-name="Delhi" onclick="quickSelectState('DL')"><span class="state-code">DL</span><span>Delhi (NCT)</span></div>
-            <div class="state-pill" data-code="GA" data-name="Goa" onclick="quickSelectState('GA')"><span class="state-code">GA</span><span>Goa</span></div>
-            <div class="state-pill" data-code="GJ" data-name="Gujarat" onclick="quickSelectState('GJ')"><span class="state-code">GJ</span><span>Gujarat</span></div>
-            <div class="state-pill" data-code="HR" data-name="Haryana" onclick="quickSelectState('HR')"><span class="state-code">HR</span><span>Haryana</span></div>
-            <div class="state-pill" data-code="HP" data-name="Himachal Pradesh" onclick="quickSelectState('HP')"><span class="state-code">HP</span><span>Himachal Pradesh</span></div>
-            <div class="state-pill" data-code="JK" data-name="Jammu and Kashmir" onclick="quickSelectState('JK')"><span class="state-code">JK</span><span>Jammu & Kashmir</span></div>
-            <div class="state-pill" data-code="JH" data-name="Jharkhand" onclick="quickSelectState('JH')"><span class="state-code">JH</span><span>Jharkhand</span></div>
-            <div class="state-pill" data-code="KA" data-name="Karnataka" onclick="quickSelectState('KA')"><span class="state-code">KA</span><span>Karnataka</span></div>
-            <div class="state-pill" data-code="KL" data-name="Kerala" onclick="quickSelectState('KL')"><span class="state-code">KL</span><span>Kerala</span></div>
-            <div class="state-pill" data-code="LA" data-name="Ladakh" onclick="quickSelectState('LA')"><span class="state-code">LA</span><span>Ladakh</span></div>
-            <div class="state-pill" data-code="LD" data-name="Lakshadweep" onclick="quickSelectState('LD')"><span class="state-code">LD</span><span>Lakshadweep</span></div>
-            <div class="state-pill" data-code="MP" data-name="Madhya Pradesh" onclick="quickSelectState('MP')"><span class="state-code">MP</span><span>Madhya Pradesh</span></div>
-            <div class="state-pill" data-code="MH" data-name="Maharashtra" onclick="quickSelectState('MH')"><span class="state-code">MH</span><span>Maharashtra</span></div>
-            <div class="state-pill" data-code="MN" data-name="Manipur" onclick="quickSelectState('MN')"><span class="state-code">MN</span><span>Manipur</span></div>
-            <div class="state-pill" data-code="ML" data-name="Meghalaya" onclick="quickSelectState('ML')"><span class="state-code">ML</span><span>Meghalaya</span></div>
-            <div class="state-pill" data-code="MZ" data-name="Mizoram" onclick="quickSelectState('MZ')"><span class="state-code">MZ</span><span>Mizoram</span></div>
-            <div class="state-pill" data-code="NL" data-name="Nagaland" onclick="quickSelectState('NL')"><span class="state-code">NL</span><span>Nagaland</span></div>
-            <div class="state-pill" data-code="OR" data-name="Odisha" onclick="quickSelectState('OR')"><span class="state-code">OR</span><span>Odisha</span></div>
-            <div class="state-pill" data-code="PY" data-name="Puducherry" onclick="quickSelectState('PY')"><span class="state-code">PY</span><span>Puducherry</span></div>
-            <div class="state-pill" data-code="PB" data-name="Punjab" onclick="quickSelectState('PB')"><span class="state-code">PB</span><span>Punjab</span></div>
-            <div class="state-pill" data-code="RJ" data-name="Rajasthan" onclick="quickSelectState('RJ')"><span class="state-code">RJ</span><span>Rajasthan</span></div>
-            <div class="state-pill" data-code="SK" data-name="Sikkim" onclick="quickSelectState('SK')"><span class="state-code">SK</span><span>Sikkim</span></div>
-            <div class="state-pill" data-code="TN" data-name="Tamil Nadu" onclick="quickSelectState('TN')"><span class="state-code">TN</span><span>Tamil Nadu</span></div>
-            <div class="state-pill" data-code="TG" data-name="Telangana" onclick="quickSelectState('TG')"><span class="state-code">TG</span><span>Telangana</span></div>
-            <div class="state-pill" data-code="TR" data-name="Tripura" onclick="quickSelectState('TR')"><span class="state-code">TR</span><span>Tripura</span></div>
-            <div class="state-pill" data-code="UP" data-name="Uttar Pradesh" onclick="quickSelectState('UP')"><span class="state-code">UP</span><span>Uttar Pradesh</span></div>
-            <div class="state-pill" data-code="UT" data-name="Uttarakhand" onclick="quickSelectState('UT')"><span class="state-code">UT</span><span>Uttarakhand</span></div>
-            <div class="state-pill" data-code="WB" data-name="West Bengal" onclick="quickSelectState('WB')"><span class="state-code">WB</span><span>West Bengal</span></div>
+            <div class="state-pill" data-code="IN" data-name="National Pan-India" onclick="quickSelectState('IN', 'IN')"><span class="state-code">IN</span><span>National (All-India)</span></div>
+            <div class="state-pill" data-code="AN" data-name="Andaman and Nicobar" onclick="quickSelectState('AN', 'IN')"><span class="state-code">AN</span><span>Andaman & Nicobar</span></div>
+            <div class="state-pill" data-code="AP" data-name="Andhra Pradesh" onclick="quickSelectState('AP', 'IN')"><span class="state-code">AP</span><span>Andhra Pradesh</span></div>
+            <div class="state-pill" data-code="AR" data-name="Arunachal Pradesh" onclick="quickSelectState('AR', 'IN')"><span class="state-code">AR</span><span>Arunachal Pradesh</span></div>
+            <div class="state-pill" data-code="AS" data-name="Assam" onclick="quickSelectState('AS', 'IN')"><span class="state-code">AS</span><span>Assam</span></div>
+            <div class="state-pill" data-code="BR" data-name="Bihar" onclick="quickSelectState('BR', 'IN')"><span class="state-code">BR</span><span>Bihar</span></div>
+            <div class="state-pill" data-code="CH" data-name="Chandigarh" onclick="quickSelectState('CH', 'IN')"><span class="state-code">CH</span><span>Chandigarh</span></div>
+            <div class="state-pill" data-code="CT" data-name="Chhattisgarh" onclick="quickSelectState('CT', 'IN')"><span class="state-code">CT</span><span>Chhattisgarh</span></div>
+            <div class="state-pill" data-code="DN" data-name="Dadra and Nagar Haveli and Daman and Diu" onclick="quickSelectState('DN', 'IN')"><span class="state-code">DN</span><span>Dadra & Nagar Haveli (DN)</span></div>
+            <div class="state-pill" data-code="DL" data-name="Delhi" onclick="quickSelectState('DL', 'IN')"><span class="state-code">DL</span><span>Delhi (NCT)</span></div>
+            <div class="state-pill" data-code="GA" data-name="Goa" onclick="quickSelectState('GA', 'IN')"><span class="state-code">GA</span><span>Goa</span></div>
+            <div class="state-pill" data-code="GJ" data-name="Gujarat" onclick="quickSelectState('GJ', 'IN')"><span class="state-code">GJ</span><span>Gujarat</span></div>
+            <div class="state-pill" data-code="HR" data-name="Haryana" onclick="quickSelectState('HR', 'IN')"><span class="state-code">HR</span><span>Haryana</span></div>
+            <div class="state-pill" data-code="HP" data-name="Himachal Pradesh" onclick="quickSelectState('HP', 'IN')"><span class="state-code">HP</span><span>Himachal Pradesh</span></div>
+            <div class="state-pill" data-code="JK" data-name="Jammu and Kashmir" onclick="quickSelectState('JK', 'IN')"><span class="state-code">JK</span><span>Jammu & Kashmir</span></div>
+            <div class="state-pill" data-code="JH" data-name="Jharkhand" onclick="quickSelectState('JH', 'IN')"><span class="state-code">JH</span><span>Jharkhand</span></div>
+            <div class="state-pill" data-code="KA" data-name="Karnataka" onclick="quickSelectState('KA', 'IN')"><span class="state-code">KA</span><span>Karnataka</span></div>
+            <div class="state-pill" data-code="KL" data-name="Kerala" onclick="quickSelectState('KL', 'IN')"><span class="state-code">KL</span><span>Kerala</span></div>
+            <div class="state-pill" data-code="LA" data-name="Ladakh" onclick="quickSelectState('LA', 'IN')"><span class="state-code">LA</span><span>Ladakh</span></div>
+            <div class="state-pill" data-code="LD" data-name="Lakshadweep" onclick="quickSelectState('LD', 'IN')"><span class="state-code">LD</span><span>Lakshadweep</span></div>
+            <div class="state-pill" data-code="MP" data-name="Madhya Pradesh" onclick="quickSelectState('MP', 'IN')"><span class="state-code">MP</span><span>Madhya Pradesh</span></div>
+            <div class="state-pill" data-code="MH" data-name="Maharashtra" onclick="quickSelectState('MH', 'IN')"><span class="state-code">MH</span><span>Maharashtra</span></div>
+            <div class="state-pill" data-code="MN" data-name="Manipur" onclick="quickSelectState('MN', 'IN')"><span class="state-code">MN</span><span>Manipur</span></div>
+            <div class="state-pill" data-code="ML" data-name="Meghalaya" onclick="quickSelectState('ML', 'IN')"><span class="state-code">ML</span><span>Meghalaya</span></div>
+            <div class="state-pill" data-code="MZ" data-name="Mizoram" onclick="quickSelectState('MZ', 'IN')"><span class="state-code">MZ</span><span>Mizoram</span></div>
+            <div class="state-pill" data-code="NL" data-name="Nagaland" onclick="quickSelectState('NL', 'IN')"><span class="state-code">NL</span><span>Nagaland</span></div>
+            <div class="state-pill" data-code="OR" data-name="Odisha" onclick="quickSelectState('OR', 'IN')"><span class="state-code">OR</span><span>Odisha</span></div>
+            <div class="state-pill" data-code="PY" data-name="Puducherry" onclick="quickSelectState('PY', 'IN')"><span class="state-code">PY</span><span>Puducherry</span></div>
+            <div class="state-pill" data-code="PB" data-name="Punjab" onclick="quickSelectState('PB', 'IN')"><span class="state-code">PB</span><span>Punjab</span></div>
+            <div class="state-pill" data-code="RJ" data-name="Rajasthan" onclick="quickSelectState('RJ', 'IN')"><span class="state-code">RJ</span><span>Rajasthan</span></div>
+            <div class="state-pill" data-code="SK" data-name="Sikkim" onclick="quickSelectState('SK', 'IN')"><span class="state-code">SK</span><span>Sikkim</span></div>
+            <div class="state-pill" data-code="TN" data-name="Tamil Nadu" onclick="quickSelectState('TN', 'IN')"><span class="state-code">TN</span><span>Tamil Nadu</span></div>
+            <div class="state-pill" data-code="TG" data-name="Telangana" onclick="quickSelectState('TG', 'IN')"><span class="state-code">TG</span><span>Telangana</span></div>
+            <div class="state-pill" data-code="TR" data-name="Tripura" onclick="quickSelectState('TR', 'IN')"><span class="state-code">TR</span><span>Tripura</span></div>
+            <div class="state-pill" data-code="UP" data-name="Uttar Pradesh" onclick="quickSelectState('UP', 'IN')"><span class="state-code">UP</span><span>Uttar Pradesh</span></div>
+            <div class="state-pill" data-code="UT" data-name="Uttarakhand" onclick="quickSelectState('UT', 'IN')"><span class="state-code">UT</span><span>Uttarakhand</span></div>
+            <div class="state-pill" data-code="WB" data-name="West Bengal" onclick="quickSelectState('WB', 'IN')"><span class="state-code">WB</span><span>West Bengal</span></div>
           </div>
         </section>
 
@@ -3553,6 +3567,12 @@ console.log(upcoming);</div>
         executeWorkbenchRequest();
       }
 
+      const dSelect = document.getElementById('directoryCountrySelect');
+      if (dSelect) {
+        dSelect.value = countryCode;
+        renderDirectoryStatePills(countryCode);
+      }
+
       const wbSection = document.getElementById('workbench-section');
       if (wbSection) {
         wbSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -3725,6 +3745,28 @@ console.log(upcoming);</div>
       }
     }
 
+    function renderDirectoryStatePills(countryCode) {
+      const container = document.getElementById('statesContainer');
+      if (!container) return;
+      const code = countryCode || document.getElementById('directoryCountrySelect')?.value || 'IN';
+      const list = REGIONS_MAP[code] || REGIONS_MAP['IN'];
+
+      let html = '';
+      for (let i = 0; i < list.length; i++) {
+        const item = list[i];
+        html += '<div class="state-pill" data-code="' + escapeHtml(item.code) + '" data-name="' + escapeHtml(item.name) + '" onclick="quickSelectState(\'' + escapeHtml(item.code) + '\', \'' + escapeHtml(code) + '\')">' +
+          '<span class="state-code">' + escapeHtml(item.code) + '</span>' +
+          '<span>' + escapeHtml(item.name) + '</span>' +
+        '</div>';
+      }
+      container.innerHTML = html;
+
+      const searchInput = document.getElementById('stateSearchInput');
+      if (searchInput && searchInput.value) {
+        filterStatePills(searchInput.value);
+      }
+    }
+
     function filterStatePills(query) {
       const q = (query || '').toLowerCase().trim();
       const pills = document.querySelectorAll('#statesContainer .state-pill');
@@ -3735,8 +3777,13 @@ console.log(upcoming);</div>
       });
     }
 
-    function quickSelectState(code) {
-      testInWorkbench('/api/holidays/:year/:state', code);
+    function quickSelectState(code, countryCode) {
+      const c = countryCode || document.getElementById('directoryCountrySelect')?.value || 'IN';
+      if (c === 'IN') {
+        testInWorkbench('/api/holidays/:year/:state', code, { country: 'IN' });
+      } else {
+        testInWorkbench('/api/v2/holidays/:country/:year/:region', code, { country: c });
+      }
     }
 
     function updateFaviconFromSlide(slideEl) {
@@ -3768,6 +3815,7 @@ console.log(upcoming);</div>
       initTheme();
       initScrollSpy();
       initFlagRotator();
+      renderDirectoryStatePills('IN');
       updateFormFields();
       executeWorkbenchRequest();
     });

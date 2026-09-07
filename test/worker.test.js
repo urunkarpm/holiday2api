@@ -72,6 +72,7 @@ async function runTests() {
     assert(!html.includes('header-search-btn') && !html.includes('searchModalBackdrop'), 'Should not include header search bar or search modal');
     assert(html.includes('themeToggleBtn') && html.includes('toggleTheme()') && html.includes('[data-theme="light"]') && html.includes('[data-theme="dark"]'), 'Should include Night/Day theme toggle and CSS tokens');
     assert(html.includes('stateSearchInput') && html.includes('filterStatePills'), 'Should include states search filter');
+    assert(html.includes('directoryCountrySelect') && html.includes('renderDirectoryStatePills'), 'Should include country dropdown for State & Region Directory');
     assert(html.includes('data-code="TG"') && html.includes('data-code="MH"') && html.includes('data-code="AN"'), 'Should include full state pill directory');
     assert(html.includes('overflow-x: hidden') && html.includes('min-width: 0'), 'Should contain viewport tearing prevention and flexbox min-width reset');
     assert(html.includes('@media (max-width: 820px)') && html.includes('@media (max-width: 768px)') && html.includes('@media (max-width: 480px)'), 'Should contain responsive mobile breakpoints');
