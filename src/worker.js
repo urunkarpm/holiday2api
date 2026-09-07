@@ -3177,7 +3177,7 @@ console.log(upcoming);</div>
           <div class="states-filter-bar" style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-end; margin-bottom: 1.25rem;">
             <div style="flex: 1; min-width: 200px; max-width: 280px;">
               <label for="directoryCountrySelect" class="form-label" style="margin-bottom: 0.35rem; font-weight: 600; display: block; font-size: 0.82rem; color: var(--ink-secondary);">Select Country</label>
-              <select id="directoryCountrySelect" class="form-select" onchange="renderDirectoryStatePills(this.value)">
+              <select id="directoryCountrySelect" class="form-select" onchange="onCountrySelectChange(this.value)">
                 <option value="IN" selected>🇮🇳 India (IN)</option>
                 <option value="US">🇺🇸 United States (US)</option>
                 <option value="GB">🇬🇧 United Kingdom (GB)</option>
@@ -3544,34 +3544,53 @@ console.log(upcoming);</div>
       });
     }
 
-    function onCountrySelectChange() {
+    function onCountrySelectChange(newCountryCode, triggerRequest = true) {
       const countrySelect = document.getElementById('countrySelect');
+      const directoryCountrySelect = document.getElementById('directoryCountrySelect');
       const stateSelect = document.getElementById('stateSelect');
       if (!countrySelect || !stateSelect) return;
-      const country = countrySelect.value || 'IN';
+
+      const country = (newCountryCode || countrySelect.value || 'IN').toUpperCase();
+
+      if (countrySelect.value !== country) {
+        countrySelect.value = country;
+      }
+      if (directoryCountrySelect && directoryCountrySelect.value !== country) {
+        directoryCountrySelect.value = country;
+      }
+
       syncCountryPillActiveState(country);
+
       const list = REGIONS_MAP[country] || REGIONS_MAP['IN'];
       stateSelect.innerHTML = list.map(function(r) { return '<option value="' + r.code + '">' + r.name + ' (' + r.code + ')</option>'; }).join('');
+      if (list && list.length > 0) {
+        stateSelect.value = list[0].code;
+      }
+
+      renderDirectoryStatePills(country);
+
+      const epSelect = document.getElementById('endpointSelect');
+      if (epSelect && country !== 'IN' && epSelect.value === '/api/holidays/:year/:state') {
+        epSelect.value = '/api/v2/holidays/:country/:year/:region';
+      }
+
+      updateFormFields();
+
+      if (triggerRequest) {
+        executeWorkbenchRequest();
+      }
     }
 
     function selectCountryPill(countryCode) {
-      const cSelect = document.getElementById('countrySelect');
-      if (cSelect) {
-        cSelect.value = countryCode;
-        onCountrySelectChange();
-        const epSelect = document.getElementById('endpointSelect');
-        if (epSelect) {
-          epSelect.value = '/api/v2/holidays/:country/:year/:region';
-        }
-        updateFormFields();
-        executeWorkbenchRequest();
+      onCountrySelectChange(countryCode, false);
+
+      const epSelect = document.getElementById('endpointSelect');
+      if (epSelect) {
+        epSelect.value = '/api/v2/holidays/:country/:year/:region';
       }
 
-      const dSelect = document.getElementById('directoryCountrySelect');
-      if (dSelect) {
-        dSelect.value = countryCode;
-        renderDirectoryStatePills(countryCode);
-      }
+      updateFormFields();
+      executeWorkbenchRequest();
 
       const wbSection = document.getElementById('workbench-section');
       if (wbSection) {
@@ -3591,11 +3610,7 @@ console.log(upcoming);</div>
 
     function testInWorkbench(endpoint, state, extra) {
       if (extra && extra.country) {
-        const cSelect = document.getElementById('countrySelect');
-        if (cSelect) {
-          cSelect.value = extra.country;
-          onCountrySelectChange();
-        }
+        onCountrySelectChange(extra.country, false);
       }
       const epSelect = document.getElementById('endpointSelect');
       if (epSelect && endpoint) {
@@ -3815,9 +3830,7 @@ console.log(upcoming);</div>
       initTheme();
       initScrollSpy();
       initFlagRotator();
-      renderDirectoryStatePills('IN');
-      updateFormFields();
-      executeWorkbenchRequest();
+      onCountrySelectChange('IN', true);
     });
   </script>
 </body>
