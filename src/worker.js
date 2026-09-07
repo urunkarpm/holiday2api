@@ -3323,6 +3323,16 @@ console.log(upcoming);</div>
       }
     }
 
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     function buildJsonTreeHtml(val) {
       if (val === null) return '<span class="json-null">null</span>';
       if (typeof val === 'boolean') return '<span class="json-boolean">' + val + '</span>';
