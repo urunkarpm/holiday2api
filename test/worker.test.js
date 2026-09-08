@@ -382,7 +382,17 @@ async function runTests() {
     console.log(`✔ GET /api/v2/holidays/GB/2026/SCT passed (returned ${dataGb.length} holidays)`);
   }
 
-  console.log('\n🎉 All 29 tests (including multi-country, HSTS, accessibility, SEO, & AI discovery) passed successfully!');
+  // Test 30: GET /api/meta/regions?country=US (US Regions metadata)
+  {
+    const reqRegions = new Request('http://localhost:8787/api/meta/regions?country=US');
+    const resRegions = await worker.fetch(reqRegions, mockEnv);
+    assert.strictEqual(resRegions.status, 200, 'GET /api/meta/regions?country=US should return 200');
+    const dataRegions = await resRegions.json();
+    assert(Array.isArray(dataRegions.regions) && dataRegions.regions.some(r => r.code === 'CA'), 'Should return US regions array containing CA');
+    console.log(`✔ GET /api/meta/regions?country=US passed (returned ${dataRegions.total_regions} regions)`);
+  }
+
+  console.log('\n🎉 All 30 tests (including multi-country, HSTS, accessibility, SEO, & AI discovery) passed successfully!');
 }
 
 runTests().catch(err => {

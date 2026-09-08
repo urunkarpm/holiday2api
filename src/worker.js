@@ -206,7 +206,7 @@ async function handleRoute(request, env, ctx) {
 
   // 4b. Metadata: /api/meta/regions
   if (path === '/api/meta/regions' || path === '/api/meta/regions.json' || path === '/meta/regions.json') {
-    return await serveFile(env, request, 'meta/regions.json');
+    return await serveMetaRegions(env, request, url.searchParams);
   }
 
   // 4c. Metadata: /api/meta/states
@@ -388,6 +388,29 @@ async function serveFile(env, request, filePath) {
     );
   }
   return new Response(JSON.stringify(data, null, 2), { headers: JSON_HEADERS });
+}
+
+/**
+ * Serve regions metadata with optional country filtering
+ */
+async function serveMetaRegions(env, request, params) {
+  const regionsMap = await loadJson(env, request, 'meta/regions.json');
+  if (!regionsMap) {
+    return new Response(JSON.stringify({ error: 'Regions metadata not found' }), { status: 404, headers: JSON_HEADERS });
+  }
+
+  const country = params ? params.get('country') : null;
+  if (country) {
+    const code = country.toUpperCase();
+    const list = regionsMap[code] || regionsMap['IN'] || [];
+    return new Response(JSON.stringify({
+      country_code: code,
+      total_regions: list.length,
+      regions: list
+    }, null, 2), { headers: JSON_HEADERS });
+  }
+
+  return new Response(JSON.stringify(regionsMap, null, 2), { headers: JSON_HEADERS });
 }
 
 /**
@@ -3023,7 +3046,7 @@ console.log(upcoming);</div>
             <div class="wb-controls">
               <div class="form-group" id="countryGroup">
                 <label class="form-label" for="countrySelect">Country</label>
-                <select id="countrySelect" class="form-select" onchange="onCountrySelectChange()">
+                <select id="countrySelect" class="form-select" onchange="onCountrySelectChange(this.value)">
                   <option value="IN" selected>🇮🇳 India (IN)</option>
                   <option value="US">🇺🇸 United States (US)</option>
                   <option value="GB">🇬🇧 United Kingdom (GB)</option>
@@ -3193,43 +3216,43 @@ console.log(upcoming);</div>
           </div>
 
           <div class="states-pills-container" id="statesContainer">
-            <div class="state-pill" data-code="IN" data-name="National Pan-India" onclick="quickSelectState('IN', 'IN')"><span class="state-code">IN</span><span>National (All-India)</span></div>
-            <div class="state-pill" data-code="AN" data-name="Andaman and Nicobar" onclick="quickSelectState('AN', 'IN')"><span class="state-code">AN</span><span>Andaman & Nicobar</span></div>
-            <div class="state-pill" data-code="AP" data-name="Andhra Pradesh" onclick="quickSelectState('AP', 'IN')"><span class="state-code">AP</span><span>Andhra Pradesh</span></div>
-            <div class="state-pill" data-code="AR" data-name="Arunachal Pradesh" onclick="quickSelectState('AR', 'IN')"><span class="state-code">AR</span><span>Arunachal Pradesh</span></div>
-            <div class="state-pill" data-code="AS" data-name="Assam" onclick="quickSelectState('AS', 'IN')"><span class="state-code">AS</span><span>Assam</span></div>
-            <div class="state-pill" data-code="BR" data-name="Bihar" onclick="quickSelectState('BR', 'IN')"><span class="state-code">BR</span><span>Bihar</span></div>
-            <div class="state-pill" data-code="CH" data-name="Chandigarh" onclick="quickSelectState('CH', 'IN')"><span class="state-code">CH</span><span>Chandigarh</span></div>
-            <div class="state-pill" data-code="CT" data-name="Chhattisgarh" onclick="quickSelectState('CT', 'IN')"><span class="state-code">CT</span><span>Chhattisgarh</span></div>
-            <div class="state-pill" data-code="DN" data-name="Dadra and Nagar Haveli and Daman and Diu" onclick="quickSelectState('DN', 'IN')"><span class="state-code">DN</span><span>Dadra & Nagar Haveli (DN)</span></div>
-            <div class="state-pill" data-code="DL" data-name="Delhi" onclick="quickSelectState('DL', 'IN')"><span class="state-code">DL</span><span>Delhi (NCT)</span></div>
-            <div class="state-pill" data-code="GA" data-name="Goa" onclick="quickSelectState('GA', 'IN')"><span class="state-code">GA</span><span>Goa</span></div>
-            <div class="state-pill" data-code="GJ" data-name="Gujarat" onclick="quickSelectState('GJ', 'IN')"><span class="state-code">GJ</span><span>Gujarat</span></div>
-            <div class="state-pill" data-code="HR" data-name="Haryana" onclick="quickSelectState('HR', 'IN')"><span class="state-code">HR</span><span>Haryana</span></div>
-            <div class="state-pill" data-code="HP" data-name="Himachal Pradesh" onclick="quickSelectState('HP', 'IN')"><span class="state-code">HP</span><span>Himachal Pradesh</span></div>
-            <div class="state-pill" data-code="JK" data-name="Jammu and Kashmir" onclick="quickSelectState('JK', 'IN')"><span class="state-code">JK</span><span>Jammu & Kashmir</span></div>
-            <div class="state-pill" data-code="JH" data-name="Jharkhand" onclick="quickSelectState('JH', 'IN')"><span class="state-code">JH</span><span>Jharkhand</span></div>
-            <div class="state-pill" data-code="KA" data-name="Karnataka" onclick="quickSelectState('KA', 'IN')"><span class="state-code">KA</span><span>Karnataka</span></div>
-            <div class="state-pill" data-code="KL" data-name="Kerala" onclick="quickSelectState('KL', 'IN')"><span class="state-code">KL</span><span>Kerala</span></div>
-            <div class="state-pill" data-code="LA" data-name="Ladakh" onclick="quickSelectState('LA', 'IN')"><span class="state-code">LA</span><span>Ladakh</span></div>
-            <div class="state-pill" data-code="LD" data-name="Lakshadweep" onclick="quickSelectState('LD', 'IN')"><span class="state-code">LD</span><span>Lakshadweep</span></div>
-            <div class="state-pill" data-code="MP" data-name="Madhya Pradesh" onclick="quickSelectState('MP', 'IN')"><span class="state-code">MP</span><span>Madhya Pradesh</span></div>
-            <div class="state-pill" data-code="MH" data-name="Maharashtra" onclick="quickSelectState('MH', 'IN')"><span class="state-code">MH</span><span>Maharashtra</span></div>
-            <div class="state-pill" data-code="MN" data-name="Manipur" onclick="quickSelectState('MN', 'IN')"><span class="state-code">MN</span><span>Manipur</span></div>
-            <div class="state-pill" data-code="ML" data-name="Meghalaya" onclick="quickSelectState('ML', 'IN')"><span class="state-code">ML</span><span>Meghalaya</span></div>
-            <div class="state-pill" data-code="MZ" data-name="Mizoram" onclick="quickSelectState('MZ', 'IN')"><span class="state-code">MZ</span><span>Mizoram</span></div>
-            <div class="state-pill" data-code="NL" data-name="Nagaland" onclick="quickSelectState('NL', 'IN')"><span class="state-code">NL</span><span>Nagaland</span></div>
-            <div class="state-pill" data-code="OR" data-name="Odisha" onclick="quickSelectState('OR', 'IN')"><span class="state-code">OR</span><span>Odisha</span></div>
-            <div class="state-pill" data-code="PY" data-name="Puducherry" onclick="quickSelectState('PY', 'IN')"><span class="state-code">PY</span><span>Puducherry</span></div>
-            <div class="state-pill" data-code="PB" data-name="Punjab" onclick="quickSelectState('PB', 'IN')"><span class="state-code">PB</span><span>Punjab</span></div>
-            <div class="state-pill" data-code="RJ" data-name="Rajasthan" onclick="quickSelectState('RJ', 'IN')"><span class="state-code">RJ</span><span>Rajasthan</span></div>
-            <div class="state-pill" data-code="SK" data-name="Sikkim" onclick="quickSelectState('SK', 'IN')"><span class="state-code">SK</span><span>Sikkim</span></div>
-            <div class="state-pill" data-code="TN" data-name="Tamil Nadu" onclick="quickSelectState('TN', 'IN')"><span class="state-code">TN</span><span>Tamil Nadu</span></div>
-            <div class="state-pill" data-code="TG" data-name="Telangana" onclick="quickSelectState('TG', 'IN')"><span class="state-code">TG</span><span>Telangana</span></div>
-            <div class="state-pill" data-code="TR" data-name="Tripura" onclick="quickSelectState('TR', 'IN')"><span class="state-code">TR</span><span>Tripura</span></div>
-            <div class="state-pill" data-code="UP" data-name="Uttar Pradesh" onclick="quickSelectState('UP', 'IN')"><span class="state-code">UP</span><span>Uttar Pradesh</span></div>
-            <div class="state-pill" data-code="UT" data-name="Uttarakhand" onclick="quickSelectState('UT', 'IN')"><span class="state-code">UT</span><span>Uttarakhand</span></div>
-            <div class="state-pill" data-code="WB" data-name="West Bengal" onclick="quickSelectState('WB', 'IN')"><span class="state-code">WB</span><span>West Bengal</span></div>
+            <div class="state-pill" data-code="IN" data-name="National Pan-India" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">IN</span><span>National (All-India)</span></div>
+            <div class="state-pill" data-code="AN" data-name="Andaman and Nicobar" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">AN</span><span>Andaman & Nicobar</span></div>
+            <div class="state-pill" data-code="AP" data-name="Andhra Pradesh" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">AP</span><span>Andhra Pradesh</span></div>
+            <div class="state-pill" data-code="AR" data-name="Arunachal Pradesh" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">AR</span><span>Arunachal Pradesh</span></div>
+            <div class="state-pill" data-code="AS" data-name="Assam" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">AS</span><span>Assam</span></div>
+            <div class="state-pill" data-code="BR" data-name="Bihar" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">BR</span><span>Bihar</span></div>
+            <div class="state-pill" data-code="CH" data-name="Chandigarh" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">CH</span><span>Chandigarh</span></div>
+            <div class="state-pill" data-code="CT" data-name="Chhattisgarh" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">CT</span><span>Chhattisgarh</span></div>
+            <div class="state-pill" data-code="DN" data-name="Dadra and Nagar Haveli and Daman and Diu" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">DN</span><span>Dadra & Nagar Haveli (DN)</span></div>
+            <div class="state-pill" data-code="DL" data-name="Delhi" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">DL</span><span>Delhi (NCT)</span></div>
+            <div class="state-pill" data-code="GA" data-name="Goa" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">GA</span><span>Goa</span></div>
+            <div class="state-pill" data-code="GJ" data-name="Gujarat" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">GJ</span><span>Gujarat</span></div>
+            <div class="state-pill" data-code="HR" data-name="Haryana" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">HR</span><span>Haryana</span></div>
+            <div class="state-pill" data-code="HP" data-name="Himachal Pradesh" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">HP</span><span>Himachal Pradesh</span></div>
+            <div class="state-pill" data-code="JK" data-name="Jammu and Kashmir" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">JK</span><span>Jammu & Kashmir</span></div>
+            <div class="state-pill" data-code="JH" data-name="Jharkhand" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">JH</span><span>Jharkhand</span></div>
+            <div class="state-pill" data-code="KA" data-name="Karnataka" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">KA</span><span>Karnataka</span></div>
+            <div class="state-pill" data-code="KL" data-name="Kerala" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">KL</span><span>Kerala</span></div>
+            <div class="state-pill" data-code="LA" data-name="Ladakh" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">LA</span><span>Ladakh</span></div>
+            <div class="state-pill" data-code="LD" data-name="Lakshadweep" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">LD</span><span>Lakshadweep</span></div>
+            <div class="state-pill" data-code="MP" data-name="Madhya Pradesh" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">MP</span><span>Madhya Pradesh</span></div>
+            <div class="state-pill" data-code="MH" data-name="Maharashtra" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">MH</span><span>Maharashtra</span></div>
+            <div class="state-pill" data-code="MN" data-name="Manipur" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">MN</span><span>Manipur</span></div>
+            <div class="state-pill" data-code="ML" data-name="Meghalaya" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">ML</span><span>Meghalaya</span></div>
+            <div class="state-pill" data-code="MZ" data-name="Mizoram" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">MZ</span><span>Mizoram</span></div>
+            <div class="state-pill" data-code="NL" data-name="Nagaland" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">NL</span><span>Nagaland</span></div>
+            <div class="state-pill" data-code="OR" data-name="Odisha" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">OR</span><span>Odisha</span></div>
+            <div class="state-pill" data-code="PY" data-name="Puducherry" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">PY</span><span>Puducherry</span></div>
+            <div class="state-pill" data-code="PB" data-name="Punjab" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">PB</span><span>Punjab</span></div>
+            <div class="state-pill" data-code="RJ" data-name="Rajasthan" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">RJ</span><span>Rajasthan</span></div>
+            <div class="state-pill" data-code="SK" data-name="Sikkim" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">SK</span><span>Sikkim</span></div>
+            <div class="state-pill" data-code="TN" data-name="Tamil Nadu" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">TN</span><span>Tamil Nadu</span></div>
+            <div class="state-pill" data-code="TG" data-name="Telangana" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">TG</span><span>Telangana</span></div>
+            <div class="state-pill" data-code="TR" data-name="Tripura" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">TR</span><span>Tripura</span></div>
+            <div class="state-pill" data-code="UP" data-name="Uttar Pradesh" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">UP</span><span>Uttar Pradesh</span></div>
+            <div class="state-pill" data-code="UT" data-name="Uttarakhand" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">UT</span><span>Uttarakhand</span></div>
+            <div class="state-pill" data-code="WB" data-name="West Bengal" data-country="IN" onclick="quickSelectState(this.dataset.code, this.dataset.country)"><span class="state-code">WB</span><span>West Bengal</span></div>
           </div>
         </section>
 
@@ -3741,14 +3764,14 @@ console.log(upcoming);</div>
           if (Array.isArray(data)) {
             visualHtml = '<div class="kpi-grid">' +
               '<div class="kpi-card"><div class="kpi-val">' + data.length + '</div><div class="kpi-label">Items Returned</div></div>' +
-              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-cyan);">' + (state || 'IN') + '</div><div class="kpi-label">State / Region</div></div>' +
-              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-emerald);">' + (year || '2026') + '</div><div class="kpi-label">Year</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-cyan);">' + escapeHtml(state || 'IN') + '</div><div class="kpi-label">State / Region</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-emerald);">' + escapeHtml(year || '2026') + '</div><div class="kpi-label">Year</div></div>' +
             '</div>';
           } else if (Array.isArray(data.holidays)) {
             visualHtml = '<div class="kpi-grid">' +
               '<div class="kpi-card"><div class="kpi-val">' + data.holidays.length + '</div><div class="kpi-label">Total Holidays</div></div>' +
-              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-cyan);">' + (data.state_code || state) + '</div><div class="kpi-label">Region Code</div></div>' +
-              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-emerald);">' + (data.year || year) + '</div><div class="kpi-label">Year</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-cyan);">' + escapeHtml(data.state_code || state || 'IN') + '</div><div class="kpi-label">Region Code</div></div>' +
+              '<div class="kpi-card"><div class="kpi-val" style="color: var(--accent-emerald);">' + escapeHtml(data.year || year || '2026') + '</div><div class="kpi-label">Year</div></div>' +
             '</div>';
           }
           visualContainer.innerHTML = visualHtml;
@@ -3769,7 +3792,7 @@ console.log(upcoming);</div>
       let html = '';
       for (let i = 0; i < list.length; i++) {
         const item = list[i];
-        html += '<div class="state-pill" data-code="' + escapeHtml(item.code) + '" data-name="' + escapeHtml(item.name) + '" onclick="quickSelectState(\'' + escapeHtml(item.code) + '\', \'' + escapeHtml(code) + '\')">' +
+        html += '<div class="state-pill" data-code="' + escapeHtml(item.code) + '" data-name="' + escapeHtml(item.name) + '" data-country="' + escapeHtml(code) + '" onclick="quickSelectState(this.dataset.code, this.dataset.country)">' +
           '<span class="state-code">' + escapeHtml(item.code) + '</span>' +
           '<span>' + escapeHtml(item.name) + '</span>' +
         '</div>';

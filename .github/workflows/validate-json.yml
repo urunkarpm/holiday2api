@@ -92,6 +92,11 @@ jobs:
                                   if region_id:
                                       if not (isinstance(region_id, str) and 2 <= len(region_id) <= 5):
                                           errors.append(f"{filepath}[{i}]: Invalid region_id '{region_id}'")
+
+                                  # Validate country_code format
+                                  if 'country_code' in holiday:
+                                      if not (isinstance(holiday['country_code'], str) and len(holiday['country_code']) == 2 and holiday['country_code'].isupper()):
+                                          errors.append(f"{filepath}[{i}]: Invalid country_code '{holiday['country_code']}'")
                           
                           elif isinstance(data, dict):
                               # Meta files - basic validation
