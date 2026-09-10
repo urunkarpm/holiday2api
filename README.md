@@ -1,12 +1,14 @@
-# 🇮🇳 India Holidays API
+# 🌍 Global Holidays API
 
 [![Validate JSON](https://github.com/urunkarpm/holiday2api/actions/workflows/validate-json.yml/badge.svg)](https://github.com/urunkarpm/holiday2api/actions/workflows/validate-json.yml)
 [![Deploy](https://github.com/urunkarpm/holiday2api/actions/workflows/deploy.yml/badge.svg)](https://github.com/urunkarpm/holiday2api/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A free, fast, and dead-simple REST API for Indian holidays. Get national, state, and bank holidays, calculate working days, and find long weekend vacation recommendations with clean JSON.
+A free, fast, and dead-simple REST API for holidays across multiple countries. Get national, state, and bank holidays, calculate working days, and find long weekend vacation recommendations with clean JSON.
 
 **Zero setup. No API keys. No rate limits. Free forever.**
+
+**🌐 Now supporting international holidays:** India 🇮🇳, United States 🇺🇸, United Kingdom 🇬🇧, Canada 🇨🇦, Australia 🇦🇺, and Singapore 🇸🇬.
 
 ---
 
@@ -115,7 +117,20 @@ Calculates working days between two dates, excluding weekends and official holid
 
 ---
 
-## 🗺️ 2-Letter State & Union Territory Codes
+## 🌐 Supported Countries
+
+| Code | Country | Flag | Currency | Timezone | Regions | Years |
+|---|---|---|---|---|---|---|
+| `IN` | India | 🇮🇳 | INR | Asia/Kolkata | 37 | 2020–2036 |
+| `US` | United States | 🇺🇸 | USD | America/New_York | 51 | 2020–2036 |
+| `GB` | United Kingdom | 🇬🇧 | GBP | Europe/London | 4 | 2020–2036 |
+| `CA` | Canada | 🇨🇦 | CAD | America/Toronto | 13 | 2020–2036 |
+| `AU` | Australia | 🇦🇺 | AUD | Australia/Sydney | 8 | 2020–2036 |
+| `SG` | Singapore | 🇸🇬 | SGD | Asia/Singapore | 1 | 2020–2036 |
+
+---
+
+## 🗺️ Indian State & Union Territory Codes
 
 | Code | State / UT | Code | State / UT | Code | State / UT |
 |---|---|---|---|---|---|
@@ -128,9 +143,10 @@ Calculates working days between two dates, excluding weekends and official holid
 | `CH` | Chandigarh | `KA` | Karnataka | `TN` | Tamil Nadu |
 | `CT` | Chhattisgarh | `KL` | Kerala | `TG` | Telangana |
 | `DH` | Dadra & Nagar Haveli | `LA` | Ladakh | `TR` | Tripura |
-| `DL` | Delhi (NCT) | `MP` | Madhya Pradesh | `UP` | Uttar Pradesh |
-| `MH` | Maharashtra | `ML` | Meghalaya | `UT` | Uttarakhand |
-| `MN` | Manipur | `MZ` | Mizoram | `WB` | West Bengal |
+| `DL` | Delhi (NCT) | `LD` | Lakshadweep | `UP` | Uttar Pradesh |
+| `DN` | Dadra & Nagar Haveli and Daman & Diu | `MP` | Madhya Pradesh | `UT` | Uttarakhand |
+| `MH` | Maharashtra | `ML` | Meghalaya | `WB` | West Bengal |
+| `MN` | Manipur | `MZ` | Mizoram | | |
 
 ---
 
